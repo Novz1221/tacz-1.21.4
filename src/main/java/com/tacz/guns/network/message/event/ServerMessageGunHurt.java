@@ -5,9 +5,9 @@ import com.tacz.guns.GunMod;
 import com.tacz.guns.api.event.common.EntityHurtByGunEvent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -18,8 +18,9 @@ import net.minecraft.world.entity.LivingEntity;
 
 import javax.annotation.Nullable;
 
-public class ServerMessageGunHurt implements FabricPacket {
-    public static final PacketType<ServerMessageGunHurt> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_gunhurt"), ServerMessageGunHurt::new);
+public class ServerMessageGunHurt implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ServerMessageGunHurt> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_gunhurt"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ServerMessageGunHurt> CODEC = CustomPacketPayload.codec(ServerMessageGunHurt::write, ServerMessageGunHurt::new);
 
     private final int bulletId;
     private final int hurtEntityId;
@@ -50,7 +51,6 @@ public class ServerMessageGunHurt implements FabricPacket {
         this.headshotMultiplier = headshotMultiplier;
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeInt(bulletId);
         buf.writeInt(hurtEntityId);
@@ -63,7 +63,7 @@ public class ServerMessageGunHurt implements FabricPacket {
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

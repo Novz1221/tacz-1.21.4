@@ -4,16 +4,17 @@ import com.tacz.guns.GunMod;
 import com.tacz.guns.client.gui.GunSmithTableScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
-public class ServerMessageCraft implements FabricPacket {
-    public static final PacketType<ServerMessageCraft> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_craft"), ServerMessageCraft::new);
+public class ServerMessageCraft implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ServerMessageCraft> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_craft"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ServerMessageCraft> CODEC = CustomPacketPayload.codec(ServerMessageCraft::write, ServerMessageCraft::new);
 
     private final int menuId;
 
@@ -26,13 +27,12 @@ public class ServerMessageCraft implements FabricPacket {
         this(buf.readVarInt());
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeVarInt(menuId);
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

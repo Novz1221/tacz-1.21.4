@@ -6,9 +6,9 @@ import com.tacz.guns.inventory.AmmoStorageMenu;
 import io.netty.handler.codec.DecoderException;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record ServerMessageAmmoStorageContents(int containerId, int capacityStacks, long usedStacks,
-                                               List<AmmoStorageEntry> entries) implements FabricPacket {
-    public static final PacketType<ServerMessageAmmoStorageContents> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_ammo_storage_contents"),
-            ServerMessageAmmoStorageContents::decode);
+                                               List<AmmoStorageEntry> entries) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ServerMessageAmmoStorageContents> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_ammo_storage_contents"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ServerMessageAmmoStorageContents> CODEC = CustomPacketPayload.codec(ServerMessageAmmoStorageContents::write, ServerMessageAmmoStorageContents::decode);
 
     public ServerMessageAmmoStorageContents {
         entries = List.copyOf(entries);
@@ -49,7 +49,6 @@ public record ServerMessageAmmoStorageContents(int containerId, int capacityStac
         return new ServerMessageAmmoStorageContents(containerId, capacityStacks, usedStacks, entries);
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeVarInt(containerId);
         buf.writeVarInt(capacityStacks);
@@ -64,7 +63,7 @@ public record ServerMessageAmmoStorageContents(int containerId, int capacityStac
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

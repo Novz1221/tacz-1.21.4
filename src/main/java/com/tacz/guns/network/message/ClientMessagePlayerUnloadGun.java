@@ -6,17 +6,18 @@ import com.tacz.guns.api.entity.IGunOperator;
 import com.tacz.guns.api.item.IGun;
 import com.tacz.guns.network.NetworkHandler;
 import com.tacz.guns.resource.pojo.data.gun.Bolt;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
-public class ClientMessagePlayerUnloadGun implements FabricPacket {
-    public static final PacketType<ClientMessagePlayerUnloadGun> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_unload"), ClientMessagePlayerUnloadGun::decode);
+public class ClientMessagePlayerUnloadGun implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ClientMessagePlayerUnloadGun> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_unload"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ClientMessagePlayerUnloadGun> CODEC = CustomPacketPayload.codec(ClientMessagePlayerUnloadGun::write, ClientMessagePlayerUnloadGun::decode);
 
     private final int slot;
     private final ResourceLocation gunId;
@@ -26,14 +27,13 @@ public class ClientMessagePlayerUnloadGun implements FabricPacket {
         this.gunId = gunId;
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeVarInt(slot);
         buf.writeResourceLocation(gunId);
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

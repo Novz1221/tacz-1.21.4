@@ -10,9 +10,9 @@ import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.DecoderException;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.Connection;
@@ -27,8 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ServerMessageSyncGunPack implements FabricPacket {
-    public static final PacketType<ServerMessageSyncGunPack> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_sync_gunpack"), ServerMessageSyncGunPack::decode);
+public class ServerMessageSyncGunPack implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ServerMessageSyncGunPack> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_sync_gunpack"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ServerMessageSyncGunPack> CODEC = CustomPacketPayload.codec(ServerMessageSyncGunPack::write, ServerMessageSyncGunPack::decode);
 
     private static final GunPackSync.Receiver RECEIVER = new GunPackSync.Receiver();
     private final GunPackSync.Part part;
@@ -59,7 +60,6 @@ public class ServerMessageSyncGunPack implements FabricPacket {
         }
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeUUID(part.transferId());
         buf.writeVarInt(part.index());
@@ -69,7 +69,7 @@ public class ServerMessageSyncGunPack implements FabricPacket {
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

@@ -4,9 +4,9 @@ import com.tacz.guns.GunMod;
 import com.tacz.guns.client.particle.HitBlockEffectHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -16,8 +16,9 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 
-public class ServerMessageBulletHitBlock implements FabricPacket {
-    public static final PacketType<ServerMessageBulletHitBlock> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_bullet_hit_block"), ServerMessageBulletHitBlock::new);
+public class ServerMessageBulletHitBlock implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ServerMessageBulletHitBlock> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_bullet_hit_block"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ServerMessageBulletHitBlock> CODEC = CustomPacketPayload.codec(ServerMessageBulletHitBlock::write, ServerMessageBulletHitBlock::new);
 
     private final double hitX;
     private final double hitY;
@@ -57,7 +58,6 @@ public class ServerMessageBulletHitBlock implements FabricPacket {
         this.incendiary = incendiary;
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeDouble(hitX);
         buf.writeDouble(hitY);
@@ -71,7 +71,7 @@ public class ServerMessageBulletHitBlock implements FabricPacket {
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

@@ -2,15 +2,16 @@ package com.tacz.guns.network.message;
 
 import com.tacz.guns.GunMod;
 import com.tacz.guns.api.entity.IGunOperator;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
-public class ClientMessagePlayerZoom implements FabricPacket {
-    public static final PacketType<ClientMessagePlayerZoom> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_zoom"), ClientMessagePlayerZoom::new);
+public class ClientMessagePlayerZoom implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ClientMessagePlayerZoom> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_zoom"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ClientMessagePlayerZoom> CODEC = CustomPacketPayload.codec(ClientMessagePlayerZoom::write, ClientMessagePlayerZoom::new);
 
     public ClientMessagePlayerZoom() {
 
@@ -20,13 +21,12 @@ public class ClientMessagePlayerZoom implements FabricPacket {
         this();
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
 
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

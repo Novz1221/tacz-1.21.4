@@ -5,9 +5,9 @@ import com.tacz.guns.api.client.gameplay.IClientPlayerGunOperator;
 import com.tacz.guns.client.gameplay.LocalPlayerDataHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import com.tacz.guns.util.time.GunTime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -18,8 +18,9 @@ import org.slf4j.MarkerFactory;
 
 import java.util.Objects;
 
-public class ServerMessageSyncBaseTimestamp implements FabricPacket {
-    public static final PacketType<ServerMessageSyncBaseTimestamp> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_sync_base_timestamp"), ServerMessageSyncBaseTimestamp::new);
+public class ServerMessageSyncBaseTimestamp implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ServerMessageSyncBaseTimestamp> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_sync_base_timestamp"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ServerMessageSyncBaseTimestamp> CODEC = CustomPacketPayload.codec(ServerMessageSyncBaseTimestamp::write, ServerMessageSyncBaseTimestamp::new);
 
     private static final Marker MARKER = MarkerFactory.getMarker("SYNC_BASE_TIMESTAMP");
 
@@ -31,13 +32,12 @@ public class ServerMessageSyncBaseTimestamp implements FabricPacket {
 
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
 
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

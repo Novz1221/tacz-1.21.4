@@ -5,9 +5,9 @@ import com.tacz.guns.GunMod;
 import com.tacz.guns.api.event.common.GunDrawEvent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -16,8 +16,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
-public class ServerMessageGunDraw implements FabricPacket {
-    public static final PacketType<ServerMessageGunDraw> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_gundraw"), ServerMessageGunDraw::new);
+public class ServerMessageGunDraw implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ServerMessageGunDraw> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_gundraw"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ServerMessageGunDraw> CODEC = CustomPacketPayload.codec(ServerMessageGunDraw::write, ServerMessageGunDraw::new);
 
     private final int entityId;
     private final ItemStack previousGunItem;
@@ -33,7 +34,6 @@ public class ServerMessageGunDraw implements FabricPacket {
         this.currentGunItem = currentGunItem;
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeVarInt(entityId);
         buf.writeItem(previousGunItem);
@@ -41,7 +41,7 @@ public class ServerMessageGunDraw implements FabricPacket {
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

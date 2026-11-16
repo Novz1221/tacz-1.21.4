@@ -2,7 +2,6 @@ package com.tacz.guns.network;
 
 import com.tacz.guns.GunMod;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.fabricmc.fabric.api.networking.v1.ServerLoginConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerLoginNetworking;
 import net.fabricmc.loader.api.FabricLoader;

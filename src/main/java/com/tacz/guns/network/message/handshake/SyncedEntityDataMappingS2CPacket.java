@@ -6,7 +6,7 @@ import com.tacz.guns.entity.sync.core.SyncedEntityData;
 import com.tacz.guns.network.IHandshakeMessage;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
+import com.tacz.guns.network.PacketType;
 import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;

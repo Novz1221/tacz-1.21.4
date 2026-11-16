@@ -5,9 +5,9 @@ import com.tacz.guns.entity.sync.core.DataEntry;
 import com.tacz.guns.entity.sync.core.SyncedEntityData;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
@@ -18,8 +18,9 @@ import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerMessageUpdateEntityData implements FabricPacket {
-    public static final PacketType<ServerMessageUpdateEntityData> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_update_entity_data"), ServerMessageUpdateEntityData::new);
+public class ServerMessageUpdateEntityData implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ServerMessageUpdateEntityData> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_update_entity_data"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ServerMessageUpdateEntityData> CODEC = CustomPacketPayload.codec(ServerMessageUpdateEntityData::write, ServerMessageUpdateEntityData::new);
 
     private final int entityId;
     private final List<DataEntry<?, ?>> entries;
@@ -42,7 +43,6 @@ public class ServerMessageUpdateEntityData implements FabricPacket {
         this.entries = entries;
     }
 
-    @Override
     public void write(FriendlyByteBuf buffer) {
         buffer.writeVarInt(entityId);
         buffer.writeVarInt(entries.size());
@@ -50,7 +50,7 @@ public class ServerMessageUpdateEntityData implements FabricPacket {
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

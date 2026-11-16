@@ -6,9 +6,9 @@ import com.tacz.guns.api.TimelessAPI;
 import com.tacz.guns.api.item.IGun;
 import com.tacz.guns.block.entity.AmmoStorageBlockEntity;
 import com.tacz.guns.util.AmmoStorageHelper;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -19,8 +19,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class ClientMessageAmmoStorageInteract implements FabricPacket {
-    public static final PacketType<ClientMessageAmmoStorageInteract> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_ammo_storage_interact"), ClientMessageAmmoStorageInteract::new);
+public class ClientMessageAmmoStorageInteract implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ClientMessageAmmoStorageInteract> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_ammo_storage_interact"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ClientMessageAmmoStorageInteract> CODEC = CustomPacketPayload.codec(ClientMessageAmmoStorageInteract::write, ClientMessageAmmoStorageInteract::new);
 
     private static final String LAST_PICKUP_TAG = "TacAmmoStorageLastPickup";
     private static final String LAST_ACCUMULATE_TAG = "TacAmmoStorageLastAccumulate";
@@ -39,13 +40,12 @@ public class ClientMessageAmmoStorageInteract implements FabricPacket {
         this.pos = pos;
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeBlockPos(pos);
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

@@ -7,17 +7,18 @@ import com.tacz.guns.api.item.attachment.AttachmentType;
 import com.tacz.guns.network.NetworkHandler;
 import com.tacz.guns.resource.modifier.AttachmentPropertyManager;
 import com.tacz.guns.util.VirtualOemAttachment;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
-public class ClientMessageUnloadAttachment implements FabricPacket {
-    public static final PacketType<ClientMessageUnloadAttachment> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_unload_attachment"), ClientMessageUnloadAttachment::new);
+public class ClientMessageUnloadAttachment implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ClientMessageUnloadAttachment> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_unload_attachment"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ClientMessageUnloadAttachment> CODEC = CustomPacketPayload.codec(ClientMessageUnloadAttachment::write, ClientMessageUnloadAttachment::new);
 
     private final int gunSlotIndex;
     private final AttachmentType attachmentType;
@@ -31,14 +32,13 @@ public class ClientMessageUnloadAttachment implements FabricPacket {
         this.attachmentType = attachmentType;
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeInt(gunSlotIndex);
         buf.writeEnum(attachmentType);
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

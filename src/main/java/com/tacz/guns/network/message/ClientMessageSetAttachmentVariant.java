@@ -8,9 +8,9 @@ import com.tacz.guns.api.item.attachment.AttachmentType;
 import com.tacz.guns.network.NetworkHandler;
 import com.tacz.guns.resource.modifier.AttachmentPropertyManager;
 import com.tacz.guns.util.VariantHelper;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,8 +18,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-public class ClientMessageSetAttachmentVariant implements FabricPacket {
-    public static final PacketType<ClientMessageSetAttachmentVariant> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_set_attachment_variant"), ClientMessageSetAttachmentVariant::new);
+public class ClientMessageSetAttachmentVariant implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ClientMessageSetAttachmentVariant> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_set_attachment_variant"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ClientMessageSetAttachmentVariant> CODEC = CustomPacketPayload.codec(ClientMessageSetAttachmentVariant::write, ClientMessageSetAttachmentVariant::new);
 
     private final int gunSlotIndex;
     private final AttachmentType attachmentType;
@@ -36,7 +37,6 @@ public class ClientMessageSetAttachmentVariant implements FabricPacket {
         this.variantId = variantId;
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeInt(gunSlotIndex);
         buf.writeEnum(attachmentType);
@@ -47,7 +47,7 @@ public class ClientMessageSetAttachmentVariant implements FabricPacket {
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

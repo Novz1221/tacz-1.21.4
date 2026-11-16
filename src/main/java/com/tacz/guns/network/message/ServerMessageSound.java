@@ -5,15 +5,16 @@ import com.tacz.guns.api.DefaultAssets;
 import com.tacz.guns.client.sound.SoundPlayManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
-public class ServerMessageSound implements FabricPacket {
-    public static final PacketType<ServerMessageSound> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_sound"), ServerMessageSound::new);
+public class ServerMessageSound implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ServerMessageSound> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_sound"));
+    public static final StreamCodec<net.minecraft.network.FriendlyByteBuf, ServerMessageSound> CODEC = CustomPacketPayload.codec(ServerMessageSound::write, ServerMessageSound::new);
 
     private final int entityId;
     private final ResourceLocation gunId;
@@ -41,7 +42,6 @@ public class ServerMessageSound implements FabricPacket {
         this(entityId, gunId, DefaultAssets.DEFAULT_GUN_DISPLAY_ID, soundName, volume, pitch, distance);
     }
 
-    @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeVarInt(entityId);
         buf.writeResourceLocation(gunId);
@@ -53,7 +53,7 @@ public class ServerMessageSound implements FabricPacket {
     }
 
     @Override
-    public PacketType<?> getType() {
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 
