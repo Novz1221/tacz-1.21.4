@@ -12,10 +12,11 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.12
       - name: Build
         run: |
-          chmod +x gradlew || true
-          (./gradlew build --stacktrace --no-daemon 2>&1 | tee build.log) ; exit ${PIPESTATUS[0]}
+          (gradle build --stacktrace --no-daemon 2>&1 | tee build.log) ; exit ${PIPESTATUS[0]}
       - name: Extract errors
         if: always()
         run: grep -E "error:|FAILED|Could not resolve|What went wrong" -A2 build.log | head -400 > errors.txt || true
