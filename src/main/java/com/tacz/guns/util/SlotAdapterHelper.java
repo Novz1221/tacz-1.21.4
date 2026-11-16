@@ -25,7 +25,7 @@ public final class SlotAdapterHelper {
         if (holder.isEmpty() || type == null || adapterId == null) {
             return;
         }
-        CompoundTag root = holder.getOrCreateTag();
+        CompoundTag root = cn.sh1rocu.tacz.util.ItemNbt.getOrCreateTag(holder);
         CompoundTag adapters = root.getCompound(SLOT_ADAPTERS_TAG);
         adapters.putString(slotKey(type), adapterId.toString());
         root.put(SLOT_ADAPTERS_TAG, adapters);
@@ -36,7 +36,7 @@ public final class SlotAdapterHelper {
         if (holder.isEmpty() || type == null) {
             return null;
         }
-        CompoundTag root = holder.getTag();
+        CompoundTag root = cn.sh1rocu.tacz.util.ItemNbt.getTag(holder);
         if (root == null || !root.contains(SLOT_ADAPTERS_TAG, Tag.TAG_COMPOUND)) {
             return null;
         }
@@ -52,7 +52,7 @@ public final class SlotAdapterHelper {
         if (holder.isEmpty() || type == null) {
             return;
         }
-        CompoundTag root = holder.getTag();
+        CompoundTag root = cn.sh1rocu.tacz.util.ItemNbt.getTag(holder);
         if (root == null || !root.contains(SLOT_ADAPTERS_TAG, Tag.TAG_COMPOUND)) {
             return;
         }

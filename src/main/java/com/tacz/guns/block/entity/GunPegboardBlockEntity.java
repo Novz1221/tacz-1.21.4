@@ -1,5 +1,6 @@
 package com.tacz.guns.block.entity;
 
+import net.minecraft.core.HolderLookup;
 import com.tacz.guns.block.DecorationLock;
 import com.tacz.guns.block.GunPegboardBlock;
 import com.tacz.guns.block.GunPegboardSlotHelper;
@@ -236,8 +237,8 @@ public class GunPegboardBlockEntity extends BlockEntity implements GunDisplayBlo
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         color = tag.contains(COLOR_TAG, Tag.TAG_INT) ? tag.getInt(COLOR_TAG) & 0xFFFFFF : -1;
         inheritedColor = color >= 0 && tag.getBoolean(INHERITED_COLOR_TAG);
         ItemStack[] previousItems = items.clone();
@@ -285,8 +286,8 @@ public class GunPegboardBlockEntity extends BlockEntity implements GunDisplayBlo
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         tag.putString(SLOT_SHAPE_TAG, getBlockState().getValue(GunPegboardBlock.SHAPE).getSerializedName());
         if (color >= 0) tag.putInt(COLOR_TAG, color);
         if (inheritedColor) tag.putBoolean(INHERITED_COLOR_TAG, true);
@@ -304,9 +305,9 @@ public class GunPegboardBlockEntity extends BlockEntity implements GunDisplayBlo
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        saveAdditional(tag);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        saveAdditional(tag, registries);
         // 网络更新不能按结构镜像解释，客户端可能尚未收到对应的方块状态。
         tag.remove(SLOT_SHAPE_TAG);
         return tag;

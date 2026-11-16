@@ -1,5 +1,6 @@
 package com.tacz.guns.block.entity;
 
+import net.minecraft.core.HolderLookup;
 import com.tacz.guns.block.AmmoStorageBlock;
 import com.tacz.guns.init.ModBlocks;
 import com.tacz.guns.inventory.AmmoStorageInventory;
@@ -89,14 +90,14 @@ public class AmmoStorageBlockEntity extends BlockEntity implements ExtendedScree
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         inventory.load(tag.getList("Entries", Tag.TAG_COMPOUND));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         tag.put("Entries", inventory.save());
     }
 

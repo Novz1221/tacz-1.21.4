@@ -33,13 +33,13 @@ public class ServerMessageGunFirePost implements CustomPacketPayload {
 
     public static ServerMessageGunFirePost decode(FriendlyByteBuf buf) {
         int shooterId = buf.readVarInt();
-        ItemStack gunItemStack = buf.readItem();
+        ItemStack gunItemStack = cn.sh1rocu.tacz.util.ItemNbt.readItem(buf);
         return new ServerMessageGunFirePost(shooterId, gunItemStack);
     }
 
     public void write(FriendlyByteBuf buf) {
         buf.writeVarInt(shooterId);
-        buf.writeItem(gunItemStack);
+        cn.sh1rocu.tacz.util.ItemNbt.writeItem(buf, gunItemStack);
     }
 
     @Override

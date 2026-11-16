@@ -53,7 +53,7 @@ public class PartialNBTIngredient implements CustomIngredient {
     public boolean test(@Nullable ItemStack input) {
         if (input == null)
             return false;
-        return items.contains(input.getItem()) && predicate.matches(input.getTag());
+        return items.contains(input.getItem()) && predicate.matches(cn.sh1rocu.tacz.util.ItemNbt.getTag(input));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class PartialNBTIngredient implements CustomIngredient {
         return items.stream().map(item -> {
             ItemStack stack = new ItemStack(item);
             // copy NBT to prevent the stack from modifying the original, as capabilities or vanilla item durability will modify the tag
-            stack.setTag(nbt.copy());
+            cn.sh1rocu.tacz.util.ItemNbt.setTag(stack, nbt.copy());
             return stack;
         }).toList();
     }

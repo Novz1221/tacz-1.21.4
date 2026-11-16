@@ -55,7 +55,7 @@ public class RawGunTableResult {
             default -> new GunSmithTableResult(ItemStack.EMPTY, TabConfig.TAB_EMPTY);
         };
         if (raw.nbt != null) {
-            CompoundTag itemTag = result.getResult().getOrCreateTag();
+            CompoundTag itemTag = cn.sh1rocu.tacz.util.ItemNbt.getOrCreateTag(result.getResult());
             for (String key : raw.nbt.getAllKeys()) {
                 Tag tag = raw.nbt.get(key);
                 if (tag != null) {

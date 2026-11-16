@@ -1,5 +1,6 @@
 package com.tacz.guns.block.entity;
 
+import net.minecraft.core.HolderLookup;
 import com.tacz.guns.block.DecorationLock;
 import com.tacz.guns.block.GunDisplayCaseBlock;
 import com.tacz.guns.init.ModBlocks;
@@ -159,8 +160,8 @@ public class GunDisplayCaseBlockEntity extends BlockEntity implements GunDisplay
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         ItemStack[] previousItems = items.clone();
         byte[] previousRotations = rotations.clone();
         for (int i = 0; i < items.length; i++) {
@@ -190,8 +191,8 @@ public class GunDisplayCaseBlockEntity extends BlockEntity implements GunDisplay
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         ListTag list = new ListTag();
         for (int i = 0; i < items.length; i++) {
             if (!items[i].isEmpty()) {
@@ -206,9 +207,9 @@ public class GunDisplayCaseBlockEntity extends BlockEntity implements GunDisplay
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        saveAdditional(tag);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        saveAdditional(tag, registries);
         return tag;
     }
 

@@ -24,7 +24,7 @@ public class ServerMessageGunMelee implements CustomPacketPayload {
     private final ItemStack gunItemStack;
 
     public ServerMessageGunMelee(FriendlyByteBuf buf) {
-        this(buf.readVarInt(), buf.readItem());
+        this(buf.readVarInt(), cn.sh1rocu.tacz.util.ItemNbt.readItem(buf));
     }
 
     public ServerMessageGunMelee(int shooterId, ItemStack gunItemStack) {
@@ -34,7 +34,7 @@ public class ServerMessageGunMelee implements CustomPacketPayload {
 
     public void write(FriendlyByteBuf buf) {
         buf.writeVarInt(shooterId);
-        buf.writeItem(gunItemStack);
+        cn.sh1rocu.tacz.util.ItemNbt.writeItem(buf, gunItemStack);
     }
 
     @Override

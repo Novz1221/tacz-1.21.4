@@ -36,8 +36,8 @@ public class StrictNBTIngredient implements CustomIngredient {
     }
 
     private static boolean areShareTagsEqual(ItemStack stack, ItemStack other) {
-        CompoundTag shareTagA = stack.getTag();
-        CompoundTag shareTagB = other.getTag();
+        CompoundTag shareTagA = cn.sh1rocu.tacz.util.ItemNbt.getTag(stack);
+        CompoundTag shareTagB = cn.sh1rocu.tacz.util.ItemNbt.getTag(other);
         if (shareTagA == null)
             return shareTagB == null;
         else
@@ -79,18 +79,18 @@ public class StrictNBTIngredient implements CustomIngredient {
             json.addProperty("type", ID.toString());
             json.addProperty("item", BuiltInRegistries.ITEM.getKey(ingredient.stack.getItem()).toString());
             json.addProperty("count", ingredient.stack.getCount());
-            if (ingredient.stack.hasTag())
-                json.addProperty("nbt", ingredient.stack.getTag().toString());
+            if (cn.sh1rocu.tacz.util.ItemNbt.hasTag(ingredient.stack))
+                json.addProperty("nbt", cn.sh1rocu.tacz.util.ItemNbt.getTag(ingredient.stack).toString());
         }
 
         @Override
         public StrictNBTIngredient read(FriendlyByteBuf buffer) {
-            return new StrictNBTIngredient(buffer.readItem());
+            return new StrictNBTIngredient(cn.sh1rocu.tacz.util.ItemNbt.readItem(buffer));
         }
 
         @Override
         public void write(FriendlyByteBuf buffer, StrictNBTIngredient ingredient) {
-            buffer.writeItem(ingredient.stack);
+            cn.sh1rocu.tacz.util.ItemNbt.writeItem(buffer, ingredient.stack);
         }
     }
 }

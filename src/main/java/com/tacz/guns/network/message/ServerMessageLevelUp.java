@@ -21,7 +21,7 @@ public class ServerMessageLevelUp implements CustomPacketPayload {
     private final int level;
 
     public ServerMessageLevelUp(FriendlyByteBuf buf) {
-        this(buf.readItem(), buf.readInt());
+        this(cn.sh1rocu.tacz.util.ItemNbt.readItem(buf), buf.readInt());
     }
 
     public ServerMessageLevelUp(ItemStack gun, int level) {
@@ -30,7 +30,7 @@ public class ServerMessageLevelUp implements CustomPacketPayload {
     }
 
     public void write(FriendlyByteBuf buf) {
-        buf.writeItem(gun);
+        cn.sh1rocu.tacz.util.ItemNbt.writeItem(buf, gun);
         buf.writeInt(level);
     }
 

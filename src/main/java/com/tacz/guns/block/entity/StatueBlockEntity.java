@@ -1,5 +1,6 @@
 package com.tacz.guns.block.entity;
 
+import net.minecraft.core.HolderLookup;
 import com.tacz.guns.block.DecorationLock;
 import com.tacz.guns.init.ModBlocks;
 import net.minecraft.core.BlockPos;
@@ -84,22 +85,22 @@ public class StatueBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         if (tag.contains(ITEM_TAG, Tag.TAG_COMPOUND)) {
             this.gunItem = ItemStack.of(tag.getCompound(ITEM_TAG));
         }
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         tag.put(ITEM_TAG, gunItem.save(new CompoundTag()));
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     // TODO

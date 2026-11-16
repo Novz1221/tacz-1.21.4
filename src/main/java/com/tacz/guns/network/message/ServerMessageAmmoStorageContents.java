@@ -38,7 +38,7 @@ public record ServerMessageAmmoStorageContents(int containerId, int capacityStac
         List<AmmoStorageEntry> entries = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             int id = buf.readVarInt();
-            ItemStack sample = buf.readItem();
+            ItemStack sample = cn.sh1rocu.tacz.util.ItemNbt.readItem(buf);
             long count = buf.readVarLong();
             long remaining = buf.readVarLong();
             if (id < 0 || sample.isEmpty() || count <= 0 || remaining < 0) {
@@ -56,7 +56,7 @@ public record ServerMessageAmmoStorageContents(int containerId, int capacityStac
         buf.writeVarInt(entries.size());
         for (AmmoStorageEntry entry : entries) {
             buf.writeVarInt(entry.id());
-            buf.writeItem(entry.sample());
+            cn.sh1rocu.tacz.util.ItemNbt.writeItem(buf, entry.sample());
             buf.writeVarLong(entry.count());
             buf.writeVarLong(entry.remainingCapacity());
         }

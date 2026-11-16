@@ -84,7 +84,7 @@ public class ScopeThermalRenderer {
         if (shader == null || !RenderConfig.EXPERIMENTAL_SCOPE_LENS.get() || !RenderConfig.SCOPE_THERMAL_ENABLE.get()
                 || mc.level == null || mc.player == null || mc.getCameraEntity() != mc.player
                 || !mc.options.getCameraType().isFirstPerson() || mc.options.hideGui
-                || IClientPlayerGunOperator.fromLocalPlayer(mc.player).getClientAimingProgress(mc.getFrameTime()) <= 0.001f
+                || IClientPlayerGunOperator.fromLocalPlayer(mc.player).getClientAimingProgress(mc.getDeltaTracker().getGameTimeDeltaPartialTick(false)) <= 0.001f
                 || IrisCompat.isRenderShadow()) return false;
         // Resolve attachment NBT and variants once per frame, rather than once per entity draw.
         if (thermalScope == null) thermalScope = hasThermalScope(mc.player.getMainHandItem());
@@ -300,7 +300,7 @@ public class ScopeThermalRenderer {
 
         @Override
         public void endVertex() {
-            output.vertex(x, y, z).color(255, 255, 255, 255).uv(u, v).endVertex();
+            output.addVertex(x, y, z).setColor(255, 255, 255, 255).setUv(u, v);
         }
     }
 }

@@ -30,13 +30,13 @@ public class ServerMessageGunFinishReload implements CustomPacketPayload {
 
     public static ServerMessageGunFinishReload decode(FriendlyByteBuf buf) {
         int shooterId = buf.readVarInt();
-        ItemStack gunItemStack = buf.readItem();
+        ItemStack gunItemStack = cn.sh1rocu.tacz.util.ItemNbt.readItem(buf);
         return new ServerMessageGunFinishReload(shooterId, gunItemStack);
     }
 
     public void write(FriendlyByteBuf buf) {
         buf.writeVarInt(shooterId);
-        buf.writeItem(gunItemStack);
+        cn.sh1rocu.tacz.util.ItemNbt.writeItem(buf, gunItemStack);
     }
 
     @Override

@@ -951,8 +951,8 @@ public class ModernKineticGunScriptAPI {
         Optional<CommonGunIndex> gunIndexOptional = TimelessAPI.getCommonGunIndex(gunId);
         gunIndex = gunIndexOptional.orElse(null);
         abstractGunItem = gunItem;
-        if (itemStack.hasTag()) {
-            nbtUtil = new LuaNbtAccessor(itemStack.getTag());
+        if (cn.sh1rocu.tacz.util.ItemNbt.hasTag(itemStack)) {
+            nbtUtil = new LuaNbtAccessor(cn.sh1rocu.tacz.util.ItemNbt.getTag(itemStack));
         }
     }
 

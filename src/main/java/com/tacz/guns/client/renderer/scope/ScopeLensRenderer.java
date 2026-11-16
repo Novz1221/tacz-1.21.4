@@ -291,12 +291,12 @@ public final class ScopeLensRenderer {
     private static BufferBuilder.RenderedBuffer buildSurface(BufferBuilder builder, float x, float y, float radius) {
         // Exactly the same view-space circle used by BedrockAttachmentModel's stencil inversion.
         builder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION);
-        builder.vertex(x, y, SURFACE_Z).endVertex();
+        builder.addVertex(x, y, SURFACE_Z);
         for (int i = 0; i <= SEGMENTS; i++) {
             double angle = i * Math.PI * 2 / SEGMENTS;
             float cos = (float) Math.cos(angle);
             float sin = (float) Math.sin(angle);
-            builder.vertex(x + cos * radius, y + sin * radius, SURFACE_Z).endVertex();
+            builder.addVertex(x + cos * radius, y + sin * radius, SURFACE_Z);
         }
         return builder.end();
     }

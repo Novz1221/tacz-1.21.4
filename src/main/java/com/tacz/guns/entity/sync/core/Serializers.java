@@ -288,12 +288,12 @@ public class Serializers {
     public static final IDataSerializer<ItemStack> ITEM_STACK = new IDataSerializer<>() {
         @Override
         public void write(FriendlyByteBuf buf, ItemStack value) {
-            buf.writeItem(value);
+            cn.sh1rocu.tacz.util.ItemNbt.writeItem(buf, value);
         }
 
         @Override
         public ItemStack read(FriendlyByteBuf buf) {
-            return buf.readItem();
+            return cn.sh1rocu.tacz.util.ItemNbt.readItem(buf);
         }
 
         @Override

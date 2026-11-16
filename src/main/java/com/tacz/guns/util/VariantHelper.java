@@ -16,7 +16,7 @@ public final class VariantHelper {
         if (attachment.isEmpty() || variantId == null) {
             return;
         }
-        attachment.getOrCreateTag().putString(VARIANT_TAG, variantId.toString());
+        cn.sh1rocu.tacz.util.ItemNbt.getOrCreateTag(attachment).putString(VARIANT_TAG, variantId.toString());
     }
 
     @Nullable
@@ -24,7 +24,7 @@ public final class VariantHelper {
         if (attachment.isEmpty()) {
             return null;
         }
-        CompoundTag tag = attachment.getTag();
+        CompoundTag tag = cn.sh1rocu.tacz.util.ItemNbt.getTag(attachment);
         if (tag == null || !tag.contains(VARIANT_TAG, Tag.TAG_STRING)) {
             return null;
         }
@@ -39,7 +39,7 @@ public final class VariantHelper {
         if (attachment.isEmpty()) {
             return;
         }
-        CompoundTag tag = attachment.getTag();
+        CompoundTag tag = cn.sh1rocu.tacz.util.ItemNbt.getTag(attachment);
         if (tag != null) {
             tag.remove(VARIANT_TAG);
         }

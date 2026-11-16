@@ -1,5 +1,6 @@
 package com.tacz.guns.block.entity;
 
+import net.minecraft.core.HolderLookup;
 import com.mojang.authlib.GameProfile;
 import com.tacz.guns.block.TargetBlock;
 import com.tacz.guns.config.common.OtherConfig;
@@ -68,8 +69,8 @@ public class TargetBlockEntity extends BlockEntity implements Nameable {
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         if (tag.contains(OWNER_TAG, Tag.TAG_COMPOUND)) {
             this.owner = NbtUtils.readGameProfile(tag.getCompound(OWNER_TAG));
         }
@@ -79,8 +80,8 @@ public class TargetBlockEntity extends BlockEntity implements Nameable {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         if (owner != null) {
             tag.put(OWNER_TAG, NbtUtils.writeGameProfile(new CompoundTag(), owner));
         }
@@ -110,8 +111,8 @@ public class TargetBlockEntity extends BlockEntity implements Nameable {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     public void refresh() {

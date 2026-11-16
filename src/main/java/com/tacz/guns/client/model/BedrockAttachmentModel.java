@@ -297,7 +297,7 @@ public class BedrockAttachmentModel extends BedrockAnimatedModel {
             float rad = 80 * scopeViewRadiusModifier;
             LocalPlayer player = Minecraft.getInstance().player;
             if (player != null) {
-                rad *= IClientPlayerGunOperator.fromLocalPlayer(player).getClientAimingProgress(Minecraft.getInstance().getFrameTime());
+                rad *= IClientPlayerGunOperator.fromLocalPlayer(player).getClientAimingProgress(Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false));
             }
             for (int i = 0; i < ocularNodePaths.size(); i++) {
                 if (selective && !isScopeOcular.get(i)) {
@@ -308,12 +308,12 @@ public class BedrockAttachmentModel extends BedrockAnimatedModel {
                 float centerX = ocularCenter.x() * 16 * 90;
                 float centerY = ocularCenter.y() * 16 * 90;
                 builder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
-                builder.vertex(centerX, centerY, -90.0D).color(255, 255, 255, 255).endVertex();
+                builder.addVertex(centerX, centerY, -90.0D).setColor(255, 255, 255, 255);
                 for (int j = 0; j <= 90; j++) {
                     float angle = (float) j * ((float) Math.PI * 2F) / 90.0F;
                     float sin = Mth.sin(angle);
                     float cos = Mth.cos(angle);
-                    builder.vertex(centerX + cos * rad, centerY + sin * rad, -90.0D).color(255, 255, 255, 255).endVertex();
+                    builder.addVertex(centerX + cos * rad, centerY + sin * rad, -90.0D).setColor(255, 255, 255, 255);
                 }
                 BufferUploader.drawWithShader(builder.end());
             }

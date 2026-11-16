@@ -25,7 +25,7 @@ public class ServerMessageGunDraw implements CustomPacketPayload {
     private final ItemStack currentGunItem;
 
     public ServerMessageGunDraw(FriendlyByteBuf buf) {
-        this(buf.readVarInt(), buf.readItem(), buf.readItem());
+        this(buf.readVarInt(), cn.sh1rocu.tacz.util.ItemNbt.readItem(buf), cn.sh1rocu.tacz.util.ItemNbt.readItem(buf));
     }
 
     public ServerMessageGunDraw(int entityId, ItemStack previousGunItem, ItemStack currentGunItem) {
@@ -36,8 +36,8 @@ public class ServerMessageGunDraw implements CustomPacketPayload {
 
     public void write(FriendlyByteBuf buf) {
         buf.writeVarInt(entityId);
-        buf.writeItem(previousGunItem);
-        buf.writeItem(currentGunItem);
+        cn.sh1rocu.tacz.util.ItemNbt.writeItem(buf, previousGunItem);
+        cn.sh1rocu.tacz.util.ItemNbt.writeItem(buf, currentGunItem);
     }
 
     @Override

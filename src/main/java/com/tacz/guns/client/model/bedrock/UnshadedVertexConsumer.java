@@ -77,7 +77,7 @@ public final class UnshadedVertexConsumer implements VertexConsumer {
 
     @Override
     public VertexConsumer vertex(double x, double y, double z) {
-        delegate.vertex(x, y, z);
+        delegate.addVertex(x, y, z);
         return this;
     }
 
@@ -113,7 +113,7 @@ public final class UnshadedVertexConsumer implements VertexConsumer {
 
     @Override
     public void endVertex() {
-        delegate.endVertex();
+        delegate;
     }
 
     @Override

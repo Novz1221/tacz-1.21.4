@@ -1,5 +1,6 @@
 package com.tacz.guns.client.gui.toast;
 
+import net.minecraft.client.renderer.CoreShaders;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
@@ -27,7 +28,7 @@ public class GunLevelUpToast implements Toast {
     @Override
     public Visibility render(@NotNull GuiGraphics gui, ToastComponent toastComponent, long timeSinceLastVisible) {
         // todo 这个类没有实际使用，先不管了
-//        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+//        RenderSystem.setShader(CoreShaders.POSITION_TEX);
 //        RenderSystem.setShaderTexture(0, TEXTURE);
 //        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 //

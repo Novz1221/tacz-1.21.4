@@ -19,7 +19,7 @@ public enum GunTooltipPart {
     }
 
     public static int getHideFlags(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
+        CompoundTag tag = cn.sh1rocu.tacz.util.ItemNbt.getTag(stack);
         if (tag != null && tag.contains("HideFlags", Tag.TAG_ANY_NUMERIC)) {
             return tag.getInt("HideFlags");
         }
@@ -27,6 +27,6 @@ public enum GunTooltipPart {
     }
 
     public static void setHideFlags(ItemStack stack, int mask) {
-        stack.getOrCreateTag().putInt("HideFlags", mask);
+        cn.sh1rocu.tacz.util.ItemNbt.getOrCreateTag(stack).putInt("HideFlags", mask);
     }
 }

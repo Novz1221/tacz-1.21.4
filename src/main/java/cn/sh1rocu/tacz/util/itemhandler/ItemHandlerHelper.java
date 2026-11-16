@@ -30,8 +30,8 @@ public class ItemHandlerHelper {
     }
 
     public static boolean canItemStacksStack(@NotNull ItemStack a, @NotNull ItemStack b) {
-        if (!a.isEmpty() && ItemStack.isSameItem(a, b) && a.hasTag() == b.hasTag()) {
-            return (!a.hasTag() || Objects.equals(a.getTag(), b.getTag())) /*&& a.areCapsCompatible(b)*/;
+        if (!a.isEmpty() && ItemStack.isSameItem(a, b) && cn.sh1rocu.tacz.util.ItemNbt.hasTag(a) == cn.sh1rocu.tacz.util.ItemNbt.hasTag(b)) {
+            return (!cn.sh1rocu.tacz.util.ItemNbt.hasTag(a) || Objects.equals(cn.sh1rocu.tacz.util.ItemNbt.getTag(a), cn.sh1rocu.tacz.util.ItemNbt.getTag(b))) /*&& a.areCapsCompatible(b)*/;
         } else {
             return false;
         }
@@ -41,10 +41,10 @@ public class ItemHandlerHelper {
         if (!a.isEmpty() && !b.isEmpty() && a.getItem() == b.getItem()) {
             if (!a.isStackable()) {
                 return false;
-            } else if (a.hasTag() != b.hasTag()) {
+            } else if (cn.sh1rocu.tacz.util.ItemNbt.hasTag(a) != cn.sh1rocu.tacz.util.ItemNbt.hasTag(b)) {
                 return false;
             } else {
-                return (!a.hasTag() || a.getTag().equals(b.getTag())) /*&& a.areCapsCompatible(b)*/;
+                return (!cn.sh1rocu.tacz.util.ItemNbt.hasTag(a) || cn.sh1rocu.tacz.util.ItemNbt.getTag(a).equals(cn.sh1rocu.tacz.util.ItemNbt.getTag(b))) /*&& a.areCapsCompatible(b)*/;
             }
         } else {
             return false;

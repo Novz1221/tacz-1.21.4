@@ -40,11 +40,11 @@ public final class VirtualOemAttachment {
     }
 
     public static void mark(ItemStack attachmentStack) {
-        attachmentStack.getOrCreateTag().putBoolean(VIRTUAL_OEM_TAG, true);
+        cn.sh1rocu.tacz.util.ItemNbt.getOrCreateTag(attachmentStack).putBoolean(VIRTUAL_OEM_TAG, true);
     }
 
     public static boolean isMarked(ItemStack attachmentStack) {
-        CompoundTag tag = attachmentStack.getTag();
+        CompoundTag tag = cn.sh1rocu.tacz.util.ItemNbt.getTag(attachmentStack);
         return tag != null && tag.contains(VIRTUAL_OEM_TAG, Tag.TAG_BYTE) && tag.getBoolean(VIRTUAL_OEM_TAG);
     }
 }

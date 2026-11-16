@@ -132,7 +132,7 @@ public class AmmoStorageInventory implements IItemHandler {
     private long insertIntoSlot(int slot, ItemStack sample, long amount, boolean simulate) {
         Entry entry = entries[slot];
         int matching = findMatchingSlot(sample);
-        if (amount <= 0 || (entry != null && !ItemStack.isSameItemSameTags(entry.sample, sample))
+        if (amount <= 0 || (entry != null && !ItemStack.isSameItemSameComponents(entry.sample, sample))
                 || (matching >= 0 && matching != slot)) {
             return 0;
         }
@@ -194,7 +194,7 @@ public class AmmoStorageInventory implements IItemHandler {
             for (int slot = end - 1; slot >= 0 && remaining > 0; slot--) {
                 ItemStack existing = target.getItem(slot);
                 if ((existing.isEmpty() != (pass == 1)) || !target.canPlaceItem(slot, sample)
-                        || (!existing.isEmpty() && !ItemStack.isSameItemSameTags(existing, sample))) {
+                        || (!existing.isEmpty() && !ItemStack.isSameItemSameComponents(existing, sample))) {
                     continue;
                 }
                 int limit = Math.min(target.getMaxStackSize(), sample.getMaxStackSize());
@@ -313,7 +313,7 @@ public class AmmoStorageInventory implements IItemHandler {
 
     private int findMatchingSlot(ItemStack sample) {
         for (int slot = 0; slot < entries.length; slot++) {
-            if (entries[slot] != null && ItemStack.isSameItemSameTags(entries[slot].sample, sample)) {
+            if (entries[slot] != null && ItemStack.isSameItemSameComponents(entries[slot].sample, sample)) {
                 return slot;
             }
         }

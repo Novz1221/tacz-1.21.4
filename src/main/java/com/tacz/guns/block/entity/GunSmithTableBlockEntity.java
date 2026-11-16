@@ -1,5 +1,6 @@
 package com.tacz.guns.block.entity;
 
+import net.minecraft.core.HolderLookup;
 import com.tacz.guns.api.DefaultAssets;
 import com.tacz.guns.init.ModBlocks;
 import com.tacz.guns.inventory.GunSmithTableMenu;
@@ -79,8 +80,8 @@ public class GunSmithTableBlockEntity extends BlockEntity implements ExtendedScr
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         if (tag.contains(ID_TAG, Tag.TAG_STRING)) {
             this.id = ResourceLocation.tryParse(tag.getString(ID_TAG));
         } else {
@@ -89,15 +90,15 @@ public class GunSmithTableBlockEntity extends BlockEntity implements ExtendedScr
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         if (id != null) {
             tag.putString(ID_TAG, id.toString());
         }
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

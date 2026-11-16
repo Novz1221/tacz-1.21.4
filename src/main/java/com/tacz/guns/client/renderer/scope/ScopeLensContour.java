@@ -136,12 +136,11 @@ final class ScopeLensContour {
     }
 
     private static void drawQuad() {
-        BufferBuilder builder = Tesselator.getInstance().getBuilder();
-        builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
-        builder.vertex(-1, -1, 0).endVertex();
-        builder.vertex(1, -1, 0).endVertex();
-        builder.vertex(1, 1, 0).endVertex();
-        builder.vertex(-1, 1, 0).endVertex();
+        BufferBuilder builder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
+        builder.addVertex(-1, -1, 0);
+        builder.addVertex(1, -1, 0);
+        builder.addVertex(1, 1, 0);
+        builder.addVertex(-1, 1, 0);
         BufferUploader.drawWithShader(builder.end());
     }
 

@@ -1,5 +1,6 @@
 package com.tacz.guns.client.gui.overlay;
 
+import net.minecraft.client.renderer.CoreShaders;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.tacz.guns.GunMod;
@@ -145,7 +146,7 @@ public class GunHudOverlay {
 
         // 图标渲染
         RenderSystem.enableDepthTest();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(CoreShaders.POSITION_TEX);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
 

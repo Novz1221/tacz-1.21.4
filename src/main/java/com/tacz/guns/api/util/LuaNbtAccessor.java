@@ -13,7 +13,7 @@ import org.jetbrains.annotations.ApiStatus;
 public record LuaNbtAccessor(CompoundTag nbt) {
 
     public static LuaNbtAccessor from(ItemStack stack) {
-        return new LuaNbtAccessor(stack.getTag());
+        return new LuaNbtAccessor(cn.sh1rocu.tacz.util.ItemNbt.getTag(stack));
     }
 
     public static LuaNbtAccessor from(CompoundTag nbt) {
