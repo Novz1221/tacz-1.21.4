@@ -1,7 +1,6 @@
 package com.tacz.guns;
 
 import com.tacz.guns.api.resource.ResourceManager;
-import com.tacz.guns.compat.kubejs.TimelessKubeJSPlugin;
 import com.tacz.guns.init.*;
 import com.tacz.guns.resource.GunPackLoader;
 import com.tacz.guns.resource.modifier.AttachmentPropertyManager;
@@ -35,9 +34,6 @@ public class GunMod {
         ModParticles.init();
         ModAttributes.init();
         ModPainting.init();
-        if (FabricLoader.getInstance().isModLoaded("kubejs")) {
-            TimelessKubeJSPlugin.onItemRegister();
-        }
 
         registerDefaultExtraGunPack();
         AttachmentPropertyManager.registerModifier();
