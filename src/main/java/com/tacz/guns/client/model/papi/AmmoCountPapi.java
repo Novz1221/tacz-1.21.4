@@ -1,0 +1,41 @@
+package com.tacz.guns.client.model.papi;
+
+import com.tacz.guns.api.TimelessAPI;
+import com.tacz.guns.api.item.IGun;
+import com.tacz.guns.client.gameplay.ClientAmmoCount;
+import com.tacz.guns.client.resource.index.ClientGunIndex;
+import com.tacz.guns.resource.pojo.data.gun.Bolt;
+import com.tacz.guns.resource.pojo.data.gun.GunData;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.function.Function;
+
+public class AmmoCountPapi implements Function<ItemStack, String> {
+    public static final String NAME = "ammo_count";
+
+    @Override
+    public String apply(ItemStack stack) {
+        IGun iGun = IGun.getIGunOrNull(stack);
+        if (iGun != null) {
+            ResourceLocation gunId = iGun.getGunId(stack);
+            ClientGunIndex gunIndex = TimelessAPI.getClientGunIndex(gunId).orElse(null);
+            if (gunIndex == null) {
+                return "";
+            }
+            GunData gunData = gunIndex.getGunData();
+            if (gunData == null) {
+                return "";
+            }
+            LocalPlayer player = Minecraft.getInstance().player;
+            int ammoCount = iGun.useInventoryAmmo(stack) && player != null && player.getMainHandItem() == stack
+                    ? ClientAmmoCount.getCached(player, stack, iGun)
+                    : iGun.getCurrentAmmoCount(stack);
+            ammoCount += iGun.hasBulletInBarrel(stack) && gunData.getBolt() != Bolt.OPEN_BOLT ? 1 : 0;
+            return "" + ammoCount;
+        }
+        return "";
+    }
+}
