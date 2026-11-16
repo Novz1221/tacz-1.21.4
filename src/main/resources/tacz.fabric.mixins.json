@@ -34,7 +34,6 @@
     "common.itemhandler.AbstractHorseMixin",
     "common.itemhandler.LivingEntityMixin",
     "common.itemhandler.PlayerMixin",
-    "compat.carryon.ConfigLoaderMixin",
     "compat.tweakeroo.ItemMixin"
   ],
   "client": [

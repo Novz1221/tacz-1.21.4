@@ -1,6 +1,5 @@
 package com.tacz.guns.init;
 
-import com.tacz.guns.compat.carryon.BlackList;
 import com.tacz.guns.compat.iris.IrisCompat;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -11,7 +10,6 @@ public class CompatRegistry {
 
     public static void onEnqueue() {
         checkModLoad(IRIS, IrisCompat::initCompat);
-        checkModLoad(CARRY_ON_ID, BlackList::addBlackList);
     }
 
     public static void checkModLoad(String modId, Runnable runnable) {

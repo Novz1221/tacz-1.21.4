@@ -5,7 +5,7 @@ import com.tacz.guns.config.util.AmmoBlockConfigRead;
 import com.tacz.guns.config.util.GunPegboardItemConfigRead;
 import com.tacz.guns.config.util.HeadShotAABBConfigRead;
 import com.tacz.guns.config.util.InteractKeyConfigRead;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.fml.config.ModConfig;
 
 public class LoadingConfigEvent {
     private static final String CONFIG_NAME = "tacz-server.toml";

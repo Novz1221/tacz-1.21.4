@@ -2,9 +2,9 @@ package com.tacz.guns.config;
 
 import com.electronwill.nightconfig.core.CommentedConfig;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import fuzs.forgeconfigapiport.api.config.v2.ModConfigEvents;
-import net.minecraftforge.fml.config.IConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeModConfigEvents;
+import net.neoforged.fml.config.IConfigSpec;
+import net.neoforged.fml.config.ModConfig;
 
 import java.nio.file.Path;
 
@@ -27,7 +27,7 @@ public class PreLoadModConfig extends ModConfig {
     }
 
     public void fireEvent(final ModConfig config) {
-        ModConfigEvents.loading(modId).invoker().onModConfigLoading(config);
+        NeoForgeModConfigEvents.loading(modId).invoker().onModConfigLoading(config);
     }
 
     public void save() {

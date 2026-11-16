@@ -2,25 +2,25 @@ package com.tacz.guns.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.tacz.guns.GunMod;
-import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ConfigTracker;
-import net.minecraftforge.fml.config.ModConfig;
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.fml.config.ConfigTracker;
+import net.neoforged.fml.config.ModConfig;
 
 import java.nio.file.Path;
 
 public class PreLoadConfig {
     public static void init() {
-        ForgeConfigRegistry.INSTANCE.register(GunMod.MOD_ID, ModConfig.Type.COMMON, spec, "tacz-pre.toml");
+        NeoForgeConfigRegistry.INSTANCE.register(GunMod.MOD_ID, ModConfig.Type.COMMON, spec, "tacz-pre.toml");
 
     }
 
-    private static ForgeConfigSpec spec;
+    private static ModConfigSpec spec;
     private static PreLoadModConfig loadedConfig;
-    public static ForgeConfigSpec.BooleanValue override;
+    public static ModConfigSpec.BooleanValue override;
 
     static {
-        ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+        ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
         builder.push("gunpack");
         builder.comment("Enable to preserve local default gun pack edits.",
                 "When disabled, changes to the TACZ version or bundled resources trigger replacement at startup.",

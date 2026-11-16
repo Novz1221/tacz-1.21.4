@@ -21,9 +21,6 @@
     "cardinal-components-entity": [
       "com.tacz.guns.init.CapabilityRegistry"
     ],
-    "modmenu": [
-      "cn.sh1rocu.tacz.compat.modmenu.ModMenuApiImpl"
-    ],
     "jei_mod_plugin": [
       "com.tacz.guns.compat.jrei.jei.GunModPlugin"
     ],
