@@ -1,5 +1,6 @@
 package com.tacz.guns.client.renderer.scope;
 
+import com.mojang.blaze3d.ProjectionType;
 import cn.sh1rocu.tacz.api.mixin.RenderTargetStencil;
 import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -199,7 +200,7 @@ public final class ScopeLensRenderer {
                             GL11.GL_TEXTURE_2D, main.getColorTextureId(), 0);
                     try {
                         RenderSystem.viewport(0, 0, main.width, main.height);
-                        RenderSystem.setProjectionMatrix(lens.projection, VertexSorting.DISTANCE_TO_ORIGIN);
+                        RenderSystem.setProjectionMatrix(lens.projection, ProjectionType.PERSPECTIVE);
                         modelView.setIdentity();
                         modelView.mulPoseMatrix(lens.modelView);
                         RenderSystem.applyModelViewMatrix();
@@ -413,8 +414,8 @@ public final class ScopeLensRenderer {
         }
 
         @Override
-        public VertexConsumer vertex(double x, double y, double z) {
-            point.set((float) x, (float) y, (float) z, 1).mul(projection);
+        public VertexConsumer addVertex(float x, float y, float z) {
+            point.set(x, y, z, 1).mul(projection);
             if (point.w <= 0.0001f || !Float.isFinite(point.w)) {
                 behindCamera = true;
                 return this;
@@ -429,41 +430,32 @@ public final class ScopeLensRenderer {
         }
 
         @Override
-        public VertexConsumer color(int r, int g, int b, int a) {
+        public VertexConsumer setColor(int r, int g, int b, int a) {
             return this;
         }
 
         @Override
-        public VertexConsumer uv(float u, float v) {
+        public VertexConsumer setUv(float u, float v) {
             return this;
         }
 
         @Override
-        public VertexConsumer overlayCoords(int u, int v) {
+        public VertexConsumer setUv1(int u, int v) {
             return this;
         }
 
         @Override
-        public VertexConsumer uv2(int u, int v) {
+        public VertexConsumer setUv2(int u, int v) {
             return this;
         }
 
         @Override
-        public VertexConsumer normal(float x, float y, float z) {
+        public VertexConsumer setNormal(float x, float y, float z) {
             return this;
         }
 
-        @Override
-        public void endVertex() {
-        }
 
-        @Override
-        public void defaultColor(int r, int g, int b, int a) {
-        }
 
-        @Override
-        public void unsetDefaultColor() {
-        }
     }
 
     /**

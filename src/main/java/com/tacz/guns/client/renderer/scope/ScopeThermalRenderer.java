@@ -1,5 +1,8 @@
 package com.tacz.guns.client.renderer.scope;
 
+import com.mojang.blaze3d.ProjectionType;
+import com.mojang.blaze3d.vertex.MeshData;
+import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -41,7 +44,7 @@ public class ScopeThermalRenderer {
     // One pixel of depth slope covers subpixel TAA jitter; units cover depth rounding.
     static final float DEPTH_BIAS_FACTOR = -1.0f;
     static final float DEPTH_BIAS_UNITS = -2.0f;
-    private static final Map<RenderType, BufferBuilder> BUILDERS = new LinkedHashMap<>();
+    private static final Map<RenderType, ByteBufferBuilder> BUILDERS = new LinkedHashMap<>();
     private static final Map<RenderType, BufferBuilder> ACTIVE = new LinkedHashMap<>();
     private static TextureTarget target;
     private static ShaderInstance shader;
@@ -70,7 +73,7 @@ public class ScopeThermalRenderer {
     }
 
     public static void beginFrame() {
-        for (BufferBuilder builder : ACTIVE.values()) builder.end().release();
+        for (BufferBuilder builder : ACTIVE.values()) { MeshData mesh = builder.build(); if (mesh != null) mesh.close(); }
         ACTIVE.clear();
         projection = null;
         modelView = null;
@@ -159,7 +162,7 @@ public class ScopeThermalRenderer {
                 // Includes mismatched sample counts/layered attachments: use the optical fallback.
                 if (GL30.glCheckFramebufferStatus(GL30.GL_DRAW_FRAMEBUFFER) != GL30.GL_FRAMEBUFFER_COMPLETE) return;
                 if (projection != null) {
-                    RenderSystem.setProjectionMatrix(projection, VertexSorting.DISTANCE_TO_ORIGIN);
+                    RenderSystem.setProjectionMatrix(projection, ProjectionType.PERSPECTIVE);
                     view.setIdentity();
                     view.mulPoseMatrix(modelView);
                     RenderSystem.applyModelViewMatrix();
@@ -168,8 +171,9 @@ public class ScopeThermalRenderer {
                 while (batches.hasNext()) {
                     var entry = batches.next();
                     RenderType type = entry.getKey();
-                    BufferBuilder.RenderedBuffer vertices = entry.getValue().end();
+                    MeshData vertices = entry.getValue().build();
                     batches.remove();
+                    if (vertices == null) continue;
                     try {
                         type.setupRenderState();
                         target.bindWrite(true);
@@ -183,11 +187,11 @@ public class ScopeThermalRenderer {
                         RenderSystem.polygonOffset(DEPTH_BIAS_FACTOR, DEPTH_BIAS_UNITS);
                         RenderSystem.disableBlend();
                         RenderSystem.colorMask(true, true, true, true);
-                        BufferBuilder.RenderedBuffer submitted = vertices;
+                        MeshData submitted = vertices;
                         vertices = null;
                         BufferUploader.drawWithShader(submitted);
                     } finally {
-                        if (vertices != null) vertices.release();
+                        if (vertices != null) vertices.close();
                         type.clearRenderState();
                     }
                 }
@@ -195,7 +199,7 @@ public class ScopeThermalRenderer {
             } finally {
                 target.bindWrite(false);
                 attachSceneDepth(depthType, 0, 0);
-                for (BufferBuilder builder : ACTIVE.values()) builder.end().release();
+                for (BufferBuilder builder : ACTIVE.values()) { MeshData mesh = builder.build(); if (mesh != null) mesh.close(); }
                 ACTIVE.clear();
                 view.popPose();
                 RenderSystem.applyModelViewMatrix();
@@ -238,11 +242,9 @@ public class ScopeThermalRenderer {
                 modelView = new Matrix4f(RenderSystem.getModelViewMatrix());
             }
             // Keep the material state too: armor's view offset must match the scene depth.
-            BufferBuilder builder = ACTIVE.computeIfAbsent(type, key -> {
-                BufferBuilder buffer = BUILDERS.computeIfAbsent(key, unused -> new BufferBuilder(4096));
-                buffer.begin(key.mode(), DefaultVertexFormat.POSITION_COLOR_TEX);
-                return buffer;
-            });
+            BufferBuilder builder = ACTIVE.computeIfAbsent(type, key -> new BufferBuilder(
+                    BUILDERS.computeIfAbsent(key, unused -> new ByteBufferBuilder(4096)),
+                    key.mode(), DefaultVertexFormat.POSITION_COLOR_TEX));
             return VertexMultiConsumer.create(original, new MaskVertices(builder));
         }
     }
@@ -250,57 +252,37 @@ public class ScopeThermalRenderer {
     /** Equivalent to vanilla's outline generator: keep texture cutouts, ignore lighting and hurt tint. */
     public static final class MaskVertices implements VertexConsumer {
         private final VertexConsumer output;
-        private double x, y, z;
-        private float u, v;
+        private float x, y, z;
 
         MaskVertices(VertexConsumer output) {
             this.output = output;
         }
 
         @Override
-        public VertexConsumer vertex(double x, double y, double z) {
+        public VertexConsumer addVertex(float x, float y, float z) {
             this.x = x;
             this.y = y;
             this.z = z;
             return this;
         }
 
+        /** The mask only needs position + uv, so the output vertex is emitted once the uv is known. */
         @Override
-        public VertexConsumer uv(float u, float v) {
-            this.u = u; this.v = v; return this;
-        }
-
-        @Override
-        public VertexConsumer color(int r, int g, int b, int a) {
-            return this;
-        }
-
-        @Override
-        public VertexConsumer overlayCoords(int u, int v) {
-            return this;
-        }
-
-        @Override
-        public VertexConsumer uv2(int u, int v) {
-            return this;
-        }
-
-        @Override
-        public VertexConsumer normal(float x, float y, float z) {
-            return this;
-        }
-
-        @Override
-        public void defaultColor(int r, int g, int b, int a) { }
-
-        @Override
-        public void unsetDefaultColor() {
-
-        }
-
-        @Override
-        public void endVertex() {
+        public VertexConsumer setUv(float u, float v) {
             output.addVertex(x, y, z).setColor(255, 255, 255, 255).setUv(u, v);
+            return this;
         }
+
+        @Override
+        public VertexConsumer setColor(int r, int g, int b, int a) { return this; }
+
+        @Override
+        public VertexConsumer setUv1(int u, int v) { return this; }
+
+        @Override
+        public VertexConsumer setUv2(int u, int v) { return this; }
+
+        @Override
+        public VertexConsumer setNormal(float x, float y, float z) { return this; }
     }
 }
