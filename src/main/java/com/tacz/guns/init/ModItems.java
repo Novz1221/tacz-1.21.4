@@ -53,6 +53,6 @@ public class ModItems {
     public static Item TARGET_MINECART = register("target_minecart", new TargetMinecartItem());
 
     private static <T extends Item> T register(String name, T item) {
-        return Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(GunMod.MOD_ID, name), item);
+        return Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, name), item);
     }
 }

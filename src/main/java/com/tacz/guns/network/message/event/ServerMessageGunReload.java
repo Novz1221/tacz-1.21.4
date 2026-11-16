@@ -17,7 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 public class ServerMessageGunReload implements FabricPacket {
-    public static final PacketType<ServerMessageGunReload> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_gun_reload"), ServerMessageGunReload::new);
+    public static final PacketType<ServerMessageGunReload> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_gun_reload"), ServerMessageGunReload::new);
 
     private final int shooterId;
     private final ItemStack gunItemStack;

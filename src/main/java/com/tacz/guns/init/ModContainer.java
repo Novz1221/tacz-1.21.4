@@ -20,6 +20,6 @@ public class ModContainer {
             new ExtendedScreenHandlerType<>((windowId, inv, data) -> new AmmoStorageMenu(windowId, inv)));
 
     private static <T extends AbstractContainerMenu> MenuType<T> register(String name, MenuType<T> type) {
-        return Registry.register(BuiltInRegistries.MENU, new ResourceLocation(GunMod.MOD_ID, name), type);
+        return Registry.register(BuiltInRegistries.MENU, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, name), type);
     }
 }

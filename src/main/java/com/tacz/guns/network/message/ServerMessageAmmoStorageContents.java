@@ -20,7 +20,7 @@ import java.util.List;
 
 public record ServerMessageAmmoStorageContents(int containerId, int capacityStacks, long usedStacks,
                                                List<AmmoStorageEntry> entries) implements FabricPacket {
-    public static final PacketType<ServerMessageAmmoStorageContents> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_ammo_storage_contents"),
+    public static final PacketType<ServerMessageAmmoStorageContents> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_ammo_storage_contents"),
             ServerMessageAmmoStorageContents::decode);
 
     public ServerMessageAmmoStorageContents {

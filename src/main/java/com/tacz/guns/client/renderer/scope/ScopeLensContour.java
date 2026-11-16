@@ -36,16 +36,16 @@ final class ScopeLensContour {
         CoreShaderRegistrationCallback.EVENT.register(ctx -> {
             try {
                 ctx.register(
-                        new ResourceLocation(GunMod.MOD_ID, "scope_lens_mask"),
+                        ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "scope_lens_mask"),
                         DefaultVertexFormat.POSITION,
                         instance -> maskShader = instance
                 );
                 ctx.register(
-                        new ResourceLocation(GunMod.MOD_ID, "scope_lens_seed"), DefaultVertexFormat.POSITION,
+                        ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "scope_lens_seed"), DefaultVertexFormat.POSITION,
                         instance -> seedShader = instance
                 );
                 ctx.register(
-                        new ResourceLocation(GunMod.MOD_ID, "scope_lens_distance"), DefaultVertexFormat.POSITION,
+                        ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "scope_lens_distance"), DefaultVertexFormat.POSITION,
                         instance -> distanceShader = instance
                 );
             } catch (IOException exception) {

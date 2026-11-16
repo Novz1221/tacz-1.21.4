@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class ServerMessageLevelUp implements FabricPacket {
-    public static final PacketType<ServerMessageLevelUp> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_levelup"), ServerMessageLevelUp::new);
+    public static final PacketType<ServerMessageLevelUp> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_levelup"), ServerMessageLevelUp::new);
 
     private final ItemStack gun;
     private final int level;

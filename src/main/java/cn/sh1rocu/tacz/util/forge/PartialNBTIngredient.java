@@ -76,7 +76,7 @@ public class PartialNBTIngredient implements CustomIngredient {
         return Serializer.INSTANCE;
     }
 
-    public static final ResourceLocation ID = new ResourceLocation("forge", "partial_nbt");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("forge", "partial_nbt");
 
     public static class Serializer implements CustomIngredientSerializer<PartialNBTIngredient> {
         public static final Serializer INSTANCE = new Serializer();

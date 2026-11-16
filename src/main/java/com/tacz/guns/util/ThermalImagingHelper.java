@@ -11,9 +11,9 @@ import net.minecraft.world.entity.LivingEntity;
 /** Entity-type rules shared by thermal imaging; tag membership is read live after data-pack reloads. */
 public final class ThermalImagingHelper {
     public static final TagKey<EntityType<?>> BLACKLIST = TagKey.create(Registries.ENTITY_TYPE,
-            new ResourceLocation(GunMod.MOD_ID, "thermal_imaging/blacklist"));
+            ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "thermal_imaging/blacklist"));
     public static final TagKey<EntityType<?>> WHITELIST = TagKey.create(Registries.ENTITY_TYPE,
-            new ResourceLocation(GunMod.MOD_ID, "thermal_imaging/whitelist"));
+            ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "thermal_imaging/whitelist"));
 
     private ThermalImagingHelper() {
     }

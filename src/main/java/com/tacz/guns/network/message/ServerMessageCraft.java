@@ -13,7 +13,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
 public class ServerMessageCraft implements FabricPacket {
-    public static final PacketType<ServerMessageCraft> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_craft"), ServerMessageCraft::new);
+    public static final PacketType<ServerMessageCraft> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_craft"), ServerMessageCraft::new);
 
     private final int menuId;
 

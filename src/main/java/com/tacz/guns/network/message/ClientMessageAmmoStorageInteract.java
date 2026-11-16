@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class ClientMessageAmmoStorageInteract implements FabricPacket {
-    public static final PacketType<ClientMessageAmmoStorageInteract> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_ammo_storage_interact"), ClientMessageAmmoStorageInteract::new);
+    public static final PacketType<ClientMessageAmmoStorageInteract> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_ammo_storage_interact"), ClientMessageAmmoStorageInteract::new);
 
     private static final String LAST_PICKUP_TAG = "TacAmmoStorageLastPickup";
     private static final String LAST_ACCUMULATE_TAG = "TacAmmoStorageLastAccumulate";

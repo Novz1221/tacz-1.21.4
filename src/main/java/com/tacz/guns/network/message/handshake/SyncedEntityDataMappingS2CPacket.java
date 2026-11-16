@@ -19,7 +19,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class SyncedEntityDataMappingS2CPacket implements IHandshakeMessage {
-    public static final PacketType<SyncedEntityDataMappingS2CPacket> TYPE = PacketType.create(new ResourceLocation("tacz", "synced_entity_data_mapping"), SyncedEntityDataMappingS2CPacket::new);
+    public static final PacketType<SyncedEntityDataMappingS2CPacket> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath("tacz", "synced_entity_data_mapping"), SyncedEntityDataMappingS2CPacket::new);
     private static final Marker HANDSHAKE = MarkerFactory.getMarker("TACZ_HANDSHAKE");
     private Map<ResourceLocation, List<Pair<ResourceLocation, Integer>>> keyMap;
 

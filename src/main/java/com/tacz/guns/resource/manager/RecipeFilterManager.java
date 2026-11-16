@@ -99,7 +99,7 @@ public class RecipeFilterManager extends SimplePreparableReloadListener<Map<Reso
         return filters.get(id);
     }
 
-    public static final ResourceLocation ID = new ResourceLocation(GunMod.MOD_ID, "recipe_filter_manager");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "recipe_filter_manager");
 
     @Override
     public ResourceLocation getFabricId() {

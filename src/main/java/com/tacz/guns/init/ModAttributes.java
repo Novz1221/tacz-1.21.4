@@ -19,6 +19,6 @@ public class ModAttributes {
 //             new RangedAttribute("attribute.name.tacz.weight_capacity", 0.0D, -1024D, 1024.0D).setSyncable(true));
 
     private static Attribute register(String name, Attribute attribute) {
-        return Registry.register(BuiltInRegistries.ATTRIBUTE, new ResourceLocation(GunMod.MOD_ID, name), attribute);
+        return Registry.register(BuiltInRegistries.ATTRIBUTE, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, name), attribute);
     }
 }

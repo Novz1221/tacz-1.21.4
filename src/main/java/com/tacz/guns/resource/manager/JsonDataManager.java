@@ -45,7 +45,7 @@ public class JsonDataManager<T> extends SimplePreparableReloadListener<Map<Resou
         this.gson = pGson;
         this.dataClass = dataClass;
         this.marker = MarkerFactory.getMarker(marker);
-        this.ID = new ResourceLocation(GunMod.MOD_ID, marker.toLowerCase(Locale.ROOT));
+        this.ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, marker.toLowerCase(Locale.ROOT));
         this.fileToIdConverter = fileToIdConverter;
     }
 

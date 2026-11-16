@@ -51,7 +51,7 @@ public abstract class IngredientMixin {
         JsonObject obj = json.getAsJsonObject();
 
         if (obj.has("type")) {
-            ResourceLocation id = new ResourceLocation(GsonHelper.getAsString(obj, "type"));
+            ResourceLocation id = ResourceLocation.parse(GsonHelper.getAsString(obj, "type"));
             CustomIngredientSerializer<?> serializer = null;
 
             if (id.equals(StrictNBTIngredient.ID)) serializer = StrictNBTIngredient.Serializer.INSTANCE;
@@ -96,7 +96,7 @@ public abstract class IngredientMixin {
         if (element != null && !element.isJsonNull() && element.isJsonObject()) {
             JsonObject obj = element.getAsJsonObject();
             if (obj.has("type")) {
-                ResourceLocation id = new ResourceLocation(GsonHelper.getAsString(obj, "type"));
+                ResourceLocation id = ResourceLocation.parse(GsonHelper.getAsString(obj, "type"));
                 CustomIngredientSerializer serializer = null;
 
                 if (id.equals(StrictNBTIngredient.ID)) serializer = StrictNBTIngredient.Serializer.INSTANCE;

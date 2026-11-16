@@ -16,7 +16,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
 public class ClientMessagePlayerUnloadGun implements FabricPacket {
-    public static final PacketType<ClientMessagePlayerUnloadGun> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_player_unload"), ClientMessagePlayerUnloadGun::decode);
+    public static final PacketType<ClientMessagePlayerUnloadGun> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_unload"), ClientMessagePlayerUnloadGun::decode);
 
     private final int slot;
     private final ResourceLocation gunId;

@@ -125,7 +125,7 @@ public class ClientSetupEvent {
 
         var clientRegistry = ResourceManagerHelper.get(PackType.CLIENT_RESOURCES);
         clientRegistry.registerReloadListener(new IdentifiableResourceReloadListener() {
-            static final ResourceLocation ID = new ResourceLocation(GunMod.MOD_ID, "sound_manager");
+            static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "sound_manager");
 
             @Override
             public ResourceLocation getFabricId() {

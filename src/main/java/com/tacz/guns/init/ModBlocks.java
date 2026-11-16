@@ -39,13 +39,13 @@ public class ModBlocks {
     public static BlockEntityType<AmmoStorageBlockEntity> AMMO_STORAGE_BE = registerBlockEntity("ammo_storage", AmmoStorageBlockEntity.TYPE);
     public static BlockEntityType<GunDisplayCaseBlockEntity> GUN_DISPLAY_CASE_BE = registerBlockEntity("gun_display_case", GunDisplayCaseBlockEntity.TYPE);
 
-    public static final TagKey<Block> BULLET_IGNORE_BLOCKS = TagKey.create(Registries.BLOCK, new ResourceLocation(GunMod.MOD_ID, "bullet_ignore"));
+    public static final TagKey<Block> BULLET_IGNORE_BLOCKS = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "bullet_ignore"));
 
     private static Block registerBlock(String name, Block block) {
-        return Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(GunMod.MOD_ID, name), block);
+        return Registry.register(BuiltInRegistries.BLOCK, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, name), block);
     }
 
     private static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(String name, BlockEntityType<T> blockEntity) {
-        return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, new ResourceLocation(GunMod.MOD_ID, name), blockEntity);
+        return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, name), blockEntity);
     }
 }

@@ -17,7 +17,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
 public class ClientMessageUnloadAttachment implements FabricPacket {
-    public static final PacketType<ClientMessageUnloadAttachment> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_unload_attachment"), ClientMessageUnloadAttachment::new);
+    public static final PacketType<ClientMessageUnloadAttachment> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_unload_attachment"), ClientMessageUnloadAttachment::new);
 
     private final int gunSlotIndex;
     private final AttachmentType attachmentType;

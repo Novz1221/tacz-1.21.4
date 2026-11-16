@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public class ClientMessageSetSlotAdapter implements FabricPacket {
-    public static final PacketType<ClientMessageSetSlotAdapter> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_set_slot_adapter"), ClientMessageSetSlotAdapter::new);
+    public static final PacketType<ClientMessageSetSlotAdapter> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_set_slot_adapter"), ClientMessageSetSlotAdapter::new);
 
     private final int gunSlotIndex;
     private final AttachmentType attachmentType;

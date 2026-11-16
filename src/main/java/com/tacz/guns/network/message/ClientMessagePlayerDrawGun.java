@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 
 public class ClientMessagePlayerDrawGun implements FabricPacket {
-    public static final PacketType<ClientMessagePlayerDrawGun> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_player_draw_gun"), ClientMessagePlayerDrawGun::new);
+    public static final PacketType<ClientMessagePlayerDrawGun> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_draw_gun"), ClientMessagePlayerDrawGun::new);
 
     public ClientMessagePlayerDrawGun() {
 

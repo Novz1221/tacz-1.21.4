@@ -18,6 +18,6 @@ public class ModEntities {
     public static EntityType<TargetMinecart> TARGET_MINECART = register("target_minecart", TargetMinecart.TYPE);
 
     private static <T extends Entity> EntityType<T> register(String name, EntityType<T> type) {
-        return Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(GunMod.MOD_ID, name), type);
+        return Registry.register(BuiltInRegistries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, name), type);
     }
 }

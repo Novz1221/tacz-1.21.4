@@ -99,7 +99,7 @@ public class GunDisplayInstance {
     private LuaAnimationStateMachine<GunAnimationStateContext> animationStateMachine;
     private @Nullable LuaTable stateMachineParam;
 
-    private @Nullable ResourceLocation playerAnimator3rd = new ResourceLocation(GunMod.MOD_ID, "rifle_default.player_animation");
+    private @Nullable ResourceLocation playerAnimator3rd = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "rifle_default.player_animation");
     private boolean is3rdFixedHand = false;
     private Map<String, SoundData> sounds = Maps.newHashMap();
     private GunTransform transform = GunTransform.getDefault();
@@ -399,7 +399,7 @@ public class GunDisplayInstance {
     // 基础数据直接读
     private void initBase(GunDisplay display) {
         ResourceLocation presetId = display.getAdsPreset();
-        ResourceLocation legacyId = new ResourceLocation(GunMod.MOD_ID, "legacy");
+        ResourceLocation legacyId = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "legacy");
         adsPreset = ClientAssetsManager.INSTANCE.getAdsPreset(presetId == null ? legacyId : presetId);
         if (adsPreset == null && presetId != null) {
             GunMod.LOGGER.warn("Missing ADS preset {} referenced by gun display {}; falling back to {}", presetId, displayId, legacyId);
@@ -563,7 +563,7 @@ public class GunDisplayInstance {
         ResourceLocation stateMachineLocation = display.getStateMachineLocation();
         if (stateMachineLocation == null) {
             // 如果没指定状态机，则使用默认状态机
-            stateMachineLocation = new ResourceLocation("tacz", "default_state_machine");
+            stateMachineLocation = ResourceLocation.fromNamespaceAndPath("tacz", "default_state_machine");
         }
         LuaTable script = ClientAssetsManager.INSTANCE.getScript(stateMachineLocation);
         if (script != null) {
@@ -591,14 +591,14 @@ public class GunDisplayInstance {
             return;
         }
         // 部分音效为默认音效，不存在则需要添加默认音效
-        soundMaps.putIfAbsent(SoundManager.DRY_FIRE_SOUND, SoundData.of(new ResourceLocation(GunMod.MOD_ID, SoundManager.DRY_FIRE_SOUND)));
-        soundMaps.putIfAbsent(SoundManager.FIRE_SELECT, SoundData.of(new ResourceLocation(GunMod.MOD_ID, SoundManager.FIRE_SELECT)));
-        soundMaps.putIfAbsent(SoundManager.HEAD_HIT_SOUND, SoundData.of(new ResourceLocation(GunMod.MOD_ID, SoundManager.HEAD_HIT_SOUND)));
-        soundMaps.putIfAbsent(SoundManager.FLESH_HIT_SOUND, SoundData.of(new ResourceLocation(GunMod.MOD_ID, SoundManager.FLESH_HIT_SOUND)));
-        soundMaps.putIfAbsent(SoundManager.KILL_SOUND, SoundData.of(new ResourceLocation(GunMod.MOD_ID, SoundManager.KILL_SOUND)));
-        soundMaps.putIfAbsent(SoundManager.MELEE_BAYONET, SoundData.of(new ResourceLocation(GunMod.MOD_ID, "melee_bayonet/melee_bayonet_01")));
-        soundMaps.putIfAbsent(SoundManager.MELEE_STOCK, SoundData.of(new ResourceLocation(GunMod.MOD_ID, "melee_stock/melee_stock_01")));
-        soundMaps.putIfAbsent(SoundManager.MELEE_PUSH, SoundData.of(new ResourceLocation(GunMod.MOD_ID, "melee_stock/melee_stock_02")));
+        soundMaps.putIfAbsent(SoundManager.DRY_FIRE_SOUND, SoundData.of(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, SoundManager.DRY_FIRE_SOUND)));
+        soundMaps.putIfAbsent(SoundManager.FIRE_SELECT, SoundData.of(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, SoundManager.FIRE_SELECT)));
+        soundMaps.putIfAbsent(SoundManager.HEAD_HIT_SOUND, SoundData.of(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, SoundManager.HEAD_HIT_SOUND)));
+        soundMaps.putIfAbsent(SoundManager.FLESH_HIT_SOUND, SoundData.of(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, SoundManager.FLESH_HIT_SOUND)));
+        soundMaps.putIfAbsent(SoundManager.KILL_SOUND, SoundData.of(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, SoundManager.KILL_SOUND)));
+        soundMaps.putIfAbsent(SoundManager.MELEE_BAYONET, SoundData.of(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "melee_bayonet/melee_bayonet_01")));
+        soundMaps.putIfAbsent(SoundManager.MELEE_STOCK, SoundData.of(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "melee_stock/melee_stock_01")));
+        soundMaps.putIfAbsent(SoundManager.MELEE_PUSH, SoundData.of(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "melee_stock/melee_stock_02")));
         sounds.putAll(soundMaps);
     }
 

@@ -31,7 +31,7 @@ import java.util.*;
 @Environment(EnvType.CLIENT)
 public class SoundPlayManager {
     private static final FileToIdConverter TACZ_SOUND_LISTER = new FileToIdConverter("tacz_sounds", ".ogg");
-    private static final SoundData DEFAULT_UNLOAD_SOUND = SoundData.of(new ResourceLocation(GunMod.MOD_ID,
+    private static final SoundData DEFAULT_UNLOAD_SOUND = SoundData.of(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID,
             "attachments/attachment_general_uninstall"));
 
     private static final Map<SoundKey, ArrayDeque<TrackedGunSound>> TRACKED_GUN_SOUNDS = new HashMap<>();

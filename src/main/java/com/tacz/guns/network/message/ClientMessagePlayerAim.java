@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 public class ClientMessagePlayerAim implements FabricPacket {
-    public static final PacketType<ClientMessagePlayerAim> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_player_aim"), ClientMessagePlayerAim::new);
+    public static final PacketType<ClientMessagePlayerAim> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_aim"), ClientMessagePlayerAim::new);
 
     private final boolean isAim;
 

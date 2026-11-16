@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AmmoStorageScreen extends AbstractContainerScreen<AmmoStorageMenu> {
-    private static final ResourceLocation CONTAINER_LOCATION = new ResourceLocation("textures/gui/container/generic_54.png");
+    private static final ResourceLocation CONTAINER_LOCATION = ResourceLocation.parse("textures/gui/container/generic_54.png");
     private static final int CONTAINER_ROWS = AmmoStorageMenu.STORAGE_ROWS;
     private int virtualClickButton = -1;
 

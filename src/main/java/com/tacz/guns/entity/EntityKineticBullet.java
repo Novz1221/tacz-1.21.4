@@ -86,9 +86,9 @@ public class EntityKineticBullet extends Projectile implements IEntityAdditional
             .dimensions(EntityDimensions.scalable(0.0625F, 0.0625F))
             .trackRangeChunks(5).trackedUpdateRate(5)
             .forceTrackedVelocityUpdates(false).build();
-    public static final TagKey<EntityType<?>> USE_MAGIC_DAMAGE_ON = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("tacz:use_magic_damage_on"));
-    public static final TagKey<EntityType<?>> USE_VOID_DAMAGE_ON = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("tacz:use_void_damage_on"));
-    public static final TagKey<EntityType<?>> PRETEND_MELEE_DAMAGE_ON = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("tacz:pretend_melee_damage_on"));
+    public static final TagKey<EntityType<?>> USE_MAGIC_DAMAGE_ON = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("tacz:use_magic_damage_on"));
+    public static final TagKey<EntityType<?>> USE_VOID_DAMAGE_ON = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("tacz:use_void_damage_on"));
+    public static final TagKey<EntityType<?>> PRETEND_MELEE_DAMAGE_ON = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("tacz:pretend_melee_damage_on"));
 
     /**
      * 允许其他 mod 使用 persistent data（永久数据） 控制曳光弹的颜色和粗细。<p>

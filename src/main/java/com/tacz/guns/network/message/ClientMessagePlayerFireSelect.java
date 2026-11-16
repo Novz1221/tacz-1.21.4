@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 public class ClientMessagePlayerFireSelect implements FabricPacket {
-    public static final PacketType<ClientMessagePlayerFireSelect> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_player_fire_select"), ClientMessagePlayerFireSelect::new);
+    public static final PacketType<ClientMessagePlayerFireSelect> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_fire_select"), ClientMessagePlayerFireSelect::new);
 
     public ClientMessagePlayerFireSelect() {
 

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServerMessageUpdateEntityData implements FabricPacket {
-    public static final PacketType<ServerMessageUpdateEntityData> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_update_entity_data"), ServerMessageUpdateEntityData::new);
+    public static final PacketType<ServerMessageUpdateEntityData> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_update_entity_data"), ServerMessageUpdateEntityData::new);
 
     private final int entityId;
     private final List<DataEntry<?, ?>> entries;

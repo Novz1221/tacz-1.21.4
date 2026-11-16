@@ -106,7 +106,7 @@ public class AttachmentsTagManager extends SimplePreparableReloadListener<Map<Re
         return allowAttachments.get(registryName);
     }
 
-    public static final ResourceLocation ID = new ResourceLocation(GunMod.MOD_ID, "attachments_tag_manager");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "attachments_tag_manager");
 
     @Override
     public ResourceLocation getFabricId() {

@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ServerMessageSyncGunPack implements FabricPacket {
-    public static final PacketType<ServerMessageSyncGunPack> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_sync_gunpack"), ServerMessageSyncGunPack::decode);
+    public static final PacketType<ServerMessageSyncGunPack> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_sync_gunpack"), ServerMessageSyncGunPack::decode);
 
     private static final GunPackSync.Receiver RECEIVER = new GunPackSync.Receiver();
     private final GunPackSync.Part part;

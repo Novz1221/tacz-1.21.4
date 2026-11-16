@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Optional;
 
 public class DataHolderCapabilityProvider implements Component {
-    public static final ComponentKey<DataHolderCapabilityProvider> CAPABILITY = ComponentRegistry.getOrCreate(new ResourceLocation(GunMod.MOD_ID, "synced_entity_data"), DataHolderCapabilityProvider.class);
+    public static final ComponentKey<DataHolderCapabilityProvider> CAPABILITY = ComponentRegistry.getOrCreate(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "synced_entity_data"), DataHolderCapabilityProvider.class);
     private final DataHolder holder = new DataHolder();
     private final LazyOptional<DataHolder> optional = LazyOptional.of(() -> this.holder);
 

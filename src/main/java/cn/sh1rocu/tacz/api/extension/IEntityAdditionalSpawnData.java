@@ -15,7 +15,7 @@ import java.util.List;
 
 // Porting_Lib
 public interface IEntityAdditionalSpawnData {
-    ResourceLocation EXTRA_DATA_PACKET = new ResourceLocation(GunMod.MOD_ID, "extra_entity_spawn_data");
+    ResourceLocation EXTRA_DATA_PACKET = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "extra_entity_spawn_data");
 
     void readSpawnData(FriendlyByteBuf buf);
 

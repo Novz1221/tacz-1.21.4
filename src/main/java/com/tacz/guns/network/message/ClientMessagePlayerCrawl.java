@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 public class ClientMessagePlayerCrawl implements FabricPacket {
-    public static final PacketType<ClientMessagePlayerCrawl> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_player_crawl"), ClientMessagePlayerCrawl::new);
+    public static final PacketType<ClientMessagePlayerCrawl> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_crawl"), ClientMessagePlayerCrawl::new);
 
     private final boolean isCrawl;
 

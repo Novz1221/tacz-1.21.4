@@ -30,10 +30,10 @@ public class ModRecipe {
     });
 
     private static <S extends RecipeSerializer<T>, T extends Recipe<?>> S registerSerializer(String name, S serializer) {
-        return Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, new ResourceLocation(GunMod.MOD_ID, name), serializer);
+        return Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, name), serializer);
     }
 
     private static <T extends Recipe<?>> RecipeType<T> registerRecipe(String name, RecipeType<T> type) {
-        return Registry.register(BuiltInRegistries.RECIPE_TYPE, new ResourceLocation(GunMod.MOD_ID, name), type);
+        return Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, name), type);
     }
 }

@@ -29,7 +29,7 @@ public class PackInfoManager extends SimplePreparableReloadListener<Map<String, 
         Map<String, PackInfo> output = Maps.newHashMap();
 
         for (String namespaces : manager.getNamespaces()) {
-            manager.getResource(new ResourceLocation(namespaces, PACK_INFO_NAME)).ifPresent(rl -> {
+            manager.getResource(ResourceLocation.fromNamespaceAndPath(namespaces, PACK_INFO_NAME)).ifPresent(rl -> {
                 try (Reader reader = rl.openAsReader()) {
                     PackInfo packInfo = GsonHelper.fromJson(CommonAssetsManager.GSON, reader, PackInfo.class, true);
                     PackInfo packInfo1 = output.put(namespaces, packInfo);
@@ -55,7 +55,7 @@ public class PackInfoManager extends SimplePreparableReloadListener<Map<String, 
         return dataMap.get(namespace);
     }
 
-    public static final ResourceLocation ID = new ResourceLocation(GunMod.MOD_ID, "packinfo_manager");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "packinfo_manager");
 
     @Override
     public ResourceLocation getFabricId() {

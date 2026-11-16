@@ -1,7 +1,6 @@
 name: Build TACZ 1.21.4
 on:
   push:
-  pull_request:
   workflow_dispatch:
 jobs:
   build:
@@ -14,7 +13,19 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
       - name: Build
-        run: chmod +x gradlew && ./gradlew build --stacktrace
+        run: |
+          chmod +x gradlew || true
+          (./gradlew build --stacktrace --no-daemon 2>&1 | tee build.log) ; exit ${PIPESTATUS[0]}
+      - name: Extract errors
+        if: always()
+        run: grep -E "error:|FAILED|Could not resolve|What went wrong" -A2 build.log | head -400 > errors.txt || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-log
+          path: |
+            build.log
+            errors.txt
       - uses: actions/upload-artifact@v4
         if: success()
         with:

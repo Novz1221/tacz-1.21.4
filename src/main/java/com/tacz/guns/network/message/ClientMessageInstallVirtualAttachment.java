@@ -19,7 +19,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
 public class ClientMessageInstallVirtualAttachment implements FabricPacket {
-    public static final PacketType<ClientMessageInstallVirtualAttachment> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_install_virtual_attachment"), ClientMessageInstallVirtualAttachment::new);
+    public static final PacketType<ClientMessageInstallVirtualAttachment> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_install_virtual_attachment"), ClientMessageInstallVirtualAttachment::new);
 
     private final int gunSlotIndex;
     private final AttachmentType attachmentType;

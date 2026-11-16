@@ -25,9 +25,9 @@ public final class GunPegboardColors {
     }
 
     public static void setup() {
-        ItemProperties.register(ModItems.GUN_PEGBOARD, new ResourceLocation(GunMod.MOD_ID, "dyed"),
+        ItemProperties.register(ModItems.GUN_PEGBOARD, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "dyed"),
                 (stack, level, entity, seed) -> ((DyeableLeatherItem) stack.getItem()).hasCustomColor(stack) ? 1 : 0);
-        ItemProperties.register(ModItems.GLOW_GUN_PEGBOARD, new ResourceLocation(GunMod.MOD_ID, "dyed"),
+        ItemProperties.register(ModItems.GLOW_GUN_PEGBOARD, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "dyed"),
                 (stack, level, entity, seed) -> ((DyeableLeatherItem) stack.getItem()).hasCustomColor(stack) ? 1 : 0);
     }
 }

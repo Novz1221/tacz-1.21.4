@@ -19,7 +19,7 @@ import org.slf4j.MarkerFactory;
 import java.util.Objects;
 
 public class ServerMessageSyncBaseTimestamp implements FabricPacket {
-    public static final PacketType<ServerMessageSyncBaseTimestamp> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_sync_base_timestamp"), ServerMessageSyncBaseTimestamp::new);
+    public static final PacketType<ServerMessageSyncBaseTimestamp> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_sync_base_timestamp"), ServerMessageSyncBaseTimestamp::new);
 
     private static final Marker MARKER = MarkerFactory.getMarker("SYNC_BASE_TIMESTAMP");
 

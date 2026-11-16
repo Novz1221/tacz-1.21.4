@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BeamRenderer {
-    public static final ResourceLocation LASER_BEAM_TEXTURE = new ResourceLocation(GunMod.MOD_ID, "textures/entity/beam.png");
+    public static final ResourceLocation LASER_BEAM_TEXTURE = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "textures/entity/beam.png");
     private static final LaserConfig DEFAULT_LASER_CONFIG = new LaserConfig();
 
     public static void renderLaserBeam(ItemStack stack, PoseStack poseStack, ItemDisplayContext transformType, @Nonnull List<BedrockPart> path, MultiBufferSource bufferSource) {

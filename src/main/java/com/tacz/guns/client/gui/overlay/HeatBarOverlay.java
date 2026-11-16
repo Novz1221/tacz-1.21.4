@@ -21,7 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import java.text.DecimalFormat;
 
 public class HeatBarOverlay {
-    private static final ResourceLocation HEATBASE = new ResourceLocation(GunMod.MOD_ID, "textures/hud/heat_base.png");
+    private static final ResourceLocation HEATBASE = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "textures/hud/heat_base.png");
     private static final DecimalFormat HEAT_FORMAT_PERCENT = new DecimalFormat("0.0%");
     private static float heatScale = 0.25f;
 

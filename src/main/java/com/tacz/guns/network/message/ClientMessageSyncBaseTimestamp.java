@@ -14,7 +14,7 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 public class ClientMessageSyncBaseTimestamp implements FabricPacket {
-    public static final PacketType<ClientMessageSyncBaseTimestamp> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_sync_base_timestamp"), ClientMessageSyncBaseTimestamp::new);
+    public static final PacketType<ClientMessageSyncBaseTimestamp> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_sync_base_timestamp"), ClientMessageSyncBaseTimestamp::new);
 
     private static final Marker MARKER = MarkerFactory.getMarker("SYNC_BASE_TIMESTAMP");
 

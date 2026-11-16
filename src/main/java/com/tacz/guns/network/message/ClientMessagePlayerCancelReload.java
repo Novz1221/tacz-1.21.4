@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 public class ClientMessagePlayerCancelReload implements FabricPacket {
-    public static final PacketType<ClientMessagePlayerCancelReload> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_player_cancel_reload"), ClientMessagePlayerCancelReload::new);
+    public static final PacketType<ClientMessagePlayerCancelReload> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_cancel_reload"), ClientMessagePlayerCancelReload::new);
 
     public ClientMessagePlayerCancelReload() {
 

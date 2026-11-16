@@ -59,7 +59,7 @@ public class StrictNBTIngredient implements CustomIngredient {
         return Serializer.INSTANCE;
     }
 
-    public static final ResourceLocation ID = new ResourceLocation("forge", "nbt");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("forge", "nbt");
 
     public static class Serializer implements CustomIngredientSerializer<StrictNBTIngredient> {
         public static final Serializer INSTANCE = new Serializer();

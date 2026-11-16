@@ -15,6 +15,6 @@ public class ModPainting {
 //    public static final PaintingVariant BLOOD_STRIKE_2 = register("blood_strike_2",  new PaintingVariant(32, 32));
 
     private static PaintingVariant register(String name, PaintingVariant painting) {
-        return Registry.register(BuiltInRegistries.PAINTING_VARIANT, new ResourceLocation(GunMod.MOD_ID, name), painting);
+        return Registry.register(BuiltInRegistries.PAINTING_VARIANT, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, name), painting);
     }
 }

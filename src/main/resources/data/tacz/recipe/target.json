@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "id": "tacz:target",
+    "count": 1
+  },
+  "pattern": [
+    "III",
+    "IRI",
+    " P "
+  ],
+  "key": {
+    "I": "#c:ingots/iron",
+    "R": "minecraft:redstone",
+    "P": "#minecraft:planks"
+  }
+}

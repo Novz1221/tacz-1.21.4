@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 
 @JeiPlugin
 public class GunModPlugin implements IModPlugin {
-    private static final ResourceLocation UID = new ResourceLocation(GunMod.MOD_ID, "jei");
+    private static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "jei");
 
     private Map<ResourceLocation, RecipeType<GunSmithTableRecipe>> recipeTypeMap = new HashMap<>();
 

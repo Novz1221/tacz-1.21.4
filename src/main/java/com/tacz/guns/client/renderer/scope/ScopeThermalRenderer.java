@@ -59,7 +59,7 @@ public class ScopeThermalRenderer {
         CoreShaderRegistrationCallback.EVENT.register(ctx -> {
             try {
                 ctx.register(
-                        new ResourceLocation(GunMod.MOD_ID, "scope_thermal_mask"),
+                        ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "scope_thermal_mask"),
                         DefaultVertexFormat.POSITION_COLOR_TEX,
                         instance -> shader = instance
                 );

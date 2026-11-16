@@ -20,8 +20,8 @@ import java.util.List;
 public final class GunPegboardItemConfigRead {
     private static final List<ResourceLocation> WHITELIST = Lists.newArrayList();
     private static final List<ResourceLocation> BLACKLIST = Lists.newArrayList();
-    private static final TagKey<Item> WHITELIST_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(GunMod.MOD_ID, "gun_pegboard/whitelist"));
-    private static final TagKey<Item> BLACKLIST_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(GunMod.MOD_ID, "gun_pegboard/blacklist"));
+    private static final TagKey<Item> WHITELIST_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "gun_pegboard/whitelist"));
+    private static final TagKey<Item> BLACKLIST_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "gun_pegboard/blacklist"));
 
     private GunPegboardItemConfigRead() {
     }
@@ -53,7 +53,7 @@ public final class GunPegboardItemConfigRead {
             if (StringUtils.isBlank(data)) {
                 return;
             }
-            storeList.add(new ResourceLocation(data));
+            storeList.add(ResourceLocation.parse(data));
         });
     }
 }

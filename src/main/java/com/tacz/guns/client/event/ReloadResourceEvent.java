@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
 public class ReloadResourceEvent {
-    public static final ResourceLocation BLOCK_ATLAS_TEXTURE = new ResourceLocation("textures/atlas/blocks.png");
+    public static final ResourceLocation BLOCK_ATLAS_TEXTURE = ResourceLocation.parse("textures/atlas/blocks.png");
 
     public static void onTextureStitchEventPost(TextureStitchEvent.Post event) {
         if (BLOCK_ATLAS_TEXTURE.equals(event.getAtlas().location())) {

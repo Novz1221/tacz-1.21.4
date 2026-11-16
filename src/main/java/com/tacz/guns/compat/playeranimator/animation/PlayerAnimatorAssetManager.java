@@ -86,7 +86,7 @@ public class PlayerAnimatorAssetManager extends SimplePreparableReloadListener<M
         animations.putAll(map);
     }
 
-    public static final ResourceLocation ID = new ResourceLocation(GunMod.MOD_ID, "pa_asset_manager");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "pa_asset_manager");
 
     @Override
     public ResourceLocation getFabricId() {

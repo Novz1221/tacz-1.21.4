@@ -10,7 +10,7 @@ import org.slf4j.MarkerFactory;
 
 public class AcknowledgeC2SPacket implements IHandshakeMessage.IResponsePacket {
     public static final Marker ACKNOWLEDGE = MarkerFactory.getMarker("HANDSHAKE_ACKNOWLEDGE");
-    public static final ResourceLocation ID = new ResourceLocation(GunMod.MOD_ID, "acknowledge");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "acknowledge");
 
     @Override
     public void write(FriendlyByteBuf buf) {

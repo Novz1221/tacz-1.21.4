@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 
 public class ServerMessageBulletHitBlock implements FabricPacket {
-    public static final PacketType<ServerMessageBulletHitBlock> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_bullet_hit_block"), ServerMessageBulletHitBlock::new);
+    public static final PacketType<ServerMessageBulletHitBlock> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_bullet_hit_block"), ServerMessageBulletHitBlock::new);
 
     private final double hitX;
     private final double hitY;

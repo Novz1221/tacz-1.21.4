@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "id": "tacz:workbench_a",
+    "count": 1
+  },
+  "pattern": [
+    "CC",
+    "IB"
+  ],
+  "key": {
+    "C": "#c:ingots/copper",
+    "I": "#c:ingots/iron",
+    "B": "tacz:ammo_box"
+  }
+}

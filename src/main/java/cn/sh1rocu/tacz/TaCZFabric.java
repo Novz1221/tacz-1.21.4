@@ -40,10 +40,10 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.ref.WeakReference;
 
 public class TaCZFabric implements ModInitializer {
-    public static final ResourceLocation HIGHEST = new ResourceLocation(GunMod.MOD_ID, "event_highest_priority");
-    public static final ResourceLocation HIGH = new ResourceLocation(GunMod.MOD_ID, "event_high_priority");
-    public static final ResourceLocation LOW = new ResourceLocation(GunMod.MOD_ID, "event_low_priority");
-    public static final ResourceLocation LOWEST = new ResourceLocation(GunMod.MOD_ID, "event_lowest_priority");
+    public static final ResourceLocation HIGHEST = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "event_highest_priority");
+    public static final ResourceLocation HIGH = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "event_high_priority");
+    public static final ResourceLocation LOW = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "event_low_priority");
+    public static final ResourceLocation LOWEST = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "event_lowest_priority");
 
     @Nullable
     private static WeakReference<MinecraftServer> server;
@@ -68,7 +68,7 @@ public class TaCZFabric implements ModInitializer {
         GunMod.setup();
         CommandRegistry.onServerStaring();
         CompatRegistry.onEnqueue();
-        ArgumentTypeRegistry.registerArgumentType(new ResourceLocation(GunMod.MOD_ID, "enum_argument"), EnumArgument.class,
+        ArgumentTypeRegistry.registerArgumentType(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "enum_argument"), EnumArgument.class,
                 new EnumArgument.Info());
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
             CommonLoadPack.loadGunPack();

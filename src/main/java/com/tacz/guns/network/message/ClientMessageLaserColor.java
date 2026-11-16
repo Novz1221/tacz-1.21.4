@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ClientMessageLaserColor implements FabricPacket {
-    public static final PacketType<ClientMessageLaserColor> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_laser_color"), ClientMessageLaserColor::new);
+    public static final PacketType<ClientMessageLaserColor> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_laser_color"), ClientMessageLaserColor::new);
 
     private final Map<AttachmentType, Integer> colorMap = new HashMap<>();
     private boolean applyGunColor = false;

@@ -19,7 +19,7 @@ import net.minecraft.world.entity.LivingEntity;
 import javax.annotation.Nullable;
 
 public class ServerMessageGunHurt implements FabricPacket {
-    public static final PacketType<ServerMessageGunHurt> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_gunhurt"), ServerMessageGunHurt::new);
+    public static final PacketType<ServerMessageGunHurt> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_gunhurt"), ServerMessageGunHurt::new);
 
     private final int bulletId;
     private final int hurtEntityId;

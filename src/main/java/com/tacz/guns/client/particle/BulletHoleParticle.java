@@ -60,14 +60,14 @@ public class BulletHoleParticle extends TextureSheetParticle {
             this.lifetime = 1;
             this.alpha = 0.0F;
         }
-        TimelessAPI.getGunDisplay(new ResourceLocation(gunDisplayId), new ResourceLocation(gunId)).ifPresent(gunIndex -> {
+        TimelessAPI.getGunDisplay(ResourceLocation.parse(gunDisplayId), ResourceLocation.parse(gunId)).ifPresent(gunIndex -> {
             float[] gunTracerColor = gunIndex.getTracerColor();
             if (gunTracerColor != null) {
                 this.rCol = gunTracerColor[0];
                 this.gCol = gunTracerColor[1];
                 this.bCol = gunTracerColor[2];
             } else {
-                TimelessAPI.getClientAmmoIndex(new ResourceLocation(ammoId)).ifPresent(ammoIndex -> {
+                TimelessAPI.getClientAmmoIndex(ResourceLocation.parse(ammoId)).ifPresent(ammoIndex -> {
                     float[] ammoTracerColor = ammoIndex.getTracerColor();
                     this.rCol = ammoTracerColor[0];
                     this.gCol = ammoTracerColor[1];
@@ -85,11 +85,11 @@ public class BulletHoleParticle extends TextureSheetParticle {
 
     public static boolean isBulletHoleEnabled(String ammoId, String gunId, String gunDisplayId) {
         try {
-            var gunDisplay = TimelessAPI.getGunDisplay(new ResourceLocation(gunDisplayId), new ResourceLocation(gunId));
+            var gunDisplay = TimelessAPI.getGunDisplay(ResourceLocation.parse(gunDisplayId), ResourceLocation.parse(gunId));
             if (gunDisplay.isPresent() && gunDisplay.get().getBulletHoleEnabled() != null) {
                 return gunDisplay.get().getBulletHoleEnabled();
             }
-            return TimelessAPI.getClientAmmoIndex(new ResourceLocation(ammoId))
+            return TimelessAPI.getClientAmmoIndex(ResourceLocation.parse(ammoId))
                     .map(ammoIndex -> ammoIndex.isBulletHoleEnabled())
                     .orElse(true);
         } catch (Exception ignored) {

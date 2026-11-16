@@ -125,7 +125,7 @@ public class ScriptManager extends SimplePreparableReloadListener<List<Map.Entry
         return globals;
     }
 
-    public static final ResourceLocation ID = new ResourceLocation(GunMod.MOD_ID, "script_manager");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "script_manager");
 
     @Override
     public ResourceLocation getFabricId() {

@@ -13,7 +13,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
 public class ServerMessageSound implements FabricPacket {
-    public static final PacketType<ServerMessageSound> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_sound"), ServerMessageSound::new);
+    public static final PacketType<ServerMessageSound> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_sound"), ServerMessageSound::new);
 
     private final int entityId;
     private final ResourceLocation gunId;

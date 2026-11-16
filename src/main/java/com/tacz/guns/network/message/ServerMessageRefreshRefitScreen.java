@@ -14,7 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
 public class ServerMessageRefreshRefitScreen implements FabricPacket {
-    public static final PacketType<ServerMessageRefreshRefitScreen> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_refresh_refit_screen"), ServerMessageRefreshRefitScreen::new);
+    public static final PacketType<ServerMessageRefreshRefitScreen> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_refresh_refit_screen"), ServerMessageRefreshRefitScreen::new);
 
     public ServerMessageRefreshRefitScreen() {
 

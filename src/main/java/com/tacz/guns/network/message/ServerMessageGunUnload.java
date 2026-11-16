@@ -17,7 +17,7 @@ import net.minecraft.world.entity.player.Player;
  * 仅在服务端确认本次主动卸弹实际减少了枪内弹药后发送给操作者。
  */
 public class ServerMessageGunUnload implements FabricPacket {
-    public static final PacketType<ServerMessageGunUnload> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_gun_unload"), ServerMessageGunUnload::decode);
+    public static final PacketType<ServerMessageGunUnload> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_gun_unload"), ServerMessageGunUnload::decode);
 
     private final ResourceLocation gunId;
     private final ResourceLocation gunDisplayId;

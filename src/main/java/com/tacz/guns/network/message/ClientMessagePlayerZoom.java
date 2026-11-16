@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 public class ClientMessagePlayerZoom implements FabricPacket {
-    public static final PacketType<ClientMessagePlayerZoom> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_player_zoom"), ClientMessagePlayerZoom::new);
+    public static final PacketType<ClientMessagePlayerZoom> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_zoom"), ClientMessagePlayerZoom::new);
 
     public ClientMessagePlayerZoom() {
 

@@ -14,7 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
  */
 public record ClientMessageAmmoStorageClick(int containerId, int entryId,
                                             AmmoStorageMenu.Action action) implements FabricPacket {
-    public static final PacketType<ClientMessageAmmoStorageClick> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_ammo_storage_click"), ClientMessageAmmoStorageClick::decode);
+    public static final PacketType<ClientMessageAmmoStorageClick> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_ammo_storage_click"), ClientMessageAmmoStorageClick::decode);
 
     @Override
     public void write(FriendlyByteBuf buf) {

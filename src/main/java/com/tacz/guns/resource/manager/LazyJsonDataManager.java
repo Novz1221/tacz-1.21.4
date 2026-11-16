@@ -59,7 +59,7 @@ public class LazyJsonDataManager<T> extends SimplePreparableReloadListener<LazyJ
         this.gson = pGson;
         this.dataClass = dataClass;
         this.marker = MarkerFactory.getMarker(marker);
-        this.ID = new ResourceLocation(GunMod.MOD_ID, marker.toLowerCase(Locale.ROOT));
+        this.ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, marker.toLowerCase(Locale.ROOT));
         this.fileToIdConverter = fileToIdConverter;
         this.eagerLoadPredicate = eagerLoadPredicate;
     }

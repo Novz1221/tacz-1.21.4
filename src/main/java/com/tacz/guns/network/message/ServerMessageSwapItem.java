@@ -10,7 +10,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
 public class ServerMessageSwapItem implements FabricPacket {
-    public static final PacketType<ServerMessageSwapItem> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "s2c_swap_item"), ServerMessageSwapItem::new);
+    public static final PacketType<ServerMessageSwapItem> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "s2c_swap_item"), ServerMessageSwapItem::new);
 
     public ServerMessageSwapItem() {
 

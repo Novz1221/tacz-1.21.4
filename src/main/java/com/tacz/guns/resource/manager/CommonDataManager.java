@@ -28,13 +28,13 @@ public class CommonDataManager<T> extends JsonDataManager<T> implements INetwork
     public CommonDataManager(DataType type, Class<T> dataClass, Gson pGson, String directory, String marker) {
         super(dataClass, pGson, directory, marker);
         this.type = type;
-        this.ID = new ResourceLocation(GunMod.MOD_ID, marker.toLowerCase(Locale.ROOT));
+        this.ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, marker.toLowerCase(Locale.ROOT));
     }
 
     public CommonDataManager(DataType type, Class<T> dataClass, Gson pGson, FileToIdConverter fileToIdConverter, String marker) {
         super(dataClass, pGson, fileToIdConverter, marker);
         this.type = type;
-        this.ID = new ResourceLocation(GunMod.MOD_ID, marker.toLowerCase(Locale.ROOT));
+        this.ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, marker.toLowerCase(Locale.ROOT));
     }
 
     @Override

@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 public class ClientMessagePlayerShoot implements FabricPacket {
-    public static final PacketType<ClientMessagePlayerShoot> TYPE = PacketType.create(new ResourceLocation(GunMod.MOD_ID, "c2s_player_shoot"), ClientMessagePlayerShoot::new);
+    public static final PacketType<ClientMessagePlayerShoot> TYPE = PacketType.create(ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "c2s_player_shoot"), ClientMessagePlayerShoot::new);
 
     /**
      * 这里的 timestamp 应该是基于 base timestamp 的相对值

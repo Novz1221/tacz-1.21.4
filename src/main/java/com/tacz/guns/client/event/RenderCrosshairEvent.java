@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Environment(EnvType.CLIENT)
 public class RenderCrosshairEvent {
-    private static final ResourceLocation HIT_ICON = new ResourceLocation(GunMod.MOD_ID, "textures/crosshair/hit/hit_marker.png");
+    private static final ResourceLocation HIT_ICON = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "textures/crosshair/hit/hit_marker.png");
     private static final long KEEP_TIME = 300;
     private static boolean isRefitScreen = false;
     private static long hitTimestamp = -1L;

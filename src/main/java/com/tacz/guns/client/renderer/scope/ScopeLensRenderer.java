@@ -54,7 +54,7 @@ public final class ScopeLensRenderer {
         CoreShaderRegistrationCallback.EVENT.register(ctx -> {
             try {
                 ctx.register(
-                        new ResourceLocation(GunMod.MOD_ID, "scope_lens"),
+                        ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "scope_lens"),
                         DefaultVertexFormat.POSITION,
                         instance -> shader = instance
                 );

@@ -118,7 +118,7 @@ public enum ClientAssetsManager {
             scriptManager = register(new ScriptManager(new FileToIdConverter("scripts", ".lua"), libList));
             packInfo = register(new PackInfoManager());
             register(new IdentifiableResourceReloadListener() {
-                static final ResourceLocation ID = new ResourceLocation(GunMod.MOD_ID, "client_index_manager_reload");
+                static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "client_index_manager_reload");
 
                 @Override
                 public ResourceLocation getFabricId() {

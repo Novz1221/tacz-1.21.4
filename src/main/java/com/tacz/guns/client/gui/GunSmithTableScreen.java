@@ -66,8 +66,8 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class GunSmithTableScreen extends AbstractContainerScreen<GunSmithTableMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(GunMod.MOD_ID, "textures/gui/gun_smith_table.png");
-    private static final ResourceLocation SIDE = new ResourceLocation(GunMod.MOD_ID, "textures/gui/gun_smith_table_side.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "textures/gui/gun_smith_table.png");
+    private static final ResourceLocation SIDE = ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "textures/gui/gun_smith_table_side.png");
     private static final Comparator<RecipeSortKey> RECIPE_ORDER = Comparator
             .comparing(RecipeSortKey::namespace, ContentPackOrder.NAMESPACE_ORDER)
             .thenComparingInt(RecipeSortKey::sort)
