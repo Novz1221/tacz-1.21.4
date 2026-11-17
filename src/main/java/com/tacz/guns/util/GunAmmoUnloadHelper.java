@@ -72,7 +72,7 @@ public final class GunAmmoUnloadHelper {
             } else {
                 ItemStack overflow = inventory == null ? ammoStack : ItemHandlerHelper.insertItemStacked(inventory, ammoStack, false);
                 if (!overflow.isEmpty()) {
-                    shooter.spawnAtLocation(overflow);
+                    if (shooter.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) { shooter.spawnAtLocation(serverLevel, overflow); }
                 }
             }
             remaining -= count;

@@ -48,7 +48,7 @@ public class AmmoStorageBlockItem extends BlockItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext level, List<Component> components, TooltipFlag flag) {
         super.appendHoverText(stack, level, components, flag);
         components.add(Component.translatable("tooltip.tacz.ammo_storage.description").withStyle(ChatFormatting.GRAY));
         components.add(Component.translatable("tooltip.tacz.ammo_storage.description.extra").withStyle(ChatFormatting.GRAY));
@@ -56,7 +56,8 @@ public class AmmoStorageBlockItem extends BlockItem {
 
     @Override
     public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-        CompoundTag blockEntityTag = BlockItem.getBlockEntityData(stack);
+        net.minecraft.world.item.component.CustomData blockEntityData = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+        CompoundTag blockEntityTag = blockEntityData == null ? null : blockEntityData.copyTag();
         if (blockEntityTag == null || !blockEntityTag.contains(ENTRIES_TAG, Tag.TAG_LIST)) {
             return Optional.empty();
         }

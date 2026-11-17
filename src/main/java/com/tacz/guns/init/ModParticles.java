@@ -15,24 +15,31 @@ public class ModParticles {
 
     }
 
-    public static final ParticleType<BulletHoleOption> BULLET_HOLE = register("bullet_hole", new ModParticleType<>(false, BulletHoleOption.DESERIALIZER, BulletHoleOption.CODEC));
+    public static final ParticleType<BulletHoleOption> BULLET_HOLE = register("bullet_hole", new ModParticleType<>(false, BulletHoleOption.CODEC, BulletHoleOption.STREAM_CODEC));
 
     private static <T extends ParticleOptions> ParticleType<T> register(String name, ParticleType<T> type) {
         return Registry.register(BuiltInRegistries.PARTICLE_TYPE, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, name), type);
     }
 
-    @SuppressWarnings("deprecation")
     private static class ModParticleType<T extends ParticleOptions> extends ParticleType<T> {
-        private final Codec<T> codec;
+        private final com.mojang.serialization.MapCodec<T> codec;
+        private final net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.RegistryFriendlyByteBuf, T> streamCodec;
 
-        public ModParticleType(boolean overrideLimiter, ParticleOptions.Deserializer<T> deserializer, Codec<T> codec) {
-            super(overrideLimiter, deserializer);
+        public ModParticleType(boolean overrideLimiter, com.mojang.serialization.MapCodec<T> codec,
+                               net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.RegistryFriendlyByteBuf, T> streamCodec) {
+            super(overrideLimiter);
             this.codec = codec;
+            this.streamCodec = streamCodec;
         }
 
         @Override
-        public @NotNull Codec<T> codec() {
+        public @NotNull com.mojang.serialization.MapCodec<T> codec() {
             return this.codec;
+        }
+
+        @Override
+        public @NotNull net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.RegistryFriendlyByteBuf, T> streamCodec() {
+            return this.streamCodec;
         }
     }
 }

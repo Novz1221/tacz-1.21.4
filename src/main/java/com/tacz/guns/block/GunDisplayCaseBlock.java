@@ -43,6 +43,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class GunDisplayCaseBlock extends BaseEntityBlock implements IPistonPushReaction {
+    @Override
+    protected com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.BaseEntityBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(() -> this);
+    }
+
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LOCKED = BooleanProperty.create("locked");
     public static final BooleanProperty LEFT = BooleanProperty.create("left");

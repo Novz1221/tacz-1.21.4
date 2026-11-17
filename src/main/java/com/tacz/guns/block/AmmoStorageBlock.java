@@ -44,6 +44,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class AmmoStorageBlock extends BaseEntityBlock {
+    @Override
+    protected com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.BaseEntityBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(() -> this);
+    }
+
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final int IRON_CAPACITY_STACKS = 216;
     public static final int GOLD_CAPACITY_STACKS = 432;
@@ -137,7 +142,7 @@ public class AmmoStorageBlock extends BaseEntityBlock {
         BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         ItemStack stack = new ItemStack(state.getBlock());
         if (blockEntity instanceof AmmoStorageBlockEntity storage) {
-            CompoundTag tag = storage.saveWithoutMetadata();
+            CompoundTag tag = storage.saveWithoutMetadata(level.registryAccess());
             if (!tag.isEmpty()) {
                 BlockItem.setBlockEntityData(stack, ModBlocks.AMMO_STORAGE_BE, tag);
             }

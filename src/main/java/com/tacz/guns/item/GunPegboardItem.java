@@ -1,5 +1,6 @@
 package com.tacz.guns.item;
 
+import net.minecraft.world.item.Item;
 import com.tacz.guns.block.entity.GunPegboardBlockEntity;
 import com.tacz.guns.block.GunPegboardBlock;
 import net.minecraft.ChatFormatting;
@@ -45,7 +46,7 @@ public class GunPegboardItem extends BlockItem implements DyeableLeatherItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext level, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
         tooltip.add(Component.translatable("tooltip.tacz.gun_pegboard.dye").withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("tooltip.tacz.gun_pegboard.link_color").withStyle(ChatFormatting.GRAY));

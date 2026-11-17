@@ -10,6 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 public interface IBlockExtension {
     default void tacz$onBlockExploded(BlockState state, Level world, BlockPos pos, Explosion explosion) {
         world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-        ((Block) this).wasExploded(world, pos, explosion);
+        if (world instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+            ((Block) this).wasExploded(serverLevel, pos, explosion);
+        }
     }
 }

@@ -58,6 +58,7 @@ public class NetworkHandler {
         PayloadTypeRegistry.playS2C().register(ServerMessageUpdateEntityData.TYPE, ServerMessageUpdateEntityData.CODEC);
         PayloadTypeRegistry.playS2C().register(ServerMessageSyncGunPack.TYPE, ServerMessageSyncGunPack.CODEC);
         PayloadTypeRegistry.playS2C().register(ServerMessageSyncSmithRecipes.TYPE, ServerMessageSyncSmithRecipes.CODEC);
+        PayloadTypeRegistry.playS2C().register(IEntityAdditionalSpawnData.Payload.TYPE, IEntityAdditionalSpawnData.Payload.CODEC);
         PayloadTypeRegistry.playS2C().register(ServerMessageGunDraw.TYPE, ServerMessageGunDraw.CODEC);
         PayloadTypeRegistry.playS2C().register(ServerMessageGunFinishReload.TYPE, ServerMessageGunFinishReload.CODEC);
         PayloadTypeRegistry.playS2C().register(ServerMessageGunFire.TYPE, ServerMessageGunFire.CODEC);
@@ -97,16 +98,12 @@ public class NetworkHandler {
 
     @Environment(EnvType.CLIENT)
     public static void registerS2CPackets() {
-        ClientPlayNetworking.registerGlobalReceiver(IEntityAdditionalSpawnData.EXTRA_DATA_PACKET, (client, handler, buf, responseSender) -> {
-            int entityId = buf.readVarInt();
-            buf.retain();
-            client.execute(() -> {
-                Entity entity = Objects.requireNonNull(client.level).getEntity(entityId);
-                if (entity instanceof IEntityAdditionalSpawnData extra) {
-                    extra.readSpawnData(buf);
-                }
-                buf.release();
-            });
+        ClientPlayNetworking.registerGlobalReceiver(IEntityAdditionalSpawnData.Payload.TYPE, (payload, ctx) -> {
+            Entity entity = Objects.requireNonNull(ctx.client().level).getEntity(payload.entityId());
+            if (entity instanceof IEntityAdditionalSpawnData extra) {
+                net.minecraft.network.FriendlyByteBuf buf = new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.wrappedBuffer(payload.data()));
+                extra.readSpawnData(buf);
+            }
         });
 
         ClientPlayNetworking.registerGlobalReceiver(ServerMessageAmmoStorageContents.TYPE, (payload, ctx) -> payload.handle(ctx.player(), ctx.responseSender()));

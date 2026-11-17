@@ -62,7 +62,7 @@ public class GunSmithTableItem extends BlockItem implements BlockItemDataAccesso
 
 //    @Override
 //    @Environment(EnvType.CLIENT)
-//    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag isAdvanced) {
+//    public void appendHoverText(ItemStack stack, Item.TooltipContext level, List<Component> components, TooltipFlag isAdvanced) {
 //        ResourceLocation blockId = this.getBlockId(stack);
 //        TimelessAPI.getClientBlockIndex(blockId).ifPresent(index -> {
 //            String tooltipKey = index.getTooltipKey();

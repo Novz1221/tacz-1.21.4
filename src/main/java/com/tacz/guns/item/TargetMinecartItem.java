@@ -32,18 +32,18 @@ public class TargetMinecartItem extends Item {
             if (!level.isClientSide) {
                 RailShape railshape = blockstate.getBlock() instanceof BaseRailBlock baseRailBlock ? blockstate.getValue(baseRailBlock.getShapeProperty()) /*baseRailBlock.getRailDirection(blockstate, level, blockpos, null)*/ : RailShape.NORTH_SOUTH;
                 double yOffset = 0;
-                if (railshape.isAscending()) {
+                if (railshape.isSlope()) {
                     yOffset = 0.5;
                 }
                 TargetMinecart targetMinecart = new TargetMinecart(level, (double) blockpos.getX() + 0.5, (double) blockpos.getY() + 0.0625 + yOffset, (double) blockpos.getZ() + 0.5);
-                if (itemstack.hasCustomHoverName()) {
+                if (cn.sh1rocu.tacz.util.ItemNbt.hasCustomName(itemstack)) {
                     targetMinecart.setCustomName(itemstack.getHoverName());
                 }
                 level.addFreshEntity(targetMinecart);
                 level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, blockpos);
             }
             itemstack.shrink(1);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return (level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.CONSUME);
         }
     }
 }

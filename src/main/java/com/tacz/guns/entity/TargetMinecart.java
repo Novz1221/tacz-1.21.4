@@ -113,7 +113,7 @@ public class TargetMinecart extends AbstractMinecart implements ITargetEntity, I
         if (this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
             ItemStack itemStack = new ItemStack(ModItems.TARGET_MINECART);
             if (this.hasCustomName()) {
-                itemStack.setHoverName(this.getCustomName());
+                cn.sh1rocu.tacz.util.ItemNbt.setName(itemStack, this.getCustomName());
             }
             this.spawnAtLocation(itemStack);
         }
@@ -128,7 +128,7 @@ public class TargetMinecart extends AbstractMinecart implements ITargetEntity, I
     public ItemStack getPickResult() {
         ItemStack itemStack = new ItemStack(ModItems.TARGET_MINECART);
         if (this.hasCustomName()) {
-            itemStack.setHoverName(this.getCustomName());
+            cn.sh1rocu.tacz.util.ItemNbt.setName(itemStack, this.getCustomName());
         }
         return itemStack;
     }

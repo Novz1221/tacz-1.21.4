@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class AmmoStorageBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, SidedStorageBlockEntity {
+public class AmmoStorageBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, SidedStorageBlockEntity {
     public static final BlockEntityType<AmmoStorageBlockEntity> TYPE = net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder.create(AmmoStorageBlockEntity::new, ModBlocks.AMMO_STORAGE, ModBlocks.AMMO_STORAGE_GOLD, ModBlocks.AMMO_STORAGE_DIAMOND).build();
     public static final int MAX_AMMO_TYPES = 27;
 
@@ -106,8 +106,8 @@ public class AmmoStorageBlockEntity extends BlockEntity implements ExtendedScree
     }
 
     @Override
-    public void writeScreenOpeningData(ServerPlayer player, FriendlyByteBuf buf) {
-        buf.writeBlockPos(worldPosition);
+    public BlockPos getScreenOpeningData(ServerPlayer player) {
+        return worldPosition;
     }
 
     @Nullable

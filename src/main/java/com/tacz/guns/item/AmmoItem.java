@@ -78,7 +78,7 @@ public class AmmoItem extends Item implements AmmoItemDataAccessor, IItem {
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag isAdvanced) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext level, List<Component> components, TooltipFlag isAdvanced) {
         ResourceLocation ammoId = this.getAmmoId(stack);
         TimelessAPI.getClientAmmoIndex(ammoId).ifPresent(index -> {
             String tooltipKey = index.getTooltipKey();

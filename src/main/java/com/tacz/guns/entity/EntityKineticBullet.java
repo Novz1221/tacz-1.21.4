@@ -598,8 +598,8 @@ public class EntityKineticBullet extends Projectile implements IEntityAdditional
     }
 
     @Override
-    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return IEntityAdditionalSpawnData.getEntitySpawningPacket(this);
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket(net.minecraft.server.level.ServerEntity serverEntity) {
+        return IEntityAdditionalSpawnData.getEntitySpawningPacket(this, serverEntity);
     }
 
     @Override

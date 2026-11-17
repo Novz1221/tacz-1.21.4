@@ -3,6 +3,9 @@ package com.tacz.guns.particles;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.tacz.guns.api.DefaultAssets;
 import com.tacz.guns.init.ModParticles;
@@ -14,7 +17,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 
 public class BulletHoleOption implements ParticleOptions {
-    public static final Codec<BulletHoleOption> CODEC = RecordCodecBuilder.create(builder ->
+    public static final MapCodec<BulletHoleOption> CODEC = RecordCodecBuilder.mapCodec(builder ->
             builder.group(Codec.INT.fieldOf("dir").forGetter(option -> option.direction.ordinal()),
                     Codec.LONG.fieldOf("pos").forGetter(option -> option.pos.asLong()),
                     Codec.STRING.fieldOf("ammo_id").forGetter(option -> option.ammoId),
@@ -23,33 +26,9 @@ public class BulletHoleOption implements ParticleOptions {
                     Codec.BOOL.optionalFieldOf("incendiary", false).forGetter(option -> option.incendiary)
             ).apply(builder, BulletHoleOption::new));
 
-    @SuppressWarnings("deprecation")
-    public static final ParticleOptions.Deserializer<BulletHoleOption> DESERIALIZER = new ParticleOptions.Deserializer<>() {
-        @Override
-        public BulletHoleOption fromCommand(ParticleType<BulletHoleOption> particleType, StringReader reader) throws CommandSyntaxException {
-            reader.expect(' ');
-            int dir = reader.readInt();
-            reader.expect(' ');
-            long pos = reader.readLong();
-            reader.expect(' ');
-            String ammoId = reader.readString();
-            reader.expect(' ');
-            String gunId = reader.readString();
-            reader.expect(' ');
-            String gunDisplayId = reader.readString();
-            boolean incendiary = false;
-            if (reader.canRead()) {
-                reader.expect(' ');
-                incendiary = reader.readBoolean();
-            }
-            return new BulletHoleOption(dir, pos, ammoId, gunId, gunDisplayId, incendiary);
-        }
-
-        @Override
-        public BulletHoleOption fromNetwork(ParticleType<BulletHoleOption> particleType, FriendlyByteBuf buffer) {
-            return new BulletHoleOption(buffer.readVarInt(), buffer.readLong(), buffer.readUtf(), buffer.readUtf(), buffer.readUtf(), buffer.readBoolean());
-        }
-    };
+    public static final StreamCodec<RegistryFriendlyByteBuf, BulletHoleOption> STREAM_CODEC = StreamCodec.of(
+            (buffer, option) -> option.writeToNetwork(buffer),
+            buffer -> new BulletHoleOption(buffer.readVarInt(), buffer.readLong(), buffer.readUtf(), buffer.readUtf(), buffer.readUtf(), buffer.readBoolean()));
 
     private final Direction direction;
     private final BlockPos pos;
@@ -113,24 +92,13 @@ public class BulletHoleOption implements ParticleOptions {
         return ModParticles.BULLET_HOLE;
     }
 
-    @Override
     public void writeToNetwork(FriendlyByteBuf buffer) {
-        buffer.writeEnum(this.direction);
-        buffer.writeBlockPos(this.pos);
+        buffer.writeVarInt(this.direction.ordinal());
+        buffer.writeLong(this.pos.asLong());
         buffer.writeUtf(this.ammoId);
         buffer.writeUtf(this.gunId);
         buffer.writeUtf(this.gunDisplayId);
         buffer.writeBoolean(this.incendiary);
     }
 
-    @Override
-    public String writeToString() {
-        return BuiltInRegistries.PARTICLE_TYPE.getKey(this.getType()) + " "
-                + this.direction.ordinal() + " "
-                + this.pos.asLong() + " "
-                + this.ammoId + " "
-                + this.gunId + " "
-                + this.gunDisplayId + " "
-                + this.incendiary;
-    }
 }

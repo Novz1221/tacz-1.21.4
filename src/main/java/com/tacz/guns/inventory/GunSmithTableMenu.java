@@ -28,10 +28,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class GunSmithTableMenu extends AbstractContainerMenu {
-    public static final MenuType<GunSmithTableMenu> TYPE = new ExtendedScreenHandlerType<>((windowId, inv, data) -> {
-        ResourceLocation blockId = data.readResourceLocation();
+    public static final MenuType<GunSmithTableMenu> TYPE = new ExtendedScreenHandlerType<>((windowId, inv, blockId) -> {
         return new GunSmithTableMenu(windowId, inv, blockId);
-    });
+    }, ResourceLocation.STREAM_CODEC);
 
     private final ResourceLocation blockId;
     private final RecipeFilter filter;

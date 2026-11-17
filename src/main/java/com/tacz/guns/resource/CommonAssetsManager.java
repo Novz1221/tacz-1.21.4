@@ -118,7 +118,7 @@ public class CommonAssetsManager implements ICommonResourceProvider {
         blockIndex = register(new CommonDataManager<>(DataType.BLOCK_INDEX, CommonBlockIndex.class, GSON, "index/blocks", "BlockIndexLoader"));
 
         listeners.forEach(register);
-        register.accept((barrier, resourceManager, preparationProfiler, reloadProfiler, backgroundExecutor, gameExecutor) -> {
+        register.accept((barrier, resourceManager, backgroundExecutor, gameExecutor) -> {
             return barrier
                     .wait(Void.TYPE)
                     .thenRunAsync(() -> {

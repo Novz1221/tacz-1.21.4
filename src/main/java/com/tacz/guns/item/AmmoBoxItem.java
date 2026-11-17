@@ -1,5 +1,7 @@
 package com.tacz.guns.item;
 
+import cn.sh1rocu.tacz.util.DyeableLeatherItem;
+import net.minecraft.world.item.Item;
 import com.tacz.guns.GunMod;
 import com.tacz.guns.api.DefaultAssets;
 import com.tacz.guns.api.TimelessAPI;
@@ -90,8 +92,8 @@ public class AmmoBoxItem extends Item implements DyeableLeatherItem, AmmoBoxItem
     }
 
     private static int getTagColor(ItemStack stack) {
-        CompoundTag compoundtag = stack.getTagElement(DISPLAY_TAG);
-        return compoundtag != null && compoundtag.contains(COLOR_TAG, Tag.TAG_ANY_NUMERIC) ? compoundtag.getInt(COLOR_TAG) : 0x727d6b;
+        net.minecraft.world.item.component.DyedItemColor color = stack.get(net.minecraft.core.component.DataComponents.DYED_COLOR);
+        return color != null ? color.rgb() : 0x727d6b;
     }
 
     @Override
@@ -274,7 +276,7 @@ public class AmmoBoxItem extends Item implements DyeableLeatherItem, AmmoBoxItem
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level pLevel, List<Component> components, TooltipFlag isAdvanced) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext pLevel, List<Component> components, TooltipFlag isAdvanced) {
         if (isAllTypeCreative(stack)) {
             components.add(Component.translatable("tooltip.tacz.ammo_box.usage.all_type_creative").withStyle(ChatFormatting.GOLD));
             return;

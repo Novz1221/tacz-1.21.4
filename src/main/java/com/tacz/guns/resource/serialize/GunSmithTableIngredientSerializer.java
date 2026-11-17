@@ -53,7 +53,7 @@ public class GunSmithTableIngredientSerializer implements JsonDeserializer<GunSm
             } else if (object.has("tag")) {
                 ResourceLocation id = ResourceLocation.parse(GsonHelper.getAsString(object, "tag"));
                 TagKey<Item> tag = TagKey.create(Registries.ITEM, id);
-                BuiltInRegistries.ITEM.get(tag).ifPresent(set -> set.forEach(holder -> out.add(holder.value())));
+                BuiltInRegistries.ITEM.getValue(tag).ifPresent(set -> set.forEach(holder -> out.add(holder.value())));
             } else {
                 throw new JsonSyntaxException("Unsupported ingredient: " + object);
             }
@@ -61,7 +61,7 @@ public class GunSmithTableIngredientSerializer implements JsonDeserializer<GunSm
             String value = element.getAsString();
             if (value.startsWith("#")) {
                 TagKey<Item> tag = TagKey.create(Registries.ITEM, ResourceLocation.parse(value.substring(1)));
-                BuiltInRegistries.ITEM.get(tag).ifPresent(set -> set.forEach(holder -> out.add(holder.value())));
+                BuiltInRegistries.ITEM.getValue(tag).ifPresent(set -> set.forEach(holder -> out.add(holder.value())));
             } else {
                 out.add(BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(value)));
             }

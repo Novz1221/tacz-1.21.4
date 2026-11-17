@@ -38,6 +38,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class TargetBlock extends BaseEntityBlock {
+    @Override
+    protected com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.BaseEntityBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(() -> this);
+    }
+
     public static final IntegerProperty OUTPUT_POWER = BlockStateProperties.POWER;
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
@@ -186,10 +191,10 @@ public class TargetBlock extends BaseEntityBlock {
             world.setBlock(above, state.setValue(HALF, DoubleBlockHalf.UPPER), Block.UPDATE_ALL);
             world.blockUpdated(pos, Blocks.AIR);
             state.updateNeighbourShapes(world, pos, Block.UPDATE_ALL);
-            if (stack.hasCustomHoverName()) {
+            if (cn.sh1rocu.tacz.util.ItemNbt.hasCustomName(stack)) {
                 BlockEntity blockentity = world.getBlockEntity(pos);
                 if (blockentity instanceof TargetBlockEntity e) {
-                    GameProfile gameprofile = new GameProfile(null, stack.getHoverName().getString());
+                    GameProfile gameprofile = new GameProfile(net.minecraft.core.UUIDUtil.createOfflinePlayerUUID(stack.getHoverName().getString()), stack.getHoverName().getString());
                     e.setOwner(gameprofile);
                     e.setCustomName(stack.getHoverName());
                     e.refresh();
@@ -203,7 +208,7 @@ public class TargetBlock extends BaseEntityBlock {
         BlockPos blockPos = state.getValue(HALF) == DoubleBlockHalf.LOWER ? pos : pos.below();
         BlockEntity blockentity = level.getBlockEntity(blockPos);
         if (blockentity instanceof TargetBlockEntity e) {
-            return new ItemStack(this).setHoverName(e.getCustomName());
+            return new cn.sh1rocu.tacz.util.ItemNbt.setName(ItemStack(this), e.getCustomName());
         }
         return super.getCloneItemStack(level, pos, state, includeData);
     }

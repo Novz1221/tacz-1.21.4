@@ -44,7 +44,7 @@ public class ModItems {
     public static Item AMMO_STORAGE_DIAMOND = register("ammo_storage_diamond", () -> new AmmoStorageBlockItem(ModBlocks.AMMO_STORAGE_DIAMOND));
     public static Item GUN_DISPLAY_CASE = register("gun_display_case", () -> new BlockItem(ModBlocks.GUN_DISPLAY_CASE, cn.sh1rocu.tacz.util.IdProps.item()) {
         @Override
-        public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        public void appendHoverText(ItemStack stack, Item.TooltipContext level, List<Component> tooltip, TooltipFlag flag) {
             tooltip.add(Component.translatable("tooltip.tacz.gun_display_case").withStyle(ChatFormatting.GRAY));
         }
     });

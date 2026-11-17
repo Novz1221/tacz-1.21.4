@@ -19,8 +19,6 @@ public final class CommonRegistry {
         ModSyncedEntityData.init();
         TargetHitTrigger.register();
         GunRefitTrigger.register();
-        CauldronInteraction.WATER.put(ModItems.GUN_PEGBOARD, CauldronInteraction.DYED_ITEM);
-        CauldronInteraction.WATER.put(ModItems.GLOW_GUN_PEGBOARD, CauldronInteraction.DYED_ITEM);
     }
 
     public static void onLoadComplete() {

@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class GunSmithTableBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
+public class GunSmithTableBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<ResourceLocation> {
     public static final BlockEntityType<GunSmithTableBlockEntity> TYPE = net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder.create(GunSmithTableBlockEntity::new, ModBlocks.GUN_SMITH_TABLE, ModBlocks.WORKBENCH_111, ModBlocks.WORKBENCH_121, ModBlocks.WORKBENCH_211).build();
 
     private static final String ID_TAG = "BlockId";
@@ -63,9 +63,9 @@ public class GunSmithTableBlockEntity extends BlockEntity implements ExtendedScr
     }
 
     @Override
-    public void writeScreenOpeningData(ServerPlayer serverPlayer, FriendlyByteBuf buf) {
-        ResourceLocation rl = this.getId() == null ? DefaultAssets.DEFAULT_BLOCK_ID : this.getId();
-        buf.writeResourceLocation(rl);
+    public ResourceLocation getScreenOpeningData(ServerPlayer serverPlayer) {
+        return @Override
+    ;
     }
 
     @Nullable

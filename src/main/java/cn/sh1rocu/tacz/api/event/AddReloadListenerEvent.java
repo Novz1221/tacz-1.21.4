@@ -60,9 +60,9 @@ public class AddReloadListenerEvent extends BaseEvent {
         }
 
         @Override
-        public CompletableFuture<Void> reload(final PreparationBarrier stage, final ResourceManager resourceManager, final ProfilerFiller preparationsProfiler, final ProfilerFiller reloadProfiler, final Executor backgroundExecutor, final Executor gameExecutor) {
+        public CompletableFuture<Void> reload(final PreparationBarrier stage, final ResourceManager resourceManager, final Executor backgroundExecutor, final Executor gameExecutor) {
             if (FabricLoader.getInstance().isModLoaded(GunMod.MOD_ID))
-                return wrapped.reload(stage, resourceManager, preparationsProfiler, reloadProfiler, backgroundExecutor, gameExecutor);
+                return wrapped.reload(stage, resourceManager, backgroundExecutor, gameExecutor);
             else
                 return CompletableFuture.completedFuture(null);
         }

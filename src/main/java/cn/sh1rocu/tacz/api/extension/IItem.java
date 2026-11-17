@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 
 public interface IItem {
     default int tacz$getMaxStackSize(ItemStack stack) {
-        return ((Item) this).getMaxStackSize();
+        return ((Item) this).getDefaultMaxStackSize();
     }
 
     default boolean tacz$onEntitySwing(ItemStack stack, LivingEntity entity) {

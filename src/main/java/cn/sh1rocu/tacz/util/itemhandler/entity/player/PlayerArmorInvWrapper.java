@@ -32,7 +32,7 @@ public class PlayerArmorInvWrapper extends RangedWrapper {
 
 
     private boolean canEquip(ItemStack stack, EquipmentSlot armorType) {
-        return LivingEntity.getEquipmentSlotForItem(stack) == armorType;
+        return getInventoryPlayer().player.getEquipmentSlotForItem(stack) == armorType;
     }
 
     public Inventory getInventoryPlayer() {

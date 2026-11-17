@@ -89,7 +89,9 @@ public class AttachmentItem extends Item implements AttachmentItemDataAccessor, 
     }
 
     @Override
-    public void verifyTagAfterLoad(@NotNull CompoundTag tag) {
-        updateAttachmentIdInTag(tag);
+    public void verifyComponentsAfterLoad(ItemStack stack) {
+        if (cn.sh1rocu.tacz.util.ItemNbt.hasTag(stack)) {
+            updateAttachmentIdInTag(cn.sh1rocu.tacz.util.ItemNbt.getOrCreateTag(stack));
+        }
     }
 }

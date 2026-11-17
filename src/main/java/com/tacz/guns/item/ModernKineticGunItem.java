@@ -57,8 +57,8 @@ public class ModernKineticGunItem extends AbstractGunItem implements GunItemData
     public static final String TYPE_NAME = "modern_kinetic";
 
     private static final DoubleFunction<AttributeModifier> AM_FACTORY = amount -> new AttributeModifier(
-            UUID.randomUUID(), "TACZ Melee Damage",
-            amount, AttributeModifier.Operation.ADDITION
+            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("tacz", "melee_damage"),
+            amount, AttributeModifier.Operation.ADD_VALUE
     );
 
     public ModernKineticGunItem() {
@@ -523,7 +523,7 @@ public class ModernKineticGunItem extends AbstractGunItem implements GunItemData
                 return (float) instance.getValue();
             } finally {
                 instance.setBaseValue(oldBase);
-                instance.removeModifier(modifier);
+                instance.removeModifier(modifier.id());
             }
         });
         // 而后检查是否在锥形范围内
@@ -569,13 +569,12 @@ public class ModernKineticGunItem extends AbstractGunItem implements GunItemData
             target.hurt(user.damageSources().mobAttack(user), damage);
         }
         // 修复近战枪械不触发神化词条/宝石的bug
-        user.doEnchantDamageEffects(user, target);
 
         if (!target.isAlive()) {
             return;
         }
         for (EffectData data : effects) {
-            MobEffect mobEffect = BuiltInRegistries.MOB_EFFECT.get(data.getEffectId());
+            net.minecraft.core.Holder<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.get(data.getEffectId()).orElse(null);
             if (mobEffect == null) {
                 continue;
             }

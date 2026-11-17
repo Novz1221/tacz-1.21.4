@@ -42,6 +42,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class GunPegboardBlock extends BaseEntityBlock implements IPistonPushReaction {
+    @Override
+    protected com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.BaseEntityBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(() -> this);
+    }
+
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty DYED = BooleanProperty.create("dyed");
     public static final EnumProperty<PegboardShape> SHAPE = EnumProperty.create("shape", PegboardShape.class);

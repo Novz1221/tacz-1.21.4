@@ -33,7 +33,7 @@ public class CraftingHelper {
         if (!BuiltInRegistries.ITEM.containsKey(itemKey))
             throw new JsonSyntaxException("Unknown item '" + itemName + "'");
 
-        Item item = BuiltInRegistries.ITEM.get(itemKey);
+        Item item = BuiltInRegistries.ITEM.getValue(itemKey);
         if (disallowsAirInRecipe && item == Items.AIR)
             throw new JsonSyntaxException("Invalid item: " + itemName);
         return Objects.requireNonNull(item);

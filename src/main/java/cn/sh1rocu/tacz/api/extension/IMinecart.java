@@ -4,6 +4,6 @@ import net.minecraft.world.entity.vehicle.AbstractMinecart;
 
 public interface IMinecart {
     default boolean tacz$canBeRidden() {
-        return ((AbstractMinecart) this).getMinecartType() == AbstractMinecart.Type.RIDEABLE;
+        return this instanceof net.minecraft.world.entity.vehicle.Minecart;
     }
 }

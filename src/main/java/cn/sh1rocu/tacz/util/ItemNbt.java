@@ -60,6 +60,15 @@ public final class ItemNbt {
         return data == null ? null : data.getUnsafe();
     }
 
+    public static boolean hasCustomName(ItemStack stack) {
+        return stack.has(DataComponents.CUSTOM_NAME);
+    }
+
+    public static ItemStack setName(ItemStack stack, net.minecraft.network.chat.Component name) {
+        stack.set(DataComponents.CUSTOM_NAME, name);
+        return stack;
+    }
+
     public static boolean hasTag(ItemStack stack) {
         return stack.has(DataComponents.CUSTOM_DATA);
     }

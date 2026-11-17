@@ -62,20 +62,20 @@ public class TargetBlockEntity extends BlockEntity implements Nameable {
 
     public void setOwner(@Nullable GameProfile owner) {
         this.owner = owner;
-        SkullBlockEntity.updateGameprofile(this.owner, gameProfile -> {
-            this.owner = gameProfile;
-            this.refresh();
-        });
+        this.refresh();
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         if (tag.contains(OWNER_TAG, Tag.TAG_COMPOUND)) {
-            this.owner = NbtUtils.readGameProfile(tag.getCompound(OWNER_TAG));
+            CompoundTag ownerTag = tag.getCompound(OWNER_TAG);
+            String ownerName = ownerTag.getString("Name");
+            java.util.UUID ownerId = ownerTag.hasUUID("Id") ? ownerTag.getUUID("Id") : net.minecraft.core.UUIDUtil.createOfflinePlayerUUID(ownerName);
+            this.owner = new GameProfile(ownerId, ownerName);
         }
         if (tag.contains(CUSTOM_NAME_TAG, Tag.TAG_STRING)) {
-            this.name = Component.Serializer.fromJson(tag.getString(CUSTOM_NAME_TAG));
+            this.name = Component.Serializer.fromJson(tag.getString(CUSTOM_NAME_TAG), registries);
         }
     }
 
@@ -83,10 +83,13 @@ public class TargetBlockEntity extends BlockEntity implements Nameable {
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         if (owner != null) {
-            tag.put(OWNER_TAG, NbtUtils.writeGameProfile(new CompoundTag(), owner));
+            CompoundTag ownerTag = new CompoundTag();
+            ownerTag.putString("Name", owner.getName());
+            ownerTag.putUUID("Id", owner.getId());
+            tag.put(OWNER_TAG, ownerTag);
         }
         if (this.name != null) {
-            tag.putString(CUSTOM_NAME_TAG, Component.Serializer.toJson(this.name));
+            tag.putString(CUSTOM_NAME_TAG, Component.Serializer.toJson(this.name, registries));
         }
     }
 
