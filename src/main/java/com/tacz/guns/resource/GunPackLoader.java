@@ -1,5 +1,8 @@
 package com.tacz.guns.resource;
 
+import java.util.Optional;
+import net.minecraft.server.packs.PackSelectionConfig;
+import net.minecraft.server.packs.PackLocationInfo;
 import cn.sh1rocu.tacz.util.VersionConverter;
 import cn.sh1rocu.tacz.util.forge.PathPackResources;
 import com.google.gson.JsonIOException;
@@ -89,7 +92,7 @@ public enum GunPackLoader implements RepositorySource {
         for (GunPack gunPack : gunPacks) {
             PackResources packResources;
             if (Files.isDirectory(gunPack.path)) {
-                packResources = new PathPackResources(gunPack.name, false, gunPack.path) {
+                packResources = new PathPackResources(new PackLocationInfo(gunPack.name, Component.literal(gunPack.name), PackSource.BUILT_IN, Optional.empty()), gunPack.path) {
                     @Override
                     @NotNull
                     protected Path resolve(String... paths) {
@@ -101,26 +104,40 @@ public enum GunPackLoader implements RepositorySource {
                     }
                 };
             } else {
-                packResources = new FilePackResources(gunPack.name, gunPack.path.toFile(), false);
+                packResources = new FilePackResources.FileResourcesSupplier(gunPack.path).openPrimary(new PackLocationInfo(gunPack.name, Component.literal(gunPack.name), PackSource.BUILT_IN, Optional.empty()));
             }
             extensionPacks.add(packResources);
         }
 
 
-        return Pack.readMetaAndCreate("tacz_resources", Component.literal("TACZ Resources"), true, (id) -> {
-            return new NamespaceFilteredPackResources(id, false, new PackMetadataSection(Component.translatable("tacz.resources.modresources"),
-                    SharedConstants.getCurrentVersion().getPackVersion(packType)), extensionPacks) {
-                public IoSupplier<InputStream> getRootResource(String... paths) {
-                    if (paths.length == 1 && paths[0].equals("pack.png")) {
-                        Path logoPath = getModIcon("tacz");
-                        if (logoPath != null) {
-                            return IoSupplier.create(logoPath);
+        PackLocationInfo location = new PackLocationInfo("tacz_resources", Component.literal("TACZ Resources"), PackSource.BUILT_IN, Optional.empty());
+        Pack.ResourcesSupplier supplier = new Pack.ResourcesSupplier() {
+            private PackResources create(PackLocationInfo info) {
+                return new NamespaceFilteredPackResources(info, new PackMetadataSection(Component.translatable("tacz.resources.modresources"),
+                        SharedConstants.getCurrentVersion().getPackVersion(packType), Optional.empty()), extensionPacks) {
+                    public IoSupplier<InputStream> getRootResource(String... paths) {
+                        if (paths.length == 1 && paths[0].equals("pack.png")) {
+                            Path logoPath = getModIcon("tacz");
+                            if (logoPath != null) {
+                                return IoSupplier.create(logoPath);
+                            }
                         }
+                        return null;
                     }
-                    return null;
-                }
-            };
-        }, packType, Pack.Position.BOTTOM, PackSource.BUILT_IN);
+                };
+            }
+
+            @Override
+            public PackResources openPrimary(PackLocationInfo info) {
+                return create(info);
+            }
+
+            @Override
+            public PackResources openFull(PackLocationInfo info, Pack.Metadata metadata) {
+                return create(info);
+            }
+        };
+        return Pack.readMetaAndCreate(location, supplier, packType, new PackSelectionConfig(true, Pack.Position.BOTTOM, false));
     }
 
     public static @Nullable Path getModIcon(String modId) {

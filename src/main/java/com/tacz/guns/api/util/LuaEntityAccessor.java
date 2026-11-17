@@ -21,7 +21,8 @@ public record LuaEntityAccessor(LivingEntity entity) {
     }
 
     public boolean hurt(float amount) {
-        return entity.hurt(entity.level().damageSources().generic(), amount);
+        entity.hurt(entity.level().damageSources().generic(), amount);
+        return true;
     }
 
     public Component literal(String text) {

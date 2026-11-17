@@ -41,9 +41,9 @@ public class LivingEntitySpeedModifier {
                     float targetSpeed = cacheProperty.getCache(WeightModifier.ID);
                     targetSpeed *= (float) -weightFactor;
                     AttributeModifier currentModifier = speedModifier.getModifier(WEIGHT_SPEED_MODIFIER_UUID);
-                    if (currentModifier == null || currentModifier.getAmount() != targetSpeed) {
+                    if (currentModifier == null || currentModifier.amount() != targetSpeed) {
                         speedModifier.removeModifier(WEIGHT_SPEED_MODIFIER_UUID);
-                        speedModifier.addTransientModifier(new AttributeModifier(WEIGHT_SPEED_MODIFIER_UUID, targetSpeed, AttributeModifier.Operation.MULTIPLY_BASE));
+                        speedModifier.addTransientModifier(new AttributeModifier(WEIGHT_SPEED_MODIFIER_UUID, targetSpeed, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
                     }
                 }
 
@@ -51,9 +51,9 @@ public class LivingEntitySpeedModifier {
                 if (speed != null) {
                     double targetSpeed = getTargetSpeed(speed);
                     AttributeModifier currentModifier = speedModifier.getModifier(EXTRA_SPEED_MODIFIER_UUID);
-                    if (currentModifier == null || currentModifier.getAmount() != targetSpeed) {
+                    if (currentModifier == null || currentModifier.amount() != targetSpeed) {
                         speedModifier.removeModifier(EXTRA_SPEED_MODIFIER_UUID);
-                        speedModifier.addTransientModifier(new AttributeModifier(EXTRA_SPEED_MODIFIER_UUID, targetSpeed, AttributeModifier.Operation.MULTIPLY_TOTAL));
+                        speedModifier.addTransientModifier(new AttributeModifier(EXTRA_SPEED_MODIFIER_UUID, targetSpeed, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
                     }
                 }
             }

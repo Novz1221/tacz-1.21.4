@@ -1,23 +1,24 @@
 package com.tacz.guns.advancement;
 
-import com.google.gson.JsonObject;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.advancements.critereon.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.GsonHelper;
+
+import java.util.Optional;
 
 public class TargetHitTrigger extends SimpleCriterionTrigger<TargetHitTrigger.TriggerInstance> {
     public static final TargetHitTrigger INSTANCE = new TargetHitTrigger();
     static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("tacz", "target_hit");
 
     public static void register() {
-        CriteriaTriggers.register(INSTANCE);
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return ID;
+        Registry.register(BuiltInRegistries.TRIGGER_TYPES, ID, INSTANCE);
     }
 
     public void trigger(ServerPlayer player, double distance) {
@@ -25,30 +26,18 @@ public class TargetHitTrigger extends SimpleCriterionTrigger<TargetHitTrigger.Tr
     }
 
     @Override
-    protected TriggerInstance createInstance(JsonObject json, ContextAwarePredicate player, DeserializationContext context) {
-        MinMaxBounds.Doubles distance = MinMaxBounds.Doubles.fromJson(json.get("distance"));
-        return new TriggerInstance(player, distance);
+    public Codec<TriggerInstance> codec() {
+        return TriggerInstance.CODEC;
     }
 
-    public static class TriggerInstance extends AbstractCriterionTriggerInstance {
-        private final MinMaxBounds.Doubles distance;
-
-        public TriggerInstance(ContextAwarePredicate player, MinMaxBounds.Doubles distance) {
-            super(ID, player);
-            this.distance = distance;
-        }
+    public record TriggerInstance(Optional<ContextAwarePredicate> player, MinMaxBounds.Doubles distance) implements SimpleInstance {
+        public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+                MinMaxBounds.Doubles.CODEC.optionalFieldOf("distance", MinMaxBounds.Doubles.ANY).forGetter(TriggerInstance::distance)
+        ).apply(instance, TriggerInstance::new));
 
         public boolean matches(double distance) {
             return this.distance.matches(distance);
-        }
-
-        @Override
-        public JsonObject serializeToJson(SerializationContext context) {
-            JsonObject json = super.serializeToJson(context);
-            if (!this.distance.isAny()) {
-                json.add("distance", this.distance.serializeToJson());
-            }
-            return json;
         }
     }
 }

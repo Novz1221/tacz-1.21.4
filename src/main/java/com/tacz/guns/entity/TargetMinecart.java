@@ -34,13 +34,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static net.minecraft.world.entity.vehicle.AbstractMinecart.Type.RIDEABLE;
 
 public class TargetMinecart extends AbstractMinecart implements ITargetEntity, IMinecart {
     public static EntityType<TargetMinecart> TYPE = EntityType.Builder.<TargetMinecart>of(TargetMinecart::new, MobCategory.MISC)
             .sized(0.75F, 2.4F)
             .clientTrackingRange(8)
-            .build("target_minecart");
+            .build(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("tacz", "target_minecart")));
 
     private @Nullable GameProfile gameProfile = null;
 
@@ -57,7 +56,7 @@ public class TargetMinecart extends AbstractMinecart implements ITargetEntity, I
         if (this.level().isClientSide() || this.isRemoved()) {
             return;
         }
-        if (!(source.isIndirect())) {
+        if (source.isDirect()) {
             return;
         }
         Entity sourceEntity = source.getEntity();
@@ -88,8 +87,16 @@ public class TargetMinecart extends AbstractMinecart implements ITargetEntity, I
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource source) {
-        return source.is(DamageTypeTags.IS_EXPLOSION) || super.isInvulnerableTo(source);
+    public boolean hurtServer(net.minecraft.server.level.ServerLevel level, DamageSource source, float amount) {
+        if (source.is(DamageTypeTags.IS_EXPLOSION)) {
+            return false;
+        }
+        return super.hurtServer(level, source, amount);
+    }
+
+    @Override
+    public boolean ignoreExplosion(net.minecraft.world.level.Explosion explosion) {
+        return true;
     }
 
     @Override
@@ -105,18 +112,6 @@ public class TargetMinecart extends AbstractMinecart implements ITargetEntity, I
         }
         size *= RenderConfig.TARGET_RENDER_DISTANCE.get() * getViewScale();
         return distance < size * size;
-    }
-
-    @Override
-    public void destroy(DamageSource source) {
-        this.remove(Entity.RemovalReason.KILLED);
-        if (this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
-            ItemStack itemStack = new ItemStack(ModItems.TARGET_MINECART);
-            if (this.hasCustomName()) {
-                cn.sh1rocu.tacz.util.ItemNbt.setName(itemStack, this.getCustomName());
-            }
-            this.spawnAtLocation(itemStack);
-        }
     }
 
     @Override
@@ -136,8 +131,7 @@ public class TargetMinecart extends AbstractMinecart implements ITargetEntity, I
     @Nullable
     public GameProfile getGameProfile() {
         if (this.gameProfile == null && this.getCustomName() != null) {
-            this.gameProfile = new GameProfile(null, this.getCustomName().getString());
-            SkullBlockEntity.updateGameprofile(this.gameProfile, gameProfile -> this.gameProfile = gameProfile);
+            this.gameProfile = new GameProfile(net.minecraft.core.UUIDUtil.createOfflinePlayerUUID(this.getCustomName().getString()), this.getCustomName().getString());
         }
         return gameProfile;
     }
@@ -148,14 +142,8 @@ public class TargetMinecart extends AbstractMinecart implements ITargetEntity, I
         return ModBlocks.TARGET.defaultBlockState();
     }
 
-    @NotNull
     @Override
-    public Type getMinecartType() {
-        return RIDEABLE;
-    }
-
-    @Override
-    protected double getMaxSpeed() {
+    protected double getMaxSpeed(net.minecraft.server.level.ServerLevel level) {
         return 0.2F;
     }
 }

@@ -298,7 +298,7 @@ public class Serializers {
 
         @Override
         public Tag write(ItemStack value) {
-            return value.save(new CompoundTag());
+            return cn.sh1rocu.tacz.util.ItemNbt.save(value, new CompoundTag());
         }
 
         @Override

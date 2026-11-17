@@ -2,55 +2,69 @@ package com.tacz.guns.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.tacz.guns.GunMod;
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
-import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.fml.config.ConfigTracker;
-import net.neoforged.fml.config.ModConfig;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Tiny stand-alone config that has to be readable before the regular config system is loaded
+ * (the gunpack extraction runs very early). ModConfig is final in current Forge Config API Port,
+ * so the old ModConfig subclass hack was replaced with a direct NightConfig read.
+ */
 public class PreLoadConfig {
+    private static final String KEY = "gunpack.DefaultPackDebug";
+    private static Path file;
+
+    public static final Flag override = new Flag();
+
     public static void init() {
-        NeoForgeConfigRegistry.INSTANCE.register(GunMod.MOD_ID, ModConfig.Type.COMMON, spec, "tacz-pre.toml");
-
-    }
-
-    private static ModConfigSpec spec;
-    private static PreLoadModConfig loadedConfig;
-    public static ModConfigSpec.BooleanValue override;
-
-    static {
-        ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
-        builder.push("gunpack");
-        builder.comment("Enable to preserve local default gun pack edits.",
-                "When disabled, changes to the TACZ version or bundled resources trigger replacement at startup.",
-                "To regenerate, disable this option, delete <game directory>/tacz/tacz_default_gun, then restart.");
-        override = builder.define("DefaultPackDebug", false);
-        builder.pop();
-        spec = builder.build();
-    }
-
-    public static PreLoadModConfig getModConfig() {
-        var c = new PreLoadModConfig(ModConfig.Type.COMMON, spec, GunMod.MOD_ID, "tacz-pre.toml");
-        // 从 ConfigTracker 中移除，防止从默认文件夹重复加载
-        ConfigTracker.INSTANCE.configSets().get(ModConfig.Type.COMMON).remove(c);
-        ConfigTracker.INSTANCE.fileMap().remove(c.getFileName(), c);
-        return c;
+        // nothing to register; the file is read by load(Path)
     }
 
     public static void load(Path configBasePath) {
-        if (spec.isLoaded()) return;
-        PreLoadModConfig config = getModConfig();
-        final CommentedFileConfig configData = config.getHandler().reader(configBasePath).apply(config);
-        config.setConfigData(configData);
-        config.fireEvent(config);
-        loadedConfig = config;
-        config.save();
+        file = configBasePath.resolve("tacz-pre.toml");
+        try (CommentedFileConfig config = CommentedFileConfig.builder(file).sync().build()) {
+            if (Files.exists(file)) {
+                config.load();
+            }
+            Object value = config.get(KEY);
+            if (value == null) {
+                config.setComment("gunpack", "Enable to preserve local default gun pack edits.\nWhen disabled, changes to the TACZ version or bundled resources trigger replacement at startup.\nTo regenerate, disable this option, delete <game directory>/tacz/tacz_default_gun, then restart.");
+                config.set(KEY, false);
+                config.save();
+                override.value = false;
+            } else {
+                override.value = Boolean.parseBoolean(String.valueOf(value));
+            }
+        } catch (Exception e) {
+            GunMod.LOGGER.warn("Failed to read tacz-pre.toml, using defaults", e);
+        }
     }
 
     public static void save() {
-        if (loadedConfig != null) {
-            loadedConfig.save();
+        if (file == null) {
+            return;
+        }
+        try (CommentedFileConfig config = CommentedFileConfig.builder(file).sync().build()) {
+            if (Files.exists(file)) {
+                config.load();
+            }
+            config.set(KEY, override.value);
+            config.save();
+        } catch (Exception e) {
+            GunMod.LOGGER.warn("Failed to save tacz-pre.toml", e);
+        }
+    }
+
+    public static final class Flag {
+        private volatile boolean value;
+
+        public boolean get() {
+            return value;
+        }
+
+        public void set(boolean value) {
+            this.value = value;
         }
     }
 }

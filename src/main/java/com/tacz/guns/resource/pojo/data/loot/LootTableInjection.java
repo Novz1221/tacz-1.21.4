@@ -1,31 +1,28 @@
 package com.tacz.guns.resource.pojo.data.loot;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.Deserializers;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.LootTable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public record LootTableInjection(List<ResourceLocation> lootTables, LootTable lootTable, ResourceLocation id) {
-    private static final Gson LOOT_TABLE_GSON = Deserializers.createLootTableSerializer().create();
-
+/**
+ * TODO(1.21.4): loot tables are now codec based and live in ReloadableServerRegistries, so the old
+ * Gson based LootTable parsing was removed. Injections are parsed and kept but currently produce no items.
+ */
+public record LootTableInjection(List<ResourceLocation> lootTables, JsonObject definition, ResourceLocation id) {
     public static LootTableInjection fromJson(ResourceLocation fileId, JsonElement element) {
         JsonObject object = GsonHelper.convertToJsonObject(element, "loot injection");
         List<ResourceLocation> lootTables = readLootTables(fileId, object);
         if (!object.has("pools")) {
             throw new JsonParseException("Loot injection " + fileId + " must define pools");
         }
-
-        var lootTable = LOOT_TABLE_GSON.fromJson(object, LootTable.class);
-        return new LootTableInjection(lootTables, lootTable, fileId);
+        return new LootTableInjection(lootTables, object, fileId);
     }
 
     private static List<ResourceLocation> readLootTables(ResourceLocation fileId, JsonObject object) {
@@ -43,8 +40,6 @@ public record LootTableInjection(List<ResourceLocation> lootTables, LootTable lo
     }
 
     public List<ItemStack> createStacks(LootContext context) {
-        List<ItemStack> stacks = new ArrayList<>();
-        lootTable.getRandomItemsRaw(context, stacks::add);
-        return stacks;
+        return new ArrayList<>();
     }
 }

@@ -1,21 +1,27 @@
 package com.tacz.guns.util.block;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.tacz.guns.config.common.AmmoConfig;
 import com.tacz.guns.util.EntityUtil;
 import com.tacz.guns.util.HitboxHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
@@ -25,43 +31,98 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class ProjectileExplosion extends Explosion {
+/**
+ * 1.21.2+ made {@link Explosion} an interface (the vanilla implementation is ServerExplosion),
+ * so this class implements it directly and keeps the custom bullet-explosion logic.
+ */
+public class ProjectileExplosion implements Explosion {
     private static final ExplosionDamageCalculator DEFAULT_CONTEXT = new ExplosionDamageCalculator();
-    private final Level level;
-    private final double x;
-    private final double y;
-    private final double z;
+    private final ServerLevel level;
+    private final Vec3 center;
     private final float power;
     private final float radius;
     private final boolean knockback;
+    private final boolean fire;
     private final Entity owner;
     private final Entity exploder;
+    private final DamageSource damageSource;
+    private final BlockInteraction mode;
     private final ExplosionDamageCalculator damageCalculator;
+    private final List<BlockPos> toBlow = Lists.newArrayList();
+    private final Map<Player, Vec3> hitPlayers = Maps.newHashMap();
 
-    public ProjectileExplosion(Level level, Entity owner, Entity exploder, @Nullable DamageSource source, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float power, float radius, boolean knockback, Explosion.BlockInteraction mode) {
-        super(level, exploder, source, damageCalculator, x, y, z, radius, AmmoConfig.EXPLOSIVE_AMMO_FIRE.get(), mode);
+    public ProjectileExplosion(ServerLevel level, Entity owner, Entity exploder, @Nullable DamageSource source, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float power, float radius, boolean knockback, Explosion.BlockInteraction mode) {
         this.level = level;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.center = new Vec3(x, y, z);
         this.power = power;
         this.radius = radius;
         this.owner = owner;
         this.exploder = exploder;
-        this.damageCalculator = damageCalculator == null ? DEFAULT_CONTEXT : damageCalculator;
         this.knockback = knockback;
+        this.fire = AmmoConfig.EXPLOSIVE_AMMO_FIRE.get();
+        this.mode = mode;
+        this.damageSource = source == null ? Explosion.getDefaultDamageSource(level, exploder) : source;
+        this.damageCalculator = damageCalculator == null ? DEFAULT_CONTEXT : damageCalculator;
+    }
+
+    public List<BlockPos> getToBlow() {
+        return toBlow;
+    }
+
+    public Map<Player, Vec3> getHitPlayers() {
+        return hitPlayers;
     }
 
     @Override
+    public ServerLevel level() {
+        return level;
+    }
+
+    @Override
+    public BlockInteraction getBlockInteraction() {
+        return mode;
+    }
+
+    @Override
+    public LivingEntity getIndirectSourceEntity() {
+        return Explosion.getIndirectSourceEntity(exploder);
+    }
+
+    @Override
+    public Entity getDirectSourceEntity() {
+        return exploder;
+    }
+
+    @Override
+    public float radius() {
+        return radius;
+    }
+
+    @Override
+    public Vec3 center() {
+        return center;
+    }
+
+    @Override
+    public boolean canTriggerBlocks() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldAffectBlocklikeEntities() {
+        return false;
+    }
+
     public void explode() {
         // 防止直接调用时使用无效半径进行爆炸计算
         if (!Float.isFinite(this.radius) || this.radius <= 0) {
             return;
         }
-        this.level.gameEvent(this.exploder, GameEvent.EXPLODE, BlockPos.containing(this.x, this.y, this.z));
+        this.level.gameEvent(this.exploder, GameEvent.EXPLODE, BlockPos.containing(center));
         Set<BlockPos> set = Sets.newHashSet();
         int i = 16;
 
@@ -77,9 +138,9 @@ public class ProjectileExplosion extends Explosion {
                         d1 /= d3;
                         d2 /= d3;
                         float f = this.radius * (0.7F + this.level.random.nextFloat() * 0.6F);
-                        double blockX = this.x;
-                        double blockY = this.y;
-                        double blockZ = this.z;
+                        double blockX = this.center.x;
+                        double blockY = this.center.y;
+                        double blockZ = this.center.z;
 
                         for (float f1 = 0.3F; f > 0.0F; f -= 0.22500001F) {
                             BlockPos pos = BlockPos.containing(blockX, blockY, blockZ);
@@ -107,21 +168,20 @@ public class ProjectileExplosion extends Explosion {
             }
         }
 
-        this.getToBlow().addAll(set);
+        this.toBlow.addAll(set);
         float radius = this.radius;
-        int minX = Mth.floor(this.x - (double) radius - 1.0D);
-        int maxX = Mth.floor(this.x + (double) radius + 1.0D);
-        int minY = Mth.floor(this.y - (double) radius - 1.0D);
-        int maxY = Mth.floor(this.y + (double) radius + 1.0D);
-        int minZ = Mth.floor(this.z - (double) radius - 1.0D);
-        int maxZ = Mth.floor(this.z + (double) radius + 1.0D);
+        int minX = Mth.floor(this.center.x - (double) radius - 1.0D);
+        int maxX = Mth.floor(this.center.x + (double) radius + 1.0D);
+        int minY = Mth.floor(this.center.y - (double) radius - 1.0D);
+        int maxY = Mth.floor(this.center.y + (double) radius + 1.0D);
+        int minZ = Mth.floor(this.center.z - (double) radius - 1.0D);
+        int maxZ = Mth.floor(this.center.z + (double) radius + 1.0D);
         radius *= 2;
         List<Entity> entities = this.level.getEntities(this.exploder, new AABB(minX, minY, minZ, maxX, maxY, maxZ));
-        // net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.level, this, entities, radius);
-        Vec3 explosionPos = new Vec3(this.x, this.y, this.z);
+        Vec3 explosionPos = this.center;
 
         for (Entity entity : entities) {
-            if (entity.ignoreExplosion() || EntityUtil.isBulletDamageIgnored(entity)) {
+            if (entity.ignoreExplosion(this) || EntityUtil.isBulletDamageIgnored(entity)) {
                 continue;
             }
 
@@ -137,9 +197,9 @@ public class ProjectileExplosion extends Explosion {
 
             if (!(entity instanceof LivingEntity)) {
                 strength = Math.sqrt(entity.distanceToSqr(explosionPos)) * 2 / radius;
-                deltaX = entity.getX() - this.x;
-                deltaY = (entity instanceof PrimedTnt ? entity.getY() : entity.getEyeY()) - this.y;
-                deltaZ = entity.getZ() - this.z;
+                deltaX = entity.getX() - this.center.x;
+                deltaY = (entity instanceof PrimedTnt ? entity.getY() : entity.getEyeY()) - this.center.y;
+                deltaZ = entity.getZ() - this.center.z;
             } else {
                 deltaX = (boundingBox.maxX + boundingBox.minX) / 2;
                 deltaY = (boundingBox.maxY + boundingBox.minY) / 2;
@@ -160,13 +220,13 @@ public class ProjectileExplosion extends Explosion {
                 d[13] = new Vec3(deltaX, deltaY, boundingBox.maxZ);
                 d[14] = new Vec3(deltaX, deltaY, deltaZ);
                 for (int s = 0; s < 15; s++) {
-                    result = BlockRayTrace.rayTraceBlocks(this.level, new ClipContext(explosionPos, d[s], ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null));
+                    result = BlockRayTrace.rayTraceBlocks(this.level, new ClipContext(explosionPos, d[s], ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, (Entity) null));
                     minDistance = (result.getType() != BlockHitResult.Type.BLOCK) ? Math.min(minDistance, explosionPos.distanceTo(d[s])) : minDistance;
                 }
                 strength = minDistance * 2 / radius;
-                deltaX -= this.x;
-                deltaY -= this.y;
-                deltaZ -= this.z;
+                deltaX -= this.center.x;
+                deltaY -= this.center.y;
+                deltaZ -= this.center.z;
             }
 
             if (strength > 1.0D) {
@@ -182,10 +242,10 @@ public class ProjectileExplosion extends Explosion {
             }
 
             double damage = 1.0D - strength;
-            entity.hurt(this.getDamageSource(), (float) damage * this.power);
+            entity.hurtServer(this.level, this.damageSource, (float) damage * this.power);
 
-            if (entity instanceof LivingEntity) {
-                damage = (float) ProtectionEnchantment.getExplosionKnockbackAfterDampener((LivingEntity) entity, damage);
+            if (entity instanceof LivingEntity livingEntity) {
+                damage = damage * (1.0D - livingEntity.getAttributeValue(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE));
             }
 
             float multiplier = this.power * radius / 500;
@@ -194,8 +254,32 @@ public class ProjectileExplosion extends Explosion {
                 entity.setDeltaMovement(entity.getDeltaMovement().add(deltaX * damage * multiplier, deltaY * damage * multiplier, deltaZ * damage * multiplier));
                 if (entity instanceof Player player) {
                     if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
-                        this.getHitPlayers().put(player, new Vec3(deltaX * damage * multiplier, deltaY * damage * multiplier, deltaZ * damage * multiplier));
+                        this.hitPlayers.put(player, new Vec3(deltaX * damage * multiplier, deltaY * damage * multiplier, deltaZ * damage * multiplier));
                     }
+                }
+            }
+        }
+    }
+
+    /** Destroys the collected blocks (replaces the removed Explosion#finalizeExplosion). */
+    public void finalizeExplosion() {
+        if (this.mode == BlockInteraction.DESTROY) {
+            for (BlockPos pos : this.toBlow) {
+                BlockState state = this.level.getBlockState(pos);
+                if (state.isAir()) {
+                    continue;
+                }
+                Block block = state.getBlock();
+                Block.dropResources(state, this.level, pos, state.hasBlockEntity() ? this.level.getBlockEntity(pos) : null, this.exploder, ItemStack.EMPTY);
+                this.level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                block.wasExploded(this.level, pos, this);
+            }
+        }
+        if (this.fire) {
+            for (BlockPos pos : this.toBlow) {
+                if (this.level.random.nextInt(3) == 0 && this.level.getBlockState(pos).isAir()
+                        && this.level.getBlockState(pos.below()).isSolidRender()) {
+                    this.level.setBlockAndUpdate(pos, BaseFireBlock.getState(this.level, pos));
                 }
             }
         }

@@ -62,12 +62,12 @@ public class DataHolderCapabilityProvider implements Component {
     }
 
     @Override
-    public void readFromNbt(@NotNull CompoundTag tag) {
+    public void readFromNbt(@NotNull CompoundTag tag, net.minecraft.core.HolderLookup.Provider registryLookup) {
         deserializeNBT(tag.getList("DataHolder", Tag.TAG_COMPOUND));
     }
 
     @Override
-    public void writeToNbt(@NotNull CompoundTag tag) {
+    public void writeToNbt(@NotNull CompoundTag tag, net.minecraft.core.HolderLookup.Provider registryLookup) {
         ListTag listTag = serializeNBT();
         tag.put("DataHolder", listTag);
     }

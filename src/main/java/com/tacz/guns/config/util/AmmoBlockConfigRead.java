@@ -50,7 +50,7 @@ public final class AmmoBlockConfigRead {
                 // 配置加载时 tag 尚未绑定，缓存 TagKey 可随数据包重载自动匹配新内容。
                 tags.add(TagKey.create(Registries.BLOCK, id));
             } else if (BuiltInRegistries.BLOCK.containsKey(id)) {
-                blocks.add(BuiltInRegistries.BLOCK.get(id));
+                blocks.add(BuiltInRegistries.BLOCK.getValue(id));
             } else {
                 GunMod.LOGGER.warn("Ignoring unknown block ID '{}' in ammo.{}", entry, configName);
             }

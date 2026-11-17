@@ -32,13 +32,13 @@ public class ExplodeUtil {
 //        }
         // 执行爆炸逻辑
         explosion.explode();
-        explosion.finalizeExplosion(true);
-        if (mode == Explosion.BlockInteraction.KEEP) {
-            explosion.clearToBlow();
-        }
+        explosion.finalizeExplosion();
         // 客户端发包，发送爆炸相关信息
         level.players().stream().filter(player -> Mth.sqrt((float) player.distanceToSqr(hitPos)) < AmmoConfig.EXPLOSIVE_AMMO_VISIBLE_DISTANCE.get()).forEach(player -> {
-            ClientboundExplodePacket packet = new ClientboundExplodePacket(hitPos.x(), hitPos.y(), hitPos.z(), radius, explosion.getToBlow(), explosion.getHitPlayers().get(player));
+            ClientboundExplodePacket packet = new ClientboundExplodePacket(hitPos,
+                    java.util.Optional.ofNullable(explosion.getHitPlayers().get(player)),
+                    destroy && radius >= 2.0F ? net.minecraft.core.particles.ParticleTypes.EXPLOSION_EMITTER : net.minecraft.core.particles.ParticleTypes.EXPLOSION,
+                    net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE);
             player.connection.send(packet);
         });
     }

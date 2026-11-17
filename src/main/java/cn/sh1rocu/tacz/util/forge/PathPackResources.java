@@ -39,8 +39,8 @@ public class PathPackResources extends AbstractPackResources {
      * @param isBuiltin whether this pack resources should be considered builtin
      * @param source    the root path of the pack. This needs to point to the folder that contains "assets" and/or "data", not the asset folder itself!
      */
-    public PathPackResources(String packId, boolean isBuiltin, final Path source) {
-        super(packId, isBuiltin);
+    public PathPackResources(net.minecraft.server.packs.PackLocationInfo location, final Path source) {
+        super(location);
         this.source = source;
     }
 
@@ -79,9 +79,9 @@ public class PathPackResources extends AbstractPackResources {
 
     @Override
     public void listResources(PackType type, String namespace, String path, ResourceOutput resourceOutput) {
-        FileUtil.decomposePath(path).get()
-                .ifLeft(parts -> net.minecraft.server.packs.PathPackResources.listPath(namespace, resolve(type.getDirectory(), namespace).toAbsolutePath(), parts, resourceOutput))
-                .ifRight(dataResult -> LOGGER.error("Invalid path {}: {}", path, dataResult.message()));
+        FileUtil.decomposePath(path)
+                .ifSuccess(parts -> net.minecraft.server.packs.PathPackResources.listPath(namespace, resolve(type.getDirectory(), namespace).toAbsolutePath(), parts, resourceOutput))
+                .ifError(error -> LOGGER.error("Invalid path {}: {}", path, error.message()));
     }
 
     @Override

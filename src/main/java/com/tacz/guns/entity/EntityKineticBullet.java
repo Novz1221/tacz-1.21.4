@@ -80,12 +80,11 @@ import static com.tacz.guns.api.event.common.GunDamageSourcePart.NON_ARMOR_PIERC
  * 动能武器打出的子弹实体。
  */
 public class EntityKineticBullet extends Projectile implements IEntityAdditionalSpawnData {
-    public static final EntityType<EntityKineticBullet> TYPE = FabricEntityTypeBuilder
-            .<EntityKineticBullet>create(MobCategory.MISC, EntityKineticBullet::new)
-            .disableSummon().disableSaving().fireImmune()
-            .dimensions(EntityDimensions.scalable(0.0625F, 0.0625F))
-            .trackRangeChunks(5).trackedUpdateRate(5)
-            .forceTrackedVelocityUpdates(false).build();
+    public static final EntityType<EntityKineticBullet> TYPE = EntityType.Builder.<EntityKineticBullet>of(EntityKineticBullet::new, MobCategory.MISC)
+            .noSummon().noSave().fireImmune()
+            .sized(0.0625F, 0.0625F)
+            .clientTrackingRange(5).updateInterval(5)
+            .build(net.minecraft.resources.ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("tacz", "bullet")));
     public static final TagKey<EntityType<?>> USE_MAGIC_DAMAGE_ON = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("tacz:use_magic_damage_on"));
     public static final TagKey<EntityType<?>> USE_VOID_DAMAGE_ON = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("tacz:use_void_damage_on"));
     public static final TagKey<EntityType<?>> PRETEND_MELEE_DAMAGE_ON = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("tacz:pretend_melee_damage_on"));
@@ -236,7 +235,7 @@ public class EntityKineticBullet extends Projectile implements IEntityAdditional
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
     }
 
     @Override
@@ -432,7 +431,7 @@ public class EntityKineticBullet extends Projectile implements IEntityAdditional
         }
         // 点燃
         if (this.igniteEntity && AmmoConfig.IGNITE_ENTITY.get()) {
-            entity.setSecondsOnFire(this.igniteEntityTime);
+            entity.igniteForSeconds(this.igniteEntityTime);
             // 给予粒子效果
             if (this.level() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.LAVA, entity.getX(), entity.getY() + entity.getEyeHeight(), entity.getZ(), 1, 0, 0, 0, 0);

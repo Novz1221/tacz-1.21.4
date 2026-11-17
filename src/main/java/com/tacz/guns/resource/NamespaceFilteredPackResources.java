@@ -17,9 +17,9 @@ public class NamespaceFilteredPackResources extends DelegatingPackResources {
     private final Map<String, List<PackResources>> assets;
     private final Map<String, List<PackResources>> data;
 
-    public NamespaceFilteredPackResources(String id, boolean builtin, PackMetadataSection metadata,
+    public NamespaceFilteredPackResources(net.minecraft.server.packs.PackLocationInfo location, PackMetadataSection metadata,
                                           List<? extends PackResources> packs) {
-        super(id, builtin, metadata, packs);
+        super(location, metadata, packs);
         assets = indexNamespaces(PackType.CLIENT_RESOURCES, packs);
         data = indexNamespaces(PackType.SERVER_DATA, packs);
     }
