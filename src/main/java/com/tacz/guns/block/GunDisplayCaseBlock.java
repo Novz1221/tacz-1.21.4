@@ -1,5 +1,8 @@
 package com.tacz.guns.block;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import cn.sh1rocu.tacz.api.extension.IPistonPushReaction;
 import com.tacz.guns.api.item.IGun;
 import com.tacz.guns.block.entity.GunDisplayCaseBlockEntity;
@@ -128,7 +131,7 @@ public class GunDisplayCaseBlock extends BaseEntityBlock implements IPistonPushR
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos currentPos, Direction direction, BlockPos facingPos, BlockState facingState, RandomSource random) {
         BooleanProperty property = propertyForDirection(state.getValue(FACING), direction);
         if (property != null && state.getValue(property) && !connectsTo(state, facingState)) {
             return state.setValue(property, false);
@@ -145,7 +148,8 @@ public class GunDisplayCaseBlock extends BaseEntityBlock implements IPistonPushR
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        InteractionHand hand = InteractionHand.MAIN_HAND;
         ItemStack held = player.getItemInHand(hand);
         if (held.is(Items.DEBUG_STICK)) {
             return InteractionResult.PASS;
@@ -156,10 +160,10 @@ public class GunDisplayCaseBlock extends BaseEntityBlock implements IPistonPushR
                 return InteractionResult.PASS;
             }
             toggleLockFromInteraction(level, pos, state);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return (level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.CONSUME);
         }
         if (state.getValue(LOCKED)) {
-            return held.isEmpty() || holdingGun ? InteractionResult.sidedSuccess(level.isClientSide()) : InteractionResult.PASS;
+            return held.isEmpty() || holdingGun ? (level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.CONSUME) : InteractionResult.PASS;
         }
 
         int slot = GunDisplayCaseSlotHelper.getSlot(state, pos, hit.getLocation());

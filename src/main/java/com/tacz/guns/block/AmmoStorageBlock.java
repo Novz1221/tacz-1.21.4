@@ -1,5 +1,8 @@
 package com.tacz.guns.block;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import com.tacz.guns.api.DefaultAssets;
 import com.tacz.guns.api.item.IAmmoBox;
 import com.tacz.guns.block.entity.AmmoStorageBlockEntity;
@@ -80,7 +83,8 @@ public class AmmoStorageBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        InteractionHand hand = InteractionHand.MAIN_HAND;
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof AmmoStorageBlockEntity storage)) {
             return InteractionResult.PASS;

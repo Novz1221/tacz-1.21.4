@@ -1,5 +1,6 @@
 package com.tacz.guns.block;
 
+import net.minecraft.world.level.ScheduledTickAccess;
 import com.mojang.authlib.GameProfile;
 import com.tacz.guns.advancement.TargetHitTrigger;
 import com.tacz.guns.block.entity.TargetBlockEntity;
@@ -140,7 +141,7 @@ public class TargetBlock extends BaseEntityBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
         DoubleBlockHalf half = state.getValue(HALF);
         boolean stand = state.getValue(STAND);
 
@@ -198,13 +199,13 @@ public class TargetBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         BlockPos blockPos = state.getValue(HALF) == DoubleBlockHalf.LOWER ? pos : pos.below();
         BlockEntity blockentity = level.getBlockEntity(blockPos);
         if (blockentity instanceof TargetBlockEntity e) {
             return new ItemStack(this).setHoverName(e.getCustomName());
         }
-        return super.getCloneItemStack(level, pos, state);
+        return super.getCloneItemStack(level, pos, state, includeData);
     }
 
     @Override

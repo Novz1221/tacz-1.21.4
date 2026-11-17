@@ -49,11 +49,11 @@ public class GunSmithTableMenu extends AbstractContainerMenu {
         return blockId;
     }
 
-    public boolean canSelectRecipe(ResourceLocation recipeId, RecipeManager recipeManager) {
+    public boolean canSelectRecipe(ResourceLocation recipeId, Level level) {
         if (this.blockId == null || TimelessAPI.getCommonBlockIndex(this.blockId).isEmpty()) {
             return false;
         }
-        GunSmithTableRecipe recipe = this.getRecipe(recipeId, recipeManager);
+        GunSmithTableRecipe recipe = this.getRecipe(recipeId, level);
         if (recipe == null) {
             return false;
         }
@@ -86,15 +86,15 @@ public class GunSmithTableMenu extends AbstractContainerMenu {
     }
 
     @Nullable
-    private GunSmithTableRecipe getRecipe(ResourceLocation recipeId, RecipeManager recipeManager) {
+    private GunSmithTableRecipe getRecipe(ResourceLocation recipeId, Level level) {
         if (!DefaultAssets.DEFAULT_BLOCK_ID.equals(getBlockId()) || SyncConfig.ENABLE_TABLE_FILTER.get()) {
             if (filter != null && !filter.contains(recipeId)) {
                 return null;
             }
         }
 
-        Recipe<?> recipe = recipeManager.byKey(recipeId).orElse(null);
-        if (recipe instanceof GunSmithTableRecipe gunSmithTableRecipe) {
+        GunSmithTableRecipe gunSmithTableRecipe = com.tacz.guns.crafting.GunSmithRecipes.find(level, recipeId);
+        if (gunSmithTableRecipe != null) {
             boolean flag = TimelessAPI.getCommonBlockIndex(getBlockId()).map(blockIndex -> {
                 return blockIndex.getData().getTabs().stream().noneMatch(tab -> tab.id().equals(gunSmithTableRecipe.getTab()));
             }).orElse(true);
@@ -110,7 +110,7 @@ public class GunSmithTableMenu extends AbstractContainerMenu {
     }
 
     public void doCraft(ResourceLocation recipeId, Player player) {
-        GunSmithTableRecipe recipe = getRecipe(recipeId, player.level().getRecipeManager());
+        GunSmithTableRecipe recipe = getRecipe(recipeId, player.level());
         if (recipe == null) {
             return;
         }

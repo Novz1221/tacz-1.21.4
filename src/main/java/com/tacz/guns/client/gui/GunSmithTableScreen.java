@@ -133,8 +133,7 @@ public class GunSmithTableScreen extends AbstractContainerScreen<GunSmithTableMe
         Map<ResourceLocation, RecipeSortKey> recipeSortKeys = new HashMap<>();
 
         if (Minecraft.getInstance().level != null) {
-            RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
-            List<GunSmithTableRecipe> recipeList = recipeManager.getAllRecipesFor(ModRecipe.GUN_SMITH_TABLE_CRAFTING);
+            List<GunSmithTableRecipe> recipeList = com.tacz.guns.crafting.GunSmithRecipes.all(Minecraft.getInstance().level);
             Set<String> namespaces = filterList != null ? filterList.namespaceList() : null;
             for (GunSmithTableRecipe recipe : recipeList) {
                 ResourceLocation id = recipe.getId();
@@ -291,7 +290,7 @@ public class GunSmithTableScreen extends AbstractContainerScreen<GunSmithTableMe
     private void applyRequestedRecipeSelection() {
         ResourceLocation recipeId = this.menu.consumeRecipeSelection();
         if (recipeId == null || this.minecraft.level == null
-                || !this.menu.canSelectRecipe(recipeId, this.minecraft.level.getRecipeManager())) {
+                || !this.menu.canSelectRecipe(recipeId, this.minecraft.level)) {
             return;
         }
         GunSmithTableRecipe recipe = this.getSelectedRecipe(recipeId);
@@ -324,11 +323,7 @@ public class GunSmithTableScreen extends AbstractContainerScreen<GunSmithTableMe
     @Nullable
     private GunSmithTableRecipe getSelectedRecipe(ResourceLocation recipeId) {
         if (Minecraft.getInstance().level != null) {
-            RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
-            Recipe<?> recipe = recipeManager.byKey(recipeId).orElse(null);
-            if (recipe instanceof GunSmithTableRecipe) {
-                return (GunSmithTableRecipe) recipe;
-            }
+            return com.tacz.guns.crafting.GunSmithRecipes.find(Minecraft.getInstance().level, recipeId);
         }
         return null;
     }

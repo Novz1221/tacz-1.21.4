@@ -1,14 +1,13 @@
 package com.tacz.guns.crafting;
 
-import com.tacz.guns.item.GunPegboardItem;
-import com.tacz.guns.init.ModRecipe;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.item.DyeItem;
 import cn.sh1rocu.tacz.util.DyeableLeatherItem;
+import com.tacz.guns.init.ModRecipe;
+import com.tacz.guns.item.GunPegboardItem;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -17,16 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GunPegboardDyeRecipe extends CustomRecipe {
-    public GunPegboardDyeRecipe(ResourceLocation id, CraftingBookCategory category) {
-        super(id, category);
+    public GunPegboardDyeRecipe(CraftingBookCategory category) {
+        super(category);
     }
 
     @Override
-    public boolean matches(CraftingContainer container, Level level) {
+    public boolean matches(CraftingInput input, Level level) {
         boolean pegboard = false;
         boolean dye = false;
-        for (int slot = 0; slot < container.getContainerSize(); slot++) {
-            ItemStack stack = container.getItem(slot);
+        for (int slot = 0; slot < input.size(); slot++) {
+            ItemStack stack = input.getItem(slot);
             if (stack.isEmpty()) continue;
             if (stack.getItem() instanceof GunPegboardItem) {
                 if (pegboard) return false;
@@ -41,11 +40,11 @@ public class GunPegboardDyeRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries) {
         ItemStack pegboard = ItemStack.EMPTY;
         List<DyeItem> dyes = new ArrayList<>();
-        for (int slot = 0; slot < container.getContainerSize(); slot++) {
-            ItemStack stack = container.getItem(slot);
+        for (int slot = 0; slot < input.size(); slot++) {
+            ItemStack stack = input.getItem(slot);
             if (stack.isEmpty()) continue;
             if (stack.getItem() instanceof GunPegboardItem && pegboard.isEmpty()) {
                 pegboard = stack;
@@ -59,12 +58,7 @@ public class GunPegboardDyeRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= 2;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return ModRecipe.GUN_PEGBOARD_DYE_RECIPE_SERIALIZER;
     }
 }

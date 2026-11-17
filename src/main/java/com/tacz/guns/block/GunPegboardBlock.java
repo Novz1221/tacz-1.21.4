@@ -1,5 +1,8 @@
 package com.tacz.guns.block;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import cn.sh1rocu.tacz.api.extension.IPistonPushReaction;
 import com.tacz.guns.block.entity.GunPegboardBlockEntity;
 import com.tacz.guns.config.util.GunPegboardItemConfigRead;
@@ -123,7 +126,7 @@ public class GunPegboardBlock extends BaseEntityBlock implements IPistonPushReac
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
         if (state.getValue(DecorationLock.LOCKED) && state.getValue(SHAPE) != PegboardShape.STRAIGHT) {
             return state;
         }
@@ -147,7 +150,8 @@ public class GunPegboardBlock extends BaseEntityBlock implements IPistonPushReac
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        InteractionHand hand = InteractionHand.MAIN_HAND;
         if (player.getItemInHand(hand).is(Items.DEBUG_STICK)) return InteractionResult.PASS;
         if (player.getItemInHand(hand).getItem() instanceof GunPegboardItem) {
             return InteractionResult.PASS;
@@ -239,7 +243,7 @@ public class GunPegboardBlock extends BaseEntityBlock implements IPistonPushReac
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         ItemStack stack = new ItemStack(asItem());
         if (level.getBlockEntity(pos) instanceof GunPegboardBlockEntity pegboard && pegboard.getColor() >= 0) {
             ((DyeableLeatherItem) stack.getItem()).setColor(stack, pegboard.getColor());

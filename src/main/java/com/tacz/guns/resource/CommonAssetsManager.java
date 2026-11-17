@@ -308,7 +308,7 @@ public class CommonAssetsManager implements ICommonResourceProvider {
     public static void onReload(RegistryAccess registries, boolean client) {
         if (!client) {
             if (getInstance() != null && getInstance().recipeManager != null) {
-                List<GunSmithTableRecipe> recipes = getInstance().recipeManager.getAllRecipesFor(ModRecipe.GUN_SMITH_TABLE_CRAFTING);
+                List<GunSmithTableRecipe> recipes = com.tacz.guns.crafting.GunSmithRecipes.serverAll(getInstance().recipeManager);
                 for (GunSmithTableRecipe recipe : recipes) {
                     recipe.init();
                 }
@@ -327,6 +327,10 @@ public class CommonAssetsManager implements ICommonResourceProvider {
         }
         if (player != null) {
             manager.networkSyncMessages.forEach(message -> NetworkHandler.sendToClientPlayer(message, player));
+            if (manager.recipeManager != null) {
+                NetworkHandler.sendToClientPlayer(new com.tacz.guns.network.message.ServerMessageSyncSmithRecipes(
+                        com.tacz.guns.crafting.GunSmithRecipes.serverAll(manager.recipeManager)), player);
+            }
         }
     }
 

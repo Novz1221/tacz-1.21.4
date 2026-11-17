@@ -1,5 +1,7 @@
 package com.tacz.guns.block;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ScheduledTickAccess;
 import cn.sh1rocu.tacz.api.extension.IBlockChange;
 import cn.sh1rocu.tacz.api.extension.IBlockExtension;
 import cn.sh1rocu.tacz.api.extension.IPistonPushReaction;
@@ -64,7 +66,8 @@ public class StatueBlock extends BaseEntityBlock implements IBlockExtension, IBl
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level level, BlockPos pos, Player player, InteractionHand pHand, BlockHitResult pHit) {
+    public InteractionResult useWithoutItem(BlockState pState, Level level, BlockPos pos, Player player, BlockHitResult pHit) {
+        InteractionHand pHand = InteractionHand.MAIN_HAND;
         if (player.getItemInHand(pHand).is(Items.DEBUG_STICK)) {
             return InteractionResult.PASS;
         }
@@ -133,7 +136,7 @@ public class StatueBlock extends BaseEntityBlock implements IBlockExtension, IBl
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess tickAccess, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
         DoubleBlockHalf half = state.getValue(HALF);
 
         if (facing.getAxis() == Direction.Axis.Y) {

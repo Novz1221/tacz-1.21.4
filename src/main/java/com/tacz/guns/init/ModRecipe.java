@@ -11,17 +11,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
+import net.minecraft.world.item.crafting.CustomRecipe;
 
 public class ModRecipe {
     public static void init() {
 
     }
 
-    public static final SimpleCraftingRecipeSerializer<GunPegboardDyeRecipe> GUN_PEGBOARD_DYE_RECIPE_SERIALIZER = registerSerializer("gun_pegboard_dye", new SimpleCraftingRecipeSerializer<>(GunPegboardDyeRecipe::new));
+    public static final RecipeSerializer<GunPegboardDyeRecipe> GUN_PEGBOARD_DYE_RECIPE_SERIALIZER = registerSerializer("gun_pegboard_dye", new CustomRecipe.Serializer<>(GunPegboardDyeRecipe::new));
 
-    public static RecipeSerializer<?> GUN_SMITH_TABLE_RECIPE_SERIALIZER = registerSerializer("gun_smith_table_crafting", new GunSmithTableSerializer());
-    public static SimpleCraftingRecipeSerializer<AmmoStorageUpgradeRecipe> AMMO_STORAGE_UPGRADE_RECIPE_SERIALIZER = registerSerializer("ammo_storage_upgrade", new SimpleCraftingRecipeSerializer<>(AmmoStorageUpgradeRecipe::new));
+    public static RecipeSerializer<GunSmithTableRecipe> GUN_SMITH_TABLE_RECIPE_SERIALIZER = registerSerializer("gun_smith_table_crafting", new GunSmithTableSerializer());
+    public static RecipeSerializer<AmmoStorageUpgradeRecipe> AMMO_STORAGE_UPGRADE_RECIPE_SERIALIZER = registerSerializer("ammo_storage_upgrade", new CustomRecipe.Serializer<>(category -> new AmmoStorageUpgradeRecipe(category, false)));
+    public static RecipeSerializer<AmmoStorageUpgradeRecipe> AMMO_STORAGE_UPGRADE_DIAMOND_RECIPE_SERIALIZER = registerSerializer("ammo_storage_upgrade_diamond", new CustomRecipe.Serializer<>(category -> new AmmoStorageUpgradeRecipe(category, true)));
     public static RecipeType<GunSmithTableRecipe> GUN_SMITH_TABLE_CRAFTING = registerRecipe("gun_smith_table_crafting", new RecipeType<>() {
         @Override
         public String toString() {

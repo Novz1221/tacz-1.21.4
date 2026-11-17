@@ -2,29 +2,28 @@ package com.tacz.guns.crafting;
 
 import com.tacz.guns.init.ModItems;
 import com.tacz.guns.init.ModRecipe;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class AmmoStorageUpgradeRecipe extends CustomRecipe {
+    private final boolean diamond;
     private final Item from;
     private final Item material;
     private final Item to;
 
-    public AmmoStorageUpgradeRecipe(ResourceLocation id, CraftingBookCategory category) {
-        super(id, category);
-        if (id.getPath().contains("diamond")) {
+    public AmmoStorageUpgradeRecipe(CraftingBookCategory category, boolean diamond) {
+        super(category);
+        this.diamond = diamond;
+        if (diamond) {
             from = ModItems.AMMO_STORAGE_GOLD;
             material = Items.DIAMOND;
             to = ModItems.AMMO_STORAGE_DIAMOND;
@@ -36,12 +35,12 @@ public class AmmoStorageUpgradeRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer container, Level level) {
-        if (container.getWidth() != 3 || container.getHeight() != 3) {
+    public boolean matches(CraftingInput input, Level level) {
+        if (input.width() != 3 || input.height() != 3) {
             return false;
         }
-        for (int slot = 0; slot < container.getContainerSize(); slot++) {
-            ItemStack stack = container.getItem(slot);
+        for (int slot = 0; slot < input.size(); slot++) {
+            ItemStack stack = input.getItem(slot);
             if (slot == 4) {
                 if (!stack.is(from)) {
                     return false;
@@ -54,45 +53,17 @@ public class AmmoStorageUpgradeRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
-        ItemStack result = getResultItem(registryAccess);
-        CompoundTag blockEntityData = BlockItem.getBlockEntityData(container.getItem(4));
+    public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries) {
+        ItemStack result = new ItemStack(to);
+        CustomData blockEntityData = input.getItem(4).get(DataComponents.BLOCK_ENTITY_DATA);
         if (blockEntityData != null) {
-            BlockItem.setBlockEntityData(result, com.tacz.guns.init.ModBlocks.AMMO_STORAGE_BE, blockEntityData.copy());
+            result.set(DataComponents.BLOCK_ENTITY_DATA, blockEntityData);
         }
         return result;
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> ingredients = NonNullList.withSize(9, Ingredient.EMPTY);
-        Ingredient materialIngredient = Ingredient.of(material);
-        for (int slot = 0; slot < ingredients.size(); slot++) {
-            ingredients.set(slot, slot == 4 ? Ingredient.of(from) : materialIngredient);
-        }
-        return ingredients;
-    }
-
-    @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
-        return new ItemStack(to);
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width >= 3 && height >= 3;
-    }
-
-    public int getRecipeWidth() {
-        return 3;
-    }
-
-    public int getRecipeHeight() {
-        return 3;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return ModRecipe.AMMO_STORAGE_UPGRADE_RECIPE_SERIALIZER;
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
+        return diamond ? ModRecipe.AMMO_STORAGE_UPGRADE_DIAMOND_RECIPE_SERIALIZER : ModRecipe.AMMO_STORAGE_UPGRADE_RECIPE_SERIALIZER;
     }
 }

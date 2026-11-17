@@ -1,5 +1,8 @@
 package com.tacz.guns.block;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import com.tacz.guns.api.item.builder.BlockItemBuilder;
 import com.tacz.guns.api.item.nbt.BlockItemDataAccessor;
 import com.tacz.guns.block.entity.GunSmithTableBlockEntity;
@@ -36,7 +39,8 @@ public abstract class AbstractGunSmithTableBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level level, BlockPos pos, Player player, InteractionHand pHand, BlockHitResult pHit) {
+    public InteractionResult useWithoutItem(BlockState pState, Level level, BlockPos pos, Player player, BlockHitResult pHit) {
+        InteractionHand pHand = InteractionHand.MAIN_HAND;
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
@@ -79,7 +83,7 @@ public abstract class AbstractGunSmithTableBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         BlockPos blockPos = getRootPos(pos, state);
         BlockEntity blockentity = level.getBlockEntity(blockPos);
         if (blockentity instanceof GunSmithTableBlockEntity e) {
@@ -88,7 +92,7 @@ public abstract class AbstractGunSmithTableBlock extends BaseEntityBlock {
             }
             return new ItemStack(this);
         }
-        return super.getCloneItemStack(level, pos, state);
+        return super.getCloneItemStack(level, pos, state, includeData);
     }
 
     public abstract boolean isRoot(BlockState blockState);
