@@ -268,7 +268,7 @@ public interface GunItemDataAccessor extends IGun {
         CompoundTag nbt = cn.sh1rocu.tacz.util.ItemNbt.getOrCreateTag(gun);
         String key = GUN_ATTACHMENT_BASE + type.name();
         if (nbt.contains(key, Tag.TAG_COMPOUND)) {
-            return ItemStack.of(nbt.getCompound(key));
+            return cn.sh1rocu.tacz.util.ItemNbt.parse(nbt.getCompound(key));
         }
         return ItemStack.EMPTY;
     }
@@ -316,7 +316,7 @@ public interface GunItemDataAccessor extends IGun {
         CompoundTag nbt = cn.sh1rocu.tacz.util.ItemNbt.getOrCreateTag(gun);
         String key = GUN_ATTACHMENT_BASE + attachmentType.name();
         CompoundTag attachmentTag = new CompoundTag();
-        attachment.save(attachmentTag);
+        cn.sh1rocu.tacz.util.ItemNbt.save(attachment, attachmentTag);
         nbt.put(key, attachmentTag);
     }
 
@@ -328,7 +328,7 @@ public interface GunItemDataAccessor extends IGun {
         CompoundTag nbt = cn.sh1rocu.tacz.util.ItemNbt.getOrCreateTag(gun);
         String key = GUN_ATTACHMENT_BASE + type.name();
         CompoundTag attachmentTag = new CompoundTag();
-        ItemStack.EMPTY.save(attachmentTag);
+        cn.sh1rocu.tacz.util.ItemNbt.save(ItemStack.EMPTY, attachmentTag);
         nbt.put(key, attachmentTag);
     }
 

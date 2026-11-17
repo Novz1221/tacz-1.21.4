@@ -48,7 +48,7 @@ public class TargetBlock extends BaseEntityBlock {
     public static final VoxelShape BOX_UPPER_Z = Block.box(2, 0, 6, 14, 16, 10);
 
     public TargetBlock() {
-        super(Properties.of().sound(SoundType.WOOD).strength(2.0F, 3.0F).noOcclusion().pushReaction(PushReaction.DESTROY));
+        super(cn.sh1rocu.tacz.util.IdProps.block(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()).sound(SoundType.WOOD).strength(2.0F, 3.0F).noOcclusion().pushReaction(PushReaction.DESTROY));
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(HALF, DoubleBlockHalf.LOWER).setValue(STAND, true).setValue(OUTPUT_POWER, 0));
     }
 
@@ -238,6 +238,6 @@ public class TargetBlock extends BaseEntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
+        return RenderShape.INVISIBLE;
     }
 }

@@ -1,5 +1,6 @@
 package com.tacz.guns.client.gui;
 
+import net.minecraft.client.renderer.RenderType;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.tacz.guns.inventory.AmmoStorageEntry;
 import com.tacz.guns.inventory.AmmoStorageMenu;
@@ -31,12 +32,10 @@ public class AmmoStorageScreen extends AbstractContainerScreen<AmmoStorageMenu> 
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(1, 1, 1, 1);
         int storageHeight = CONTAINER_ROWS * 18 + 17 + AmmoStorageMenu.STATUS_HEIGHT;
-        graphics.blit(CONTAINER_LOCATION, leftPos, topPos, 0, 0, imageWidth, 17);
-        graphics.blit(CONTAINER_LOCATION, leftPos, topPos + 17, imageWidth, AmmoStorageMenu.STATUS_HEIGHT,
-                0.0F, 7.0F, imageWidth, 1, 256, 256);
-        graphics.blit(CONTAINER_LOCATION, leftPos, topPos + 17 + AmmoStorageMenu.STATUS_HEIGHT,
-                0, 17, imageWidth, CONTAINER_ROWS * 18);
-        graphics.blit(CONTAINER_LOCATION, leftPos, topPos + storageHeight, 0, 126, imageWidth, 96);
+        graphics.blit(RenderType::guiTextured, CONTAINER_LOCATION, leftPos, topPos, (float) (0), (float) (0), imageWidth, 17, 256, 256);
+        graphics.blit(RenderType::guiTextured, CONTAINER_LOCATION, leftPos, topPos + 17, (float) (0.0F), (float) (7.0F), imageWidth, AmmoStorageMenu.STATUS_HEIGHT, imageWidth, 1, 256, 256);
+        graphics.blit(RenderType::guiTextured, CONTAINER_LOCATION, leftPos, topPos + 17 + AmmoStorageMenu.STATUS_HEIGHT, (float) (0), (float) (17), imageWidth, CONTAINER_ROWS * 18, 256, 256);
+        graphics.blit(RenderType::guiTextured, CONTAINER_LOCATION, leftPos, topPos + storageHeight, (float) (0), (float) (126), imageWidth, 96, 256, 256);
         renderCapacity(graphics);
         var entries = menu.getEntries();
         for (int i = 0; i < entries.size(); i++) {

@@ -396,7 +396,7 @@ public class BedrockAttachmentModel extends BedrockAnimatedModel {
         RenderHelper.enableItemEntityStencilTest();
         // 清空模板缓冲区、准备绘制模板缓冲
         RenderSystem.clearStencil(0);
-        RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
+        RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT);
         if (ocularRingPath != null) {
             RenderSystem.stencilFunc(GL11.GL_ALWAYS, 0, 0xFF);
             RenderSystem.stencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP);
@@ -430,7 +430,7 @@ public class BedrockAttachmentModel extends BedrockAnimatedModel {
         RenderHelper.enableItemEntityStencilTest();
         // 清空模板缓冲区、准备绘制模板缓冲
         RenderSystem.clearStencil(0);
-        RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
+        RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT);
         // 渲染目镜以写入模板桓冲值
         renderOcularStencil(matrixStack, transformType, renderType, light, overlay, false, bufferSource);
         // 渲染划分
@@ -454,7 +454,7 @@ public class BedrockAttachmentModel extends BedrockAnimatedModel {
         RenderHelper.enableItemEntityStencilTest();
         // 清空模板缓冲区、准备绘制模板缓冲
         RenderSystem.clearStencil(0);
-        RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
+        RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT);
         // 渲染目镜外环
         if (ocularRingPath != null) {
             RenderSystem.stencilFunc(GL11.GL_ALWAYS, 0, 0xFF);
@@ -514,7 +514,7 @@ public class BedrockAttachmentModel extends BedrockAnimatedModel {
             // 清除上模板残留, 这里其实可以按原始渲染方法移出去, 但为了统一先放入第一层渲染
             RenderHelper.enableItemEntityStencilTest();
             RenderSystem.clearStencil(0);
-            RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
+            RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT);
 
             // 渲染目镜外环所需的模板函数
             RenderSystem.stencilFunc(GL11.GL_ALWAYS, 0, 0xFF);
@@ -636,7 +636,7 @@ public class BedrockAttachmentModel extends BedrockAnimatedModel {
             // 清除上模板残留, 这里其实可以按原始渲染方法移出去, 但为了统一先放入第一层渲染
             RenderHelper.enableItemEntityStencilTest();
             RenderSystem.clearStencil(0);
-            RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
+            RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT);
 
             // 我们在层中进行渲染, 需要关闭加速, 否则这里的渲染会被导向到加速管线中, 造成被延后和内存泄漏
             ARCompat.disableAcceleration();
@@ -693,7 +693,7 @@ public class BedrockAttachmentModel extends BedrockAnimatedModel {
             // 清除上模板残留, 这里其实可以按原始渲染方法移出去, 但为了统一先放入第一层渲染
             RenderHelper.enableItemEntityStencilTest();
             RenderSystem.clearStencil(0);
-            RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
+            RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT);
 
             // 渲染目镜外环所需的模板函数
             RenderSystem.stencilFunc(GL11.GL_ALWAYS, 0, 0xFF);

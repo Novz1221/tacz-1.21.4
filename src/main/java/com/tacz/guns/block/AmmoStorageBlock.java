@@ -53,7 +53,7 @@ public class AmmoStorageBlock extends BaseEntityBlock {
     }
 
     public AmmoStorageBlock(int capacityStacks) {
-        super(Properties.of().mapColor(MapColor.METAL).sound(SoundType.METAL).strength(2.0F).dynamicShape().pushReaction(PushReaction.DESTROY));
+        super(cn.sh1rocu.tacz.util.IdProps.block(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()).mapColor(MapColor.METAL).sound(SoundType.METAL).strength(2.0F).dynamicShape().pushReaction(PushReaction.DESTROY));
         this.capacityStacks = capacityStacks;
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
@@ -124,7 +124,7 @@ public class AmmoStorageBlock extends BaseEntityBlock {
         }
         ammoBox.setAmmoCount(boxStack, current + extracted.getCount());
         player.displayClientMessage(Component.translatable("message.tacz.ammo_storage.picked", extracted.getHoverName(), extracted.getCount()), true);
-        player.level().playSound(null, player.blockPosition(), SoundEvents.ARMOR_EQUIP_IRON, SoundSource.PLAYERS, 0.8F, 1.0F);
+        player.level().playSound(null, player.blockPosition(), SoundEvents.ARMOR_EQUIP_IRON.value(), SoundSource.PLAYERS, 0.8F, 1.0F);
         return InteractionResult.CONSUME;
     }
 

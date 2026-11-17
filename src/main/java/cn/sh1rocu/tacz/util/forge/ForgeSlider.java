@@ -1,5 +1,6 @@
 package cn.sh1rocu.tacz.util.forge;
 
+import net.minecraft.client.renderer.RenderType;
 import cn.sh1rocu.tacz.mixin.client.accessor.AbstractSliderButtonAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -214,31 +215,31 @@ public class ForgeSlider extends AbstractSliderButton {
 
         // Draw Border
         // Top Left
-        guiGraphics.blit(texture, x, y, u, v, leftBorder, topBorder);
+        guiGraphics.blit(RenderType::guiTextured, texture, x, y, (float) (u), (float) (v), leftBorder, topBorder, 256, 256);
         // Top Right
-        guiGraphics.blit(texture, x + leftBorder + canvasWidth, y, u + leftBorder + fillerWidth, v, rightBorder, topBorder);
+        guiGraphics.blit(RenderType::guiTextured, texture, x + leftBorder + canvasWidth, y, (float) (u + leftBorder + fillerWidth), (float) (v), rightBorder, topBorder, 256, 256);
         // Bottom Left
-        guiGraphics.blit(texture, x, y + topBorder + canvasHeight, u, v + topBorder + fillerHeight, leftBorder, bottomBorder);
+        guiGraphics.blit(RenderType::guiTextured, texture, x, y + topBorder + canvasHeight, (float) (u), (float) (v + topBorder + fillerHeight), leftBorder, bottomBorder, 256, 256);
         // Bottom Right
-        guiGraphics.blit(texture, x + leftBorder + canvasWidth, y + topBorder + canvasHeight, u + leftBorder + fillerWidth, v + topBorder + fillerHeight, rightBorder, bottomBorder);
+        guiGraphics.blit(RenderType::guiTextured, texture, x + leftBorder + canvasWidth, y + topBorder + canvasHeight, (float) (u + leftBorder + fillerWidth), (float) (v + topBorder + fillerHeight), rightBorder, bottomBorder, 256, 256);
 
         for (int i = 0; i < xPasses + (remainderWidth > 0 ? 1 : 0); i++) {
             // Top Border
-            guiGraphics.blit(texture, x + leftBorder + (i * fillerWidth), y, u + leftBorder, v, (i == xPasses ? remainderWidth : fillerWidth), topBorder);
+            guiGraphics.blit(RenderType::guiTextured, texture, x + leftBorder + (i * fillerWidth), y, (float) (u + leftBorder), (float) (v), (i == xPasses ? remainderWidth : fillerWidth), topBorder, 256, 256);
             // Bottom Border
-            guiGraphics.blit(texture, x + leftBorder + (i * fillerWidth), y + topBorder + canvasHeight, u + leftBorder, v + topBorder + fillerHeight, (i == xPasses ? remainderWidth : fillerWidth), bottomBorder);
+            guiGraphics.blit(RenderType::guiTextured, texture, x + leftBorder + (i * fillerWidth), y + topBorder + canvasHeight, (float) (u + leftBorder), (float) (v + topBorder + fillerHeight), (i == xPasses ? remainderWidth : fillerWidth), bottomBorder, 256, 256);
 
             // Throw in some filler for good measure
             for (int j = 0; j < yPasses + (remainderHeight > 0 ? 1 : 0); j++)
-                guiGraphics.blit(texture, x + leftBorder + (i * fillerWidth), y + topBorder + (j * fillerHeight), u + leftBorder, v + topBorder, (i == xPasses ? remainderWidth : fillerWidth), (j == yPasses ? remainderHeight : fillerHeight));
+                guiGraphics.blit(RenderType::guiTextured, texture, x + leftBorder + (i * fillerWidth), y + topBorder + (j * fillerHeight), (float) (u + leftBorder), (float) (v + topBorder), (i == xPasses ? remainderWidth : fillerWidth), (j == yPasses ? remainderHeight : fillerHeight), 256, 256);
         }
 
         // Side Borders
         for (int j = 0; j < yPasses + (remainderHeight > 0 ? 1 : 0); j++) {
             // Left Border
-            guiGraphics.blit(texture, x, y + topBorder + (j * fillerHeight), u, v + topBorder, leftBorder, (j == yPasses ? remainderHeight : fillerHeight));
+            guiGraphics.blit(RenderType::guiTextured, texture, x, y + topBorder + (j * fillerHeight), (float) (u), (float) (v + topBorder), leftBorder, (j == yPasses ? remainderHeight : fillerHeight), 256, 256);
             // Right Border
-            guiGraphics.blit(texture, x + leftBorder + canvasWidth, y + topBorder + (j * fillerHeight), u + leftBorder + fillerWidth, v + topBorder, rightBorder, (j == yPasses ? remainderHeight : fillerHeight));
+            guiGraphics.blit(RenderType::guiTextured, texture, x + leftBorder + canvasWidth, y + topBorder + (j * fillerHeight), (float) (u + leftBorder + fillerWidth), (float) (v + topBorder), rightBorder, (j == yPasses ? remainderHeight : fillerHeight), 256, 256);
         }
     }
 }

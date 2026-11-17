@@ -65,7 +65,7 @@ public class CraftingHelper {
             tmp.putString("id", itemName);
             tmp.putInt("Count", GsonHelper.getAsInt(json, "count", 1));
 
-            return ItemStack.of(tmp);
+            return cn.sh1rocu.tacz.util.ItemNbt.parse(tmp);
         }
 
         return new ItemStack(item, GsonHelper.getAsInt(json, "count", 1));

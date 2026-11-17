@@ -87,7 +87,7 @@ public class GunDisplayCaseBlock extends BaseEntityBlock implements IPistonPushR
     );
 
     public GunDisplayCaseBlock() {
-        super(Properties.of().mapColor(MapColor.METAL).sound(SoundType.GLASS).strength(0.5F, 1200.0F).noOcclusion());
+        super(cn.sh1rocu.tacz.util.IdProps.block(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()).mapColor(MapColor.METAL).sound(SoundType.GLASS).strength(0.5F, 1200.0F).noOcclusion());
         registerDefaultState(stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(LOCKED, true)

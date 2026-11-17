@@ -1,5 +1,6 @@
 package com.tacz.guns.client.gui;
 
+import net.minecraft.client.renderer.RenderType;
 import cn.sh1rocu.tacz.mixin.client.accessor.ScreenAccessor;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -418,7 +419,7 @@ public class GunSmithTableScreen extends AbstractContainerScreen<GunSmithTableMe
 
     private void addCraftButton() {
         boolean hasRecipe = this.selectedRecipe != null;
-        ImageButton craftButton = this.addRenderableWidget(new ImageButton(leftPos + 289, topPos + 162, 48, 18, 138, 164, hasRecipe ? 18 : 0, TEXTURE, b -> {
+        ImageButton craftButton = this.addRenderableWidget(new cn.sh1rocu.tacz.client.gui.TexturedImageButton(leftPos + 289, topPos + 162, 48, 18, 138, 164, hasRecipe ? 18 : 0, TEXTURE, b -> {
             if (this.selectedRecipe != null && playerIngredientCount != null) {
                 // 检查是否能合成，不能就不发包
                 List<GunSmithTableIngredient> inputs = selectedRecipe.getInputs();
@@ -442,7 +443,7 @@ public class GunSmithTableScreen extends AbstractContainerScreen<GunSmithTableMe
     }
 
     private void addUrlButton() {
-        this.addRenderableWidget(new ImageButton(leftPos + 112, topPos + 164, 18, 18, 149, 211, 18, TEXTURE, b -> {
+        this.addRenderableWidget(new cn.sh1rocu.tacz.client.gui.TexturedImageButton(leftPos + 112, topPos + 164, 18, 18, 149, 211, 18, TEXTURE, b -> {
             if (this.selectedRecipe != null) {
                 ItemStack output = selectedRecipe.getOutput();
                 Item item = output.getItem();
@@ -533,13 +534,13 @@ public class GunSmithTableScreen extends AbstractContainerScreen<GunSmithTableMe
         if (this.selectedRecipeList == null || this.selectedRecipeList.isEmpty()) {
             return;
         }
-        this.addRenderableWidget(new ImageButton(leftPos + 143, topPos + 56, 96, 6, 40, 166, 6, TEXTURE, b -> {
+        this.addRenderableWidget(new cn.sh1rocu.tacz.client.gui.TexturedImageButton(leftPos + 143, topPos + 56, 96, 6, 40, 166, 6, TEXTURE, b -> {
             if (this.indexPage > 0) {
                 this.indexPage--;
                 this.init();
             }
         }));
-        this.addRenderableWidget(new ImageButton(leftPos + 143, topPos + 171, 96, 6, 40, 186, 6, TEXTURE, b -> {
+        this.addRenderableWidget(new cn.sh1rocu.tacz.client.gui.TexturedImageButton(leftPos + 143, topPos + 171, 96, 6, 40, 186, 6, TEXTURE, b -> {
             if (selectedRecipeList != null && !selectedRecipeList.isEmpty()) {
                 int maxIndexPage = (selectedRecipeList.size() - 1) / 6;
                 if (this.indexPage < maxIndexPage) {
@@ -554,13 +555,13 @@ public class GunSmithTableScreen extends AbstractContainerScreen<GunSmithTableMe
         if (this.recipes.isEmpty()) {
             return;
         }
-        this.addRenderableWidget(new ImageButton(leftPos + 136, topPos + 4, 18, 20, 0, 162, 20, TEXTURE, b -> {
+        this.addRenderableWidget(new cn.sh1rocu.tacz.client.gui.TexturedImageButton(leftPos + 136, topPos + 4, 18, 20, 0, 162, 20, TEXTURE, b -> {
             if (this.typePage > 0) {
                 this.typePage--;
                 this.init();
             }
         }));
-        this.addRenderableWidget(new ImageButton(leftPos + 327, topPos + 4, 18, 20, 20, 162, 20, TEXTURE, b -> {
+        this.addRenderableWidget(new cn.sh1rocu.tacz.client.gui.TexturedImageButton(leftPos + 327, topPos + 4, 18, 20, 20, 162, 20, TEXTURE, b -> {
             int maxIndexPage = (recipes.size() - 1) / 7;
             if (this.typePage < maxIndexPage) {
                 this.typePage++;
@@ -570,13 +571,13 @@ public class GunSmithTableScreen extends AbstractContainerScreen<GunSmithTableMe
     }
 
     private void addScaleButtons() {
-        this.addRenderableWidget(new ImageButton(leftPos + 5, topPos + 5, 10, 10, 188, 173, 10, TEXTURE, b -> {
+        this.addRenderableWidget(new cn.sh1rocu.tacz.client.gui.TexturedImageButton(leftPos + 5, topPos + 5, 10, 10, 188, 173, 10, TEXTURE, b -> {
             this.scale = Math.min(this.scale + 20, 200);
         }));
-        this.addRenderableWidget(new ImageButton(leftPos + 17, topPos + 5, 10, 10, 200, 173, 10, TEXTURE, b -> {
+        this.addRenderableWidget(new cn.sh1rocu.tacz.client.gui.TexturedImageButton(leftPos + 17, topPos + 5, 10, 10, 200, 173, 10, TEXTURE, b -> {
             this.scale = Math.max(this.scale - 20, 10);
         }));
-        this.addRenderableWidget(new ImageButton(leftPos + 29, topPos + 5, 10, 10, 212, 173, 10, TEXTURE, b -> {
+        this.addRenderableWidget(new cn.sh1rocu.tacz.client.gui.TexturedImageButton(leftPos + 29, topPos + 5, 10, 10, 212, 173, 10, TEXTURE, b -> {
             this.scale = 70;
         }));
     }
@@ -849,12 +850,12 @@ public class GunSmithTableScreen extends AbstractContainerScreen<GunSmithTableMe
     @Override
     protected void renderBg(@NotNull GuiGraphics gui, float partialTick, int mouseX, int mouseY) {
         this.renderBackground(gui);
-        gui.blit(SIDE, leftPos, topPos, 0, 0, 134, 187);
+        gui.blit(RenderType::guiTextured, SIDE, leftPos, topPos, (float) (0), (float) (0), 134, 187, 256, 256);
         if (!this.emptyByHandFilterMessage.isEmpty()) {
             // Reuse the ingredient panel's frame as one panel without interior dividers.
             gui.blitNineSliced(TEXTURE, leftPos + 136, topPos, 208, this.imageHeight + 1, 4, 96, 107, 112, 19);
         } else {
-            gui.blit(TEXTURE, leftPos + 136, topPos + 27, 0, 0, 208, 160);
+            gui.blit(RenderType::guiTextured, TEXTURE, leftPos + 136, topPos + 27, (float) (0), (float) (0), 208, 160, 256, 256);
         }
     }
 

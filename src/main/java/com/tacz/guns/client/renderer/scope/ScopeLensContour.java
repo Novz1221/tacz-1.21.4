@@ -90,7 +90,7 @@ final class ScopeLensContour {
         RenderSystem.viewport(0, 0, screenWidth, screenHeight);
         RenderSystem.enableScissor(x, y, width, height);
         RenderSystem.clearColor(0, 0, 0, 0);
-        RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT, Minecraft.ON_OSX);
+        RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT);
         GL11.glEnable(GL11.GL_STENCIL_TEST);
         RenderSystem.stencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP);
         RenderSystem.setShader(() -> maskShader);

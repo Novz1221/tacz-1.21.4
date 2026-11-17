@@ -1,5 +1,6 @@
 package com.tacz.guns.client.gui.components.refit;
 
+import net.minecraft.client.renderer.RenderType;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.tacz.guns.api.item.IGun;
 import com.tacz.guns.api.item.attachment.AttachmentType;
@@ -62,9 +63,9 @@ public class GunAttachmentSlot extends Button implements IStackTooltip {
         int x = this.getX();
         int y = this.getY();
         if (isHoveredOrFocused() || selected) {
-            graphics.blit(GunRefitScreen.SLOT_TEXTURE, x, y, 0, 0, width, height, GunRefitScreen.SLOT_SIZE, GunRefitScreen.SLOT_SIZE);
+            graphics.blit(RenderType::guiTextured, GunRefitScreen.SLOT_TEXTURE, x, y, (float) (0), (float) (0), width, height, GunRefitScreen.SLOT_SIZE, GunRefitScreen.SLOT_SIZE);
         } else {
-            graphics.blit(GunRefitScreen.SLOT_TEXTURE, x + 1, y + 1, 1, 1, width - 2, height - 2, GunRefitScreen.SLOT_SIZE, GunRefitScreen.SLOT_SIZE);
+            graphics.blit(RenderType::guiTextured, GunRefitScreen.SLOT_TEXTURE, x + 1, y + 1, (float) (1), (float) (1), width - 2, height - 2, GunRefitScreen.SLOT_SIZE, GunRefitScreen.SLOT_SIZE);
         }
         // 渲染内部物品，或者空置时的icon
         this.attachmentItem = iGun.getAttachment(gunItem, type);
@@ -72,7 +73,7 @@ public class GunAttachmentSlot extends Button implements IStackTooltip {
             graphics.renderItem(attachmentItem, x + 1, y + 1);
         } else {
             int xOffset = GunRefitScreen.getSlotTextureXOffset(gunItem, type);
-            graphics.blit(GunRefitScreen.ICONS_TEXTURE, x + 2, y + 2, width - 4, height - 4, xOffset, 0, GunRefitScreen.ICON_UV_SIZE, GunRefitScreen.ICON_UV_SIZE, GunRefitScreen.getSlotsTextureWidth(), GunRefitScreen.ICON_UV_SIZE);
+            graphics.blit(RenderType::guiTextured, GunRefitScreen.ICONS_TEXTURE, x + 2, y + 2, (float) (xOffset), (float) (0), width - 4, height - 4, GunRefitScreen.ICON_UV_SIZE, GunRefitScreen.ICON_UV_SIZE, GunRefitScreen.getSlotsTextureWidth(), GunRefitScreen.ICON_UV_SIZE);
         }
 
         RenderSystem.enableDepthTest();

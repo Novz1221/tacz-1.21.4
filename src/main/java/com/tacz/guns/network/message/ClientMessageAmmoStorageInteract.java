@@ -89,7 +89,7 @@ public class ClientMessageAmmoStorageInteract implements CustomPacketPayload {
         }
         int accumulatedCount = getAccumulatedCount(player, ammoId, count, gameTime);
         player.displayClientMessage(Component.translatable("message.tacz.ammo_storage.picked", AmmoStorageHelper.createAmmoStack(ammoId, 1).getHoverName(), accumulatedCount), true);
-        player.level().playSound(null, player.blockPosition(), SoundEvents.ARMOR_EQUIP_IRON, SoundSource.PLAYERS, 0.8F, 1.0F);
+        player.level().playSound(null, player.blockPosition(), SoundEvents.ARMOR_EQUIP_IRON.value(), SoundSource.PLAYERS, 0.8F, 1.0F);
     }
 
     private static int getAccumulatedCount(ServerPlayer player, ResourceLocation ammoId, int count, long gameTime) {

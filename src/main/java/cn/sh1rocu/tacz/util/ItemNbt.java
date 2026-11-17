@@ -1,5 +1,6 @@
 package cn.sh1rocu.tacz.util;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -16,6 +17,33 @@ import javax.annotation.Nullable;
 @SuppressWarnings("deprecation")
 public final class ItemNbt {
     private ItemNbt() {}
+
+    private static volatile HolderLookup.Provider registries;
+
+    public static void setRegistries(HolderLookup.Provider provider) {
+        registries = provider;
+    }
+
+    public static HolderLookup.Provider registries() {
+        HolderLookup.Provider provider = registries;
+        if (provider == null) {
+            throw new IllegalStateException("Registries are not available yet");
+        }
+        return provider;
+    }
+
+    /** Replacement for ItemStack.of(CompoundTag). */
+    public static ItemStack parse(CompoundTag tag) {
+        return ItemStack.parseOptional(registries(), tag);
+    }
+
+    /** Replacement for ItemStack.save(CompoundTag). Writes into (and returns) the given tag. */
+    public static CompoundTag save(ItemStack stack, CompoundTag tag) {
+        if (stack.isEmpty()) {
+            return tag;
+        }
+        return (CompoundTag) stack.save(registries(), tag);
+    }
 
     /** Returns a live, mutable tag that is stored on the stack (changes persist). */
     public static CompoundTag getOrCreateTag(ItemStack stack) {

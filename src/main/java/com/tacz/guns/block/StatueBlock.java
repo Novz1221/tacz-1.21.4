@@ -38,7 +38,7 @@ public class StatueBlock extends BaseEntityBlock implements IBlockExtension, IBl
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public StatueBlock() {
-        super(Properties.of().sound(SoundType.STONE).strength(2.0F, 3.0F).noOcclusion());
+        super(cn.sh1rocu.tacz.util.IdProps.block(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()).sound(SoundType.STONE).strength(2.0F, 3.0F).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(HALF, DoubleBlockHalf.LOWER)
                 .setValue(DecorationLock.LOCKED, false)
@@ -161,7 +161,7 @@ public class StatueBlock extends BaseEntityBlock implements IBlockExtension, IBl
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
+        return RenderShape.INVISIBLE;
     }
 
     @Override

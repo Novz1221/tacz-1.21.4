@@ -26,7 +26,7 @@ import java.util.Optional;
 
 public class GunSmithTableItem extends BlockItem implements BlockItemDataAccessor, IItem {
     public GunSmithTableItem(Block block) {
-        super(block, (new Item.Properties()).stacksTo(1));
+        super(block, (cn.sh1rocu.tacz.util.IdProps.item()).stacksTo(1));
     }
 
     @Environment(EnvType.CLIENT)

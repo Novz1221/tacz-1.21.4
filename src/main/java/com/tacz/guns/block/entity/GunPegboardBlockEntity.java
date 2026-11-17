@@ -27,7 +27,7 @@ public class GunPegboardBlockEntity extends BlockEntity implements GunDisplayBlo
     public static final int SLOTS_PER_FACE = GRID_SIZE * GRID_SIZE;
     // 原有 0..15 槽位保持不变，16..31 属于折面；转角时每面仅启用三列。
     public static final int SLOT_COUNT = SLOTS_PER_FACE * 2;
-    public static final BlockEntityType<GunPegboardBlockEntity> TYPE = BlockEntityType.Builder.of(GunPegboardBlockEntity::new, ModBlocks.GUN_PEGBOARD, ModBlocks.GLOW_GUN_PEGBOARD).build(null);
+    public static final BlockEntityType<GunPegboardBlockEntity> TYPE = net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder.create(GunPegboardBlockEntity::new, ModBlocks.GUN_PEGBOARD, ModBlocks.GLOW_GUN_PEGBOARD).build();
     private static final String ITEMS_TAG = "Items";
     private static final String SLOT_TAG = "Slot";
     private static final String ITEM_TAG = "Item";
@@ -253,7 +253,7 @@ public class GunPegboardBlockEntity extends BlockEntity implements GunDisplayBlo
                 CompoundTag entry = list.getCompound(i);
                 int slot = entry.getByte(SLOT_TAG) & 255;
                 if (isValidSlot(slot) && entry.contains(ITEM_TAG, Tag.TAG_COMPOUND)) {
-                    items[slot] = ItemStack.of(entry.getCompound(ITEM_TAG));
+                    items[slot] = cn.sh1rocu.tacz.util.ItemNbt.parse(entry.getCompound(ITEM_TAG));
                 }
             }
         }
@@ -296,7 +296,7 @@ public class GunPegboardBlockEntity extends BlockEntity implements GunDisplayBlo
             if (!items[i].isEmpty()) {
                 CompoundTag entry = new CompoundTag();
                 entry.putByte(SLOT_TAG, (byte) i);
-                entry.put(ITEM_TAG, items[i].save(new CompoundTag()));
+                entry.put(ITEM_TAG, cn.sh1rocu.tacz.util.ItemNbt.save(items[i], new CompoundTag()));
                 list.add(entry);
             }
         }

@@ -28,7 +28,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -97,7 +96,7 @@ public class ClientSetupEvent {
 
         // 注册变种
         // noinspection deprecation
-        ItemProperties.register(ModItems.AMMO_BOX, AmmoBoxItem.PROPERTY_NAME, AmmoBoxItem::getStatue);
+        // TODO(1.21.4): item property override removed, needs items/*.json range_dispatch
 
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GUN_DISPLAY_CASE, RenderType.cutout());
 

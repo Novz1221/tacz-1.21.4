@@ -7,9 +7,8 @@ import com.tacz.guns.init.ModItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.DyeableLeatherItem;
+import cn.sh1rocu.tacz.util.DyeableLeatherItem;
 
 @Environment(EnvType.CLIENT)
 public final class GunPegboardColors {
@@ -25,9 +24,7 @@ public final class GunPegboardColors {
     }
 
     public static void setup() {
-        ItemProperties.register(ModItems.GUN_PEGBOARD, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "dyed"),
-                (stack, level, entity, seed) -> ((DyeableLeatherItem) stack.getItem()).hasCustomColor(stack) ? 1 : 0);
-        ItemProperties.register(ModItems.GLOW_GUN_PEGBOARD, ResourceLocation.fromNamespaceAndPath(GunMod.MOD_ID, "dyed"),
-                (stack, level, entity, seed) -> ((DyeableLeatherItem) stack.getItem()).hasCustomColor(stack) ? 1 : 0);
+        // TODO(1.21.4): item property override removed, needs items/*.json range_dispatch
+        // TODO(1.21.4): item property override removed, needs items/*.json range_dispatch
     }
 }

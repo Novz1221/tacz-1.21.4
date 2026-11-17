@@ -73,7 +73,10 @@ public class TaCZFabric implements ModInitializer {
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
             CommonLoadPack.loadGunPack();
         }
-        ServerLifecycleEvents.SERVER_STARTING.register((server) -> TaCZFabric.server = new WeakReference<>(server));
+        ServerLifecycleEvents.SERVER_STARTING.register((server) -> {
+            TaCZFabric.server = new WeakReference<>(server);
+            cn.sh1rocu.tacz.util.ItemNbt.setRegistries(server.registryAccess());
+        });
 
         subscribeEvents();
     }

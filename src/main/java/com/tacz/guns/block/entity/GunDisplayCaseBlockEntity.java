@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class GunDisplayCaseBlockEntity extends BlockEntity implements GunDisplayBlockEntity {
     public static final int GRID_SIZE = 4;
     public static final int SLOT_COUNT = GRID_SIZE * GRID_SIZE;
-    public static final BlockEntityType<GunDisplayCaseBlockEntity> TYPE = BlockEntityType.Builder.of(GunDisplayCaseBlockEntity::new, ModBlocks.GUN_DISPLAY_CASE).build(null);
+    public static final BlockEntityType<GunDisplayCaseBlockEntity> TYPE = net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder.create(GunDisplayCaseBlockEntity::new, ModBlocks.GUN_DISPLAY_CASE).build();
     private static final String ITEMS_TAG = "Items";
     private static final String SLOT_TAG = "Slot";
     private static final String ITEM_TAG = "Item";
@@ -174,7 +174,7 @@ public class GunDisplayCaseBlockEntity extends BlockEntity implements GunDisplay
                 CompoundTag entry = list.getCompound(i);
                 int slot = entry.getByte(SLOT_TAG) & 255;
                 if (isValidSlot(slot) && entry.contains(ITEM_TAG, Tag.TAG_COMPOUND)) {
-                    items[slot] = ItemStack.of(entry.getCompound(ITEM_TAG));
+                    items[slot] = cn.sh1rocu.tacz.util.ItemNbt.parse(entry.getCompound(ITEM_TAG));
                 }
             }
         }
@@ -198,7 +198,7 @@ public class GunDisplayCaseBlockEntity extends BlockEntity implements GunDisplay
             if (!items[i].isEmpty()) {
                 CompoundTag entry = new CompoundTag();
                 entry.putByte(SLOT_TAG, (byte) i);
-                entry.put(ITEM_TAG, items[i].save(new CompoundTag()));
+                entry.put(ITEM_TAG, cn.sh1rocu.tacz.util.ItemNbt.save(items[i], new CompoundTag()));
                 list.add(entry);
             }
         }

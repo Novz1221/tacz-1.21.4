@@ -1,5 +1,6 @@
 package com.tacz.guns.client.gui.components;
 
+import net.minecraft.client.renderer.RenderType;
 import cn.sh1rocu.tacz.mixin.client.accessor.AbstractContainerScreenAccessor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.tacz.guns.GunMod;
@@ -265,7 +266,7 @@ public class CreativePackFilters {
                     3, selected ? 35 : 30, TAB_HEIGHT, selected ? 188 : 153, 2);
             if (option.logo() != null) {
                 // UVs cover the full image, independently of its pixel dimensions.
-                graphics.blit(option.logo(), getX() + 8, getY() + 5, 0, 0, 16, 16, 16, 16);
+                graphics.blit(RenderType::guiTextured, option.logo(), getX() + 8, getY() + 5, (float) (0), (float) (0), 16, 16, 16, 16);
             } else {
                 graphics.renderItem(option.icon(), getX() + 8, getY() + 5);
             }

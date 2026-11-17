@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 @SuppressWarnings("unused")
 public record LuaEntityAccessor(LivingEntity entity) {
     public void sendSystemMessage(Component message) {
-        entity.sendSystemMessage(message);
+        if (entity instanceof net.minecraft.world.entity.player.Player player) { player.displayClientMessage(message, false); }
     }
 
     public void sendActionBar(Component message) {

@@ -1,5 +1,6 @@
 package cn.sh1rocu.tacz.client;
 
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import cn.sh1rocu.simplebedrockmodel.api.event.RenderTickEvent;
 import cn.sh1rocu.simplebedrockmodel.api.event.ViewportEvent;
 import cn.sh1rocu.tacz.api.event.*;
@@ -57,6 +58,11 @@ public class TaCZFabricClient implements ClientModInitializer {
 
     private void subscribeEvents() {
         ClientLifecycleEvents.CLIENT_STARTED.register(client -> CommonRegistry.onLoadComplete());
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> cn.sh1rocu.tacz.util.ItemNbt.setRegistries(handler.registryAccess()));
+        WorldRenderEvents.START.register(context -> RenderTickEvent.EVENT.invoker().onRenderTick(
+                new RenderTickEvent(RenderTickEvent.Phase.START, context.tickCounter().getGameTimeDeltaPartialTick(false))));
+        HudRenderCallback.EVENT.register((graphics, tickCounter) -> RenderTickEvent.EVENT.invoker().onRenderTick(
+                new RenderTickEvent(RenderTickEvent.Phase.END, tickCounter.getGameTimeDeltaPartialTick(false))));
 
         RenderTickEvent.EVENT.register(RefitTransform::tickInterpolation);
 

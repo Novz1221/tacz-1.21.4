@@ -27,7 +27,7 @@ public class AmmoStorageBlockItem extends BlockItem {
     private static final String COUNT_TAG = "Count";
 
     public AmmoStorageBlockItem(Block block) {
-        super(block, new Item.Properties().stacksTo(1));
+        super(block, cn.sh1rocu.tacz.util.IdProps.item().stacksTo(1));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class AmmoStorageBlockItem extends BlockItem {
             if (!entryTag.contains(STACK_TAG, Tag.TAG_COMPOUND)) {
                 continue;
             }
-            ItemStack entryStack = ItemStack.of(entryTag.getCompound(STACK_TAG));
+            ItemStack entryStack = cn.sh1rocu.tacz.util.ItemNbt.parse(entryTag.getCompound(STACK_TAG));
             long count = entryTag.getLong(COUNT_TAG);
             if (entryStack.isEmpty() || count <= 0) {
                 continue;

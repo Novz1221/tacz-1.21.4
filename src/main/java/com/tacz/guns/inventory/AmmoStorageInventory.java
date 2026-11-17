@@ -251,7 +251,7 @@ public class AmmoStorageInventory implements IItemHandler {
             if (entry != null) {
                 CompoundTag tag = new CompoundTag();
                 tag.putByte("Slot", (byte) slot);
-                tag.put("Stack", entry.sample.save(new CompoundTag()));
+                tag.put("Stack", cn.sh1rocu.tacz.util.ItemNbt.save(entry.sample, new CompoundTag()));
                 tag.putLong("Count", entry.count);
                 result.add(tag);
             }
@@ -273,7 +273,7 @@ public class AmmoStorageInventory implements IItemHandler {
                 continue;
             }
             try {
-                ItemStack sample = ItemStack.of(tag.getCompound("Stack"));
+                ItemStack sample = cn.sh1rocu.tacz.util.ItemNbt.parse(tag.getCompound("Stack"));
                 long count = tag.getLong("Count");
                 if (sample.isEmpty() || count <= 0 || !validator.test(sample)) {
                     continue;

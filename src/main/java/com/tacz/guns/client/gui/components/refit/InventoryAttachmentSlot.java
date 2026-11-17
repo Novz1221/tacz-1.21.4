@@ -1,5 +1,6 @@
 package com.tacz.guns.client.gui.components.refit;
 
+import net.minecraft.client.renderer.RenderType;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.tacz.guns.client.gui.GunRefitScreen;
 import net.minecraft.client.gui.GuiGraphics;
@@ -48,9 +49,9 @@ public class InventoryAttachmentSlot extends Button implements IStackTooltip {
 
         int x = getX(), y = getY();
         if (isHoveredOrFocused()) {
-            graphics.blit(GunRefitScreen.SLOT_TEXTURE, x, y, 0, 0, width, height, 18, 18);
+            graphics.blit(RenderType::guiTextured, GunRefitScreen.SLOT_TEXTURE, x, y, (float) (0), (float) (0), width, height, 18, 18);
         } else {
-            graphics.blit(GunRefitScreen.SLOT_TEXTURE, x + 1, y + 1, 1, 1, width - 2, height - 2, 18, 18);
+            graphics.blit(RenderType::guiTextured, GunRefitScreen.SLOT_TEXTURE, x + 1, y + 1, (float) (1), (float) (1), width - 2, height - 2, 18, 18);
         }
         graphics.renderItem(getItemStack(), x + 1, y + 1);
 

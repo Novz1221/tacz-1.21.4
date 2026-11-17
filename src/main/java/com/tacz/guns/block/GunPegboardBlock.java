@@ -11,7 +11,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeableLeatherItem;
+import cn.sh1rocu.tacz.util.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -53,7 +53,7 @@ public class GunPegboardBlock extends BaseEntityBlock implements IPistonPushReac
     }
 
     public GunPegboardBlock(boolean glowing) {
-        super(Properties.of().mapColor(MapColor.METAL).sound(SoundType.METAL).strength(5.0F, 6.0F).noOcclusion().lightLevel(state -> glowing ? 10 : 0));
+        super(cn.sh1rocu.tacz.util.IdProps.block(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()).mapColor(MapColor.METAL).sound(SoundType.METAL).strength(5.0F, 6.0F).noOcclusion().lightLevel(state -> glowing ? 10 : 0));
         this.glowing = glowing;
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(DYED, false).setValue(DecorationLock.LOCKED, false).setValue(SHAPE, PegboardShape.STRAIGHT));
     }

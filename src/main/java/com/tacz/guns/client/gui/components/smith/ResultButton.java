@@ -1,5 +1,6 @@
 package com.tacz.guns.client.gui.components.smith;
 
+import net.minecraft.client.renderer.RenderType;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.tacz.guns.GunMod;
 import net.minecraft.client.Minecraft;
@@ -28,15 +29,15 @@ public class ResultButton extends Button {
 
         if (isSelected) {
             if (isHoveredOrFocused()) {
-                gui.blit(TEXTURE, this.getX() - 1, this.getY() - 1, 52, 229, this.width + 2, this.height + 2, 256, 256);
+                gui.blit(RenderType::guiTextured, TEXTURE, this.getX() - 1, this.getY() - 1, (float) (52), (float) (229), this.width + 2, this.height + 2, 256, 256);
             } else {
-                gui.blit(TEXTURE, this.getX(), this.getY(), 53, 230, this.width, this.height, 256, 256);
+                gui.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), (float) (53), (float) (230), this.width, this.height, 256, 256);
             }
         } else {
             if (isHoveredOrFocused()) {
-                gui.blit(TEXTURE, this.getX() - 1, this.getY() - 1, 52, 211, this.width + 2, this.height + 2, 256, 256);
+                gui.blit(RenderType::guiTextured, TEXTURE, this.getX() - 1, this.getY() - 1, (float) (52), (float) (211), this.width + 2, this.height + 2, 256, 256);
             } else {
-                gui.blit(TEXTURE, this.getX(), this.getY(), 53, 212, this.width, this.height, 256, 256);
+                gui.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), (float) (53), (float) (212), this.width, this.height, 256, 256);
             }
         }
         Minecraft mc = Minecraft.getInstance();

@@ -303,7 +303,7 @@ public class Serializers {
 
         @Override
         public ItemStack read(Tag tag) {
-            return ItemStack.of((CompoundTag) tag);
+            return cn.sh1rocu.tacz.util.ItemNbt.parse((CompoundTag) tag);
         }
     };
 

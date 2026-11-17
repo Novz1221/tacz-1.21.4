@@ -1,5 +1,6 @@
 package com.tacz.guns.client.gui.components.refit;
 
+import net.minecraft.client.renderer.RenderType;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.tacz.guns.client.gui.GunRefitScreen;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,9 +24,9 @@ public class RefitUnloadButton extends Button implements IComponentTooltip {
 
         int x = getX(), y = getY();
         if (isHoveredOrFocused()) {
-            graphics.blit(GunRefitScreen.UNLOAD_TEXTURE, x, y, width, height, 0, 0, 80, 80, 160, 80);
+            graphics.blit(RenderType::guiTextured, GunRefitScreen.UNLOAD_TEXTURE, x, y, (float) (0), (float) (0), width, height, 80, 80, 160, 80);
         } else {
-            graphics.blit(GunRefitScreen.UNLOAD_TEXTURE, x, y, width, height, 80, 0, 80, 80, 160, 80);
+            graphics.blit(RenderType::guiTextured, GunRefitScreen.UNLOAD_TEXTURE, x, y, (float) (80), (float) (0), width, height, 80, 80, 160, 80);
         }
 
         RenderSystem.enableDepthTest();

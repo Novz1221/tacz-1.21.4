@@ -1,5 +1,6 @@
 package com.tacz.guns.client.gui.components.refit;
 
+import net.minecraft.client.renderer.RenderType;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.tacz.guns.client.gui.GunRefitScreen;
 import net.minecraft.client.gui.GuiGraphics;
@@ -27,9 +28,9 @@ public class RefitTurnPageButton extends Button implements IComponentTooltip {
         int x = getX(), y = getY();
         int yOffset = isUpPage ? 0 : 80;
         if (isHoveredOrFocused()) {
-            graphics.blit(GunRefitScreen.TURN_PAGE_TEXTURE, x, y, width, height, 0, yOffset, 180, 80, 180, 160);
+            graphics.blit(RenderType::guiTextured, GunRefitScreen.TURN_PAGE_TEXTURE, x, y, (float) (0), (float) (yOffset), width, height, 180, 80, 180, 160);
         } else {
-            graphics.blit(GunRefitScreen.TURN_PAGE_TEXTURE, x + 1, y + 1, width - 2, height - 2, 10, yOffset + 10, 180 - 20, 80 - 20, 180, 160);
+            graphics.blit(RenderType::guiTextured, GunRefitScreen.TURN_PAGE_TEXTURE, x + 1, y + 1, (float) (10), (float) (yOffset + 10), width - 2, height - 2, 180 - 20, 80 - 20, 180, 160);
         }
 
         RenderSystem.enableDepthTest();

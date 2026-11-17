@@ -85,7 +85,7 @@ public class RangedWrapper implements IItemHandlerModifiable {
             if (!getStackInSlot(i).isEmpty()) {
                 CompoundTag itemTag = new CompoundTag();
                 itemTag.putInt("Slot", i);
-                nbtTagList.add(getStackInSlot(i).save(itemTag));
+                nbtTagList.add(cn.sh1rocu.tacz.util.ItemNbt.save(getStackInSlot(i), itemTag));
             }
         }
         CompoundTag nbt = new CompoundTag();
@@ -102,7 +102,7 @@ public class RangedWrapper implements IItemHandlerModifiable {
             int slot = itemTags.getInt("Slot");
 
             if (slot >= 0 && slot < size) {
-                setStackInSlot(slot, ItemStack.of(itemTags));
+                setStackInSlot(slot, cn.sh1rocu.tacz.util.ItemNbt.parse(itemTags));
             }
         }
     }

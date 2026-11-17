@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import static com.tacz.guns.block.StatueBlock.FACING;
 
 public class StatueBlockEntity extends BlockEntity {
-    public static final BlockEntityType<StatueBlockEntity> TYPE = BlockEntityType.Builder.of(StatueBlockEntity::new, ModBlocks.STATUE).build(null);
+    public static final BlockEntityType<StatueBlockEntity> TYPE = net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder.create(StatueBlockEntity::new, ModBlocks.STATUE).build();
     private static final String ITEM_TAG = "Item";
     private ItemStack gunItem = ItemStack.EMPTY;
 
@@ -88,14 +88,14 @@ public class StatueBlockEntity extends BlockEntity {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         if (tag.contains(ITEM_TAG, Tag.TAG_COMPOUND)) {
-            this.gunItem = ItemStack.of(tag.getCompound(ITEM_TAG));
+            this.gunItem = cn.sh1rocu.tacz.util.ItemNbt.parse(tag.getCompound(ITEM_TAG));
         }
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put(ITEM_TAG, gunItem.save(new CompoundTag()));
+        tag.put(ITEM_TAG, cn.sh1rocu.tacz.util.ItemNbt.save(gunItem, new CompoundTag()));
     }
 
     @Override

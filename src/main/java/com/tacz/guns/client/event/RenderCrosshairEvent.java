@@ -1,5 +1,6 @@
 package com.tacz.guns.client.event;
 
+import net.minecraft.client.renderer.RenderType;
 import cn.sh1rocu.simplebedrockmodel.api.event.RenderTickEvent;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Window;
@@ -129,7 +130,7 @@ public class RenderCrosshairEvent {
         RenderSystem.setShaderColor(1F, 1F, 1F, 0.9f);
         float x = width / 2f - 8;
         float y = height / 2f - 8;
-        graphics.blit(location, (int) x, (int) y, 0, 0, 16, 16, 16, 16);
+        graphics.blit(RenderType::guiTextured, location, (int) x, (int) y, (float) (0), (float) (0), 16, 16, 16, 16);
     }
 
     private static void renderHitMarker(GuiGraphics graphics, Window window) {
@@ -163,10 +164,10 @@ public class RenderCrosshairEvent {
             RenderSystem.setShaderColor(1F, 0, 0, 1 - fadeTime / KEEP_TIME);
         }
 
-        graphics.blit(HIT_ICON, (int) (x - offset), (int) (y - offset), 0, 0, 8, 8, 16, 16);
-        graphics.blit(HIT_ICON, (int) (x + 8 + offset), (int) (y - offset), 8, 0, 8, 8, 16, 16);
-        graphics.blit(HIT_ICON, (int) (x - offset), (int) (y + 8 + offset), 0, 8, 8, 8, 16, 16);
-        graphics.blit(HIT_ICON, (int) (x + 8 + offset), (int) (y + 8 + offset), 8, 8, 8, 8, 16, 16);
+        graphics.blit(RenderType::guiTextured, HIT_ICON, (int) (x - offset), (int) (y - offset), (float) (0), (float) (0), 8, 8, 16, 16);
+        graphics.blit(RenderType::guiTextured, HIT_ICON, (int) (x + 8 + offset), (int) (y - offset), (float) (8), (float) (0), 8, 8, 16, 16);
+        graphics.blit(RenderType::guiTextured, HIT_ICON, (int) (x - offset), (int) (y + 8 + offset), (float) (0), (float) (8), 8, 8, 16, 16);
+        graphics.blit(RenderType::guiTextured, HIT_ICON, (int) (x + 8 + offset), (int) (y + 8 + offset), (float) (8), (float) (8), 8, 8, 16, 16);
     }
 
     public static void markHitTimestamp() {

@@ -340,7 +340,7 @@ public class BedrockGunModel extends BedrockAnimatedModel {
         super.render(matrixStack, transformType, renderType, light, overlay, red, green, blue, alpha, bufferSource);
         RenderHelper.disableItemEntityStencilTest();
         RenderSystem.clearStencil(0);
-        RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
+        RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT);
     }
 
 	public void renderAccelerated(PoseStack matrixStack, ItemStack gunItem, ItemDisplayContext transformType, RenderType renderType, int light, int overlay, MultiBufferSource bufferSource) {
@@ -401,7 +401,7 @@ public class BedrockGunModel extends BedrockAnimatedModel {
 			RenderHelper.disableItemEntityStencilTest();
 			// 重置模板缓冲区
 			RenderSystem.clearStencil(0);
-			RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
+			RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT);
 
 			// 最后执行被覆盖的层后方法
 			after.run();

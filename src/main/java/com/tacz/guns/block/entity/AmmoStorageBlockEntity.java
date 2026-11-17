@@ -31,8 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class AmmoStorageBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, SidedStorageBlockEntity {
-    public static final BlockEntityType<AmmoStorageBlockEntity> TYPE = BlockEntityType.Builder.of(AmmoStorageBlockEntity::new,
-            ModBlocks.AMMO_STORAGE, ModBlocks.AMMO_STORAGE_GOLD, ModBlocks.AMMO_STORAGE_DIAMOND).build(null);
+    public static final BlockEntityType<AmmoStorageBlockEntity> TYPE = net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder.create(AmmoStorageBlockEntity::new, ModBlocks.AMMO_STORAGE, ModBlocks.AMMO_STORAGE_GOLD, ModBlocks.AMMO_STORAGE_DIAMOND).build();
     public static final int MAX_AMMO_TYPES = 27;
 
     private final AmmoStorageInventory inventory = new AmmoStorageInventory(MAX_AMMO_TYPES, this::getCapacityStacks,

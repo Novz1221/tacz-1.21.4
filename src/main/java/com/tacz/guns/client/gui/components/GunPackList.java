@@ -1,5 +1,6 @@
 package com.tacz.guns.client.gui.components;
 
+import net.minecraft.client.renderer.RenderType;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.tacz.guns.client.gui.GunSmithTableScreen;
@@ -251,7 +252,7 @@ public class GunPackList extends ContainerObjectSelectionList<GunPackList.Entry>
             Font font = minecraft.font;
             pGuiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
             RenderSystem.enableBlend();
-            pGuiGraphics.blit(TEXTURE, this.getX(), this.getY(), this.isFocused() ? 10.0F : 0.0F, this.selected ? 10.0F : 0.0F, 10, 10, 32, 32);
+            pGuiGraphics.blit(RenderType::guiTextured, TEXTURE, this.getX(), this.getY(), (float) (this.isFocused() ? 10.0F : 0.0F), (float) (this.selected ? 10.0F : 0.0F), 10, 10, 32, 32);
             pGuiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
             if (this.showLabel) {
                 pGuiGraphics.drawString(font, this.getMessage(), this.getX() + 24, this.getY() + (this.height - 8) / 2, 14737632 | Mth.ceil(this.alpha * 255.0F) << 24);
