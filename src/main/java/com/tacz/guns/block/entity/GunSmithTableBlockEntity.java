@@ -64,8 +64,7 @@ public class GunSmithTableBlockEntity extends BlockEntity implements ExtendedScr
 
     @Override
     public ResourceLocation getScreenOpeningData(ServerPlayer serverPlayer) {
-        return @Override
-    ;
+        return this.getId() == null ? DefaultAssets.DEFAULT_BLOCK_ID : this.getId();
     }
 
     @Nullable
