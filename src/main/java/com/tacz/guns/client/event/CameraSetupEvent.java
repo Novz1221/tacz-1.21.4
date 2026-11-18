@@ -218,9 +218,15 @@ public class CameraSetupEvent {
         long timeTotal = GunTime.nowMillis() - shootTimeStamp;
         if (shootTimeStamp >= 0 && timeTotal >= 0 && pitchSplineFunction != null && pitchSplineFunction.isValidPoint(timeTotal)) {
             double value = pitchSplineFunction.value(timeTotal);
-                    if (shootTimeStamp >= 0 && timeTotal >= 0 && yawSplineFunction != null && yawSplineFunction.isValidPoint(timeTotal)) {
+            player.setXRot(player.getXRot() - (float) (value - xRotO));
+            xRotO = value;
+        }
+        if (shootTimeStamp >= 0 && timeTotal >= 0 && yawSplineFunction != null && yawSplineFunction.isValidPoint(timeTotal)) {
             double value = yawSplineFunction.value(timeTotal);
-                }
+            player.setYRot(player.getYRot() - (float) (value - yRotO));
+            yRotO = value;
+        }
+    }
 
     public static void resetTimestamp() {
         shootTimeStamp = -1;
