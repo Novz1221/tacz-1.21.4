@@ -15,7 +15,6 @@
     "common.BundlePacketMixin",
     "common.ClipContextMixin",
     "common.EntityMixin",
-    "common.ExplosionMixin",
     "common.ItemStackMixin",
     "common.LevelMixin",
     "common.LivingEntityMixin",

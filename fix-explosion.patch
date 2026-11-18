@@ -1,0 +1,90 @@
+diff --git a/src/main/java/cn/sh1rocu/tacz/mixin/common/BlockStateBaseMixin.java b/src/main/java/cn/sh1rocu/tacz/mixin/common/BlockStateBaseMixin.java
+--- a/src/main/java/cn/sh1rocu/tacz/mixin/common/BlockStateBaseMixin.java	2026-11-18 07:15:04.734290666 +0000
++++ b/src/main/java/cn/sh1rocu/tacz/mixin/common/BlockStateBaseMixin.java	2026-11-18 07:15:04.951704155 +0000
+@@ -1,7 +1,12 @@
+ package cn.sh1rocu.tacz.mixin.common;
+ 
++import cn.sh1rocu.tacz.api.extension.IBlockExtension;
+ import cn.sh1rocu.tacz.api.extension.IPistonPushReaction;
+ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
++import net.minecraft.core.BlockPos;
++import net.minecraft.server.level.ServerLevel;
++import net.minecraft.world.item.ItemStack;
++import net.minecraft.world.level.Explosion;
+ import net.minecraft.world.level.block.Block;
+ import net.minecraft.world.level.block.state.BlockBehaviour;
+ import net.minecraft.world.level.block.state.BlockState;
+@@ -9,6 +14,10 @@
+ import org.spongepowered.asm.mixin.Mixin;
+ import org.spongepowered.asm.mixin.Shadow;
+ import org.spongepowered.asm.mixin.injection.At;
++import org.spongepowered.asm.mixin.injection.Inject;
++import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
++
++import java.util.function.BiConsumer;
+ 
+ @Mixin(BlockBehaviour.BlockStateBase.class)
+ public abstract class BlockStateBaseMixin {
+@@ -26,4 +35,12 @@
+         }
+         return original;
+     }
++
++    // 1.21.2+: Explosion is an interface and finalizeExplosion is gone; block hits go through onExplosionHit.
++    @Inject(method = "onExplosionHit", at = @At("HEAD"))
++    private void tacz$onBlockExploded(ServerLevel level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> dropConsumer, CallbackInfo ci) {
++        if (getBlock() instanceof IBlockExtension block) {
++            block.tacz$onBlockExploded(asState(), level, pos, explosion);
++        }
++    }
+ }
+diff --git a/src/main/java/cn/sh1rocu/tacz/mixin/common/ExplosionMixin.java b/src/main/java/cn/sh1rocu/tacz/mixin/common/ExplosionMixin.java
+--- a/src/main/java/cn/sh1rocu/tacz/mixin/common/ExplosionMixin.java	2026-11-18 07:15:04.734337865 +0000
++++ b/src/main/java/cn/sh1rocu/tacz/mixin/common/ExplosionMixin.java	1970-01-01 00:00:00.000000000 +0000
+@@ -1,34 +0,0 @@
+-package cn.sh1rocu.tacz.mixin.common;
+-
+-import cn.sh1rocu.tacz.api.extension.IBlockExtension;
+-import com.llamalad7.mixinextras.sugar.Local;
+-import net.minecraft.core.BlockPos;
+-import net.minecraft.world.level.Explosion;
+-import net.minecraft.world.level.Level;
+-import net.minecraft.world.level.block.state.BlockState;
+-import org.spongepowered.asm.mixin.Final;
+-import org.spongepowered.asm.mixin.Mixin;
+-import org.spongepowered.asm.mixin.Shadow;
+-import org.spongepowered.asm.mixin.injection.At;
+-import org.spongepowered.asm.mixin.injection.Inject;
+-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+-
+-@Mixin(Explosion.class)
+-public class ExplosionMixin {
+-    @Shadow
+-    @Final
+-    public Level level;
+-
+-    @Inject(
+-            method = "finalizeExplosion",
+-            at = @At(
+-                    value = "INVOKE",
+-                    target = "Lnet/minecraft/util/profiling/ProfilerFiller;pop()V"
+-            )
+-    )
+-    private void tacz$onBlockExploded(boolean spawnParticles, CallbackInfo ci, @Local(ordinal = 0) BlockPos pos, @Local(ordinal = 0) BlockState state) {
+-        if (state.getBlock() instanceof IBlockExtension block) {
+-            block.tacz$onBlockExploded(state, this.level, pos, (Explosion) (Object) this);
+-        }
+-    }
+-}
+\ No newline at end of file
+diff --git a/src/main/resources/tacz.fabric.mixins.json b/src/main/resources/tacz.fabric.mixins.json
+--- a/src/main/resources/tacz.fabric.mixins.json	2026-11-18 07:15:04.760802053 +0000
++++ b/src/main/resources/tacz.fabric.mixins.json	2026-11-18 07:15:04.957714402 +0000
+@@ -15,7 +15,6 @@
+     "common.BundlePacketMixin",
+     "common.ClipContextMixin",
+     "common.EntityMixin",
+-    "common.ExplosionMixin",
+     "common.ItemStackMixin",
+     "common.LevelMixin",
+     "common.LivingEntityMixin",
