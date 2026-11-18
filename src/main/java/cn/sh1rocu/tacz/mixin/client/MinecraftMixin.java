@@ -111,9 +111,10 @@ public abstract class MinecraftMixin {
         }
     }
 
-    @ModifyExpressionValue(method = "startUseItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/InteractionResult;shouldSwing()Z"))
-    private boolean tacz$onlySwingHandIfNeeded(boolean original, @Share("inputEvent") LocalRef<InputEvent.InteractionKeyMappingTriggered> inputEvent) {
-        return original && (inputEvent.get() == null || inputEvent.get().shouldSwingHand());
+    // 1.21.2+: InteractionResult#shouldSwing was removed; gate the client-side swing calls directly.
+    @WrapWithCondition(method = "startUseItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;swing(Lnet/minecraft/world/InteractionHand;)V"))
+    private boolean tacz$onlySwingHandIfNeeded(LocalPlayer instance, InteractionHand interactionHand, @Share("inputEvent") LocalRef<InputEvent.InteractionKeyMappingTriggered> inputEvent) {
+        return inputEvent.get() == null || inputEvent.get().shouldSwingHand();
     }
 
     @Inject(method = "pickBlock", at = @At("HEAD"), cancellable = true)
