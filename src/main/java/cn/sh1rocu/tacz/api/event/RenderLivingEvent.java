@@ -26,7 +26,7 @@ public abstract class RenderLivingEvent<T extends LivingEntity, S extends net.mi
     });
 
     public interface PostCallback {
-        void post(Post<?, ?> event);
+        void post(Post<?, ?, ?> event);
     }
 
     protected RenderLivingEvent(LivingEntity entity, LivingEntityRenderer<T, S, M> renderer, float partialTick, PoseStack poseStack,

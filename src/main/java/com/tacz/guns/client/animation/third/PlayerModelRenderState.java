@@ -14,13 +14,6 @@ import java.util.stream.Stream;
 public final class PlayerModelRenderState implements AutoCloseable {
     private final PlayerModel model;
     private final List<PartState> parts;
-    private final float attackTime;
-    private final float swimAmount;
-    private final boolean crouching;
-    private final boolean riding;
-    private final boolean young;
-    private final HumanoidModel.ArmPose leftArmPose;
-    private final HumanoidModel.ArmPose rightArmPose;
     private final Runnable restoreAnimation;
 
     public PlayerModelRenderState(PlayerModel model) {
@@ -29,13 +22,6 @@ public final class PlayerModelRenderState implements AutoCloseable {
                         model.leftLeg, model.rightLeg, model.jacket, model.leftSleeve, model.rightSleeve,
                         model.leftPants, model.rightPants)
                 .flatMap(ModelPart::getAllParts).distinct().map(PartState::new).toList();
-        attackTime = model.attackTime;
-        swimAmount = model.swimAmount;
-        crouching = model.crouching;
-        riding = model.riding;
-        young = model.young;
-        leftArmPose = model.leftArmPose;
-        rightArmPose = model.rightArmPose;
         restoreAnimation = PlayerAnimatorCompat.captureModelState(model);
     }
 
@@ -55,13 +41,6 @@ public final class PlayerModelRenderState implements AutoCloseable {
     public void close() {
         restoreAnimation.run();
         parts.forEach(PartState::restore);
-        model.attackTime = attackTime;
-        model.swimAmount = swimAmount;
-        model.crouching = crouching;
-        model.riding = riding;
-        model.young = young;
-        model.leftArmPose = leftArmPose;
-        model.rightArmPose = rightArmPose;
     }
 
     private record PartState(ModelPart part, PartPose pose, float xScale, float yScale, float zScale,
