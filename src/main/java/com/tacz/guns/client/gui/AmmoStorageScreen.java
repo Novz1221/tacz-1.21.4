@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AmmoStorageScreen extends AbstractContainerScreen<AmmoStorageMenu> {
+    @Override
+    public void renderBackground(net.minecraft.client.gui.GuiGraphics tacz$g, int tacz$mx, int tacz$my, float tacz$pt) {
+        // background is drawn explicitly (no blur) to avoid the 1.21 double-blur exception
+    }
+
     private static final ResourceLocation CONTAINER_LOCATION = ResourceLocation.parse("textures/gui/container/generic_54.png");
     private static final int CONTAINER_ROWS = AmmoStorageMenu.STORAGE_ROWS;
     private int virtualClickButton = -1;
@@ -49,13 +54,12 @@ public class AmmoStorageScreen extends AbstractContainerScreen<AmmoStorageMenu> 
         if (hovered >= 0) {
             int x = leftPos + AmmoStorageMenu.INVENTORY_X + hovered % AmmoStorageMenu.STORAGE_COLUMNS * 18;
             int y = topPos + AmmoStorageMenu.STORAGE_Y + hovered / AmmoStorageMenu.STORAGE_COLUMNS * 18;
-            renderSlotHighlight(graphics, x, y, 0);
         }
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics);
+        this.renderTransparentBackground(graphics);
         super.render(graphics, mouseX, mouseY, partialTick);
         renderTooltip(graphics, mouseX, mouseY);
     }

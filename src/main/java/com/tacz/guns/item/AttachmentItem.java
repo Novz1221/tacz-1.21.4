@@ -13,7 +13,7 @@ import com.tacz.guns.resource.index.CommonAttachmentIndex;
 import com.tacz.guns.util.ContentPackOrder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import cn.sh1rocu.tacz.client.render.BuiltinItemRendererRegistry;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

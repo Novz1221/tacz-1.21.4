@@ -262,8 +262,7 @@ public class CreativePackFilters {
             RenderSystem.enableBlend();
             // Native left-side tabs keep highlights above/left and shadows below.
             // Preserve the corners and the selected tab's join to the panel; only tile the center.
-            graphics.blitNineSliced(TAB_TEXTURE, getX(), getY(), selected ? 31 : 28, TAB_HEIGHT,
-                    3, selected ? 35 : 30, TAB_HEIGHT, selected ? 188 : 153, 2);
+            graphics.fill(getX(), getY(), getX() + this.width, getY() + TAB_HEIGHT, selected ? 0xFFC6C6C6 : 0xFF8B8B8B);
             if (option.logo() != null) {
                 // UVs cover the full image, independently of its pixel dimensions.
                 graphics.blit(RenderType::guiTextured, option.logo(), getX() + 8, getY() + 5, (float) (0), (float) (0), 16, 16, 16, 16);

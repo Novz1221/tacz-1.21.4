@@ -171,7 +171,7 @@ public final class HitSurfaceParticleSpawner {
         boolean hasArguments = trimmedName.split("\\s+", 2).length > 1;
         if (hasArguments) {
             try {
-                return ParticleArgument.readParticle(new StringReader(trimmedName), BuiltInRegistries.PARTICLE_TYPE.asLookup());
+                return ParticleArgument.readParticle(new StringReader(trimmedName), net.minecraft.client.Minecraft.getInstance().level.registryAccess());
             } catch (CommandSyntaxException ignored) {
                 return null;
             }
@@ -185,19 +185,19 @@ public final class HitSurfaceParticleSpawner {
         }
         if (DUST.equals(particleId)) {
             float[] color = colorOrDefault(particle.getColor(), 1.0f, 0.35f, 0.1f);
-            return new DustParticleOptions(new Vector3f(color[0], color[1], color[2]), positiveScale(particle));
+            return new DustParticleOptions(net.minecraft.util.ARGB.colorFromFloat(1.0F, color[0], color[1], color[2]), positiveScale(particle));
         }
         if (DUST_COLOR_TRANSITION.equals(particleId)) {
             float[] color = colorOrDefault(particle.getColor(), 1.0f, 0.35f, 0.1f);
             Vector3f fromColor = new Vector3f(color[0], color[1], color[2]);
             Vector3f toColor = new Vector3f(color[0] * 0.25f, color[1] * 0.25f, color[2] * 0.25f);
-            return new DustColorTransitionOptions(fromColor, toColor, positiveScale(particle));
+            return new DustColorTransitionOptions(net.minecraft.util.ARGB.colorFromFloat(1.0F, fromColor.x(), fromColor.y(), fromColor.z()), net.minecraft.util.ARGB.colorFromFloat(1.0F, toColor.x(), toColor.y(), toColor.z()), positiveScale(particle));
         }
         if (ITEM.equals(particleId)) {
             return null;
         }
         try {
-            return ParticleArgument.readParticle(new StringReader(trimmedName), BuiltInRegistries.PARTICLE_TYPE.asLookup());
+            return ParticleArgument.readParticle(new StringReader(trimmedName), net.minecraft.client.Minecraft.getInstance().level.registryAccess());
         } catch (CommandSyntaxException ignored) {
             return null;
         }
@@ -247,7 +247,7 @@ public final class HitSurfaceParticleSpawner {
     }
 
     private static Vec3 randomPosition(RandomSource random, Vec3 hitPos, Direction direction, float surfaceOffset, float randomOffset) {
-        Vec3 normal = Vec3.atLowerCornerOf(direction.getNormal());
+        Vec3 normal = Vec3.atLowerCornerOf(direction.getUnitVec3i());
         double offsetX = randomOffset == 0 ? 0 : random.nextGaussian() * randomOffset;
         double offsetY = randomOffset == 0 ? 0 : random.nextGaussian() * randomOffset;
         double offsetZ = randomOffset == 0 ? 0 : random.nextGaussian() * randomOffset;
@@ -255,7 +255,7 @@ public final class HitSurfaceParticleSpawner {
     }
 
     private static Vec3 randomVelocity(RandomSource random, Direction direction, float normalSpeed, float randomSpeed, float spreadAngle) {
-        Vec3 normal = Vec3.atLowerCornerOf(direction.getNormal()).normalize();
+        Vec3 normal = Vec3.atLowerCornerOf(direction.getUnitVec3i()).normalize();
         Vec3 tangent = Math.abs(normal.y) > 0.9 ? new Vec3(1, 0, 0) : normal.cross(new Vec3(0, 1, 0)).normalize();
         Vec3 bitangent = normal.cross(tangent).normalize();
         double spread = Math.tan(Math.toRadians(spreadAngle));

@@ -51,7 +51,7 @@ public class SyncedEntityDataMappingS2CPacket implements IHandshakeMessage {
         });
     }
 
-    public IHandshakeMessage.IResponsePacket handle(Connection connection, Consumer<GenericFutureListener<? extends Future<? super Void>>> listenerAdder) {
+    public IHandshakeMessage.IResponsePacket handle(Connection connection, Consumer<net.minecraft.network.PacketSendListener> listenerAdder) {
         GunMod.LOGGER.debug(HANDSHAKE, "Received synced key mappings from server");
         if (!SyncedEntityData.instance().updateMappings(this.keyMap)) {
             connection.disconnect(Component.literal("Connection closed - [TacZ] Received unknown synced data keys."));

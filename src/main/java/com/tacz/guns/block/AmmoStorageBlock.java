@@ -142,7 +142,7 @@ public class AmmoStorageBlock extends BaseEntityBlock {
         BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         ItemStack stack = new ItemStack(state.getBlock());
         if (blockEntity instanceof AmmoStorageBlockEntity storage) {
-            CompoundTag tag = storage.saveWithoutMetadata(level.registryAccess());
+            CompoundTag tag = storage.saveWithoutMetadata(builder.getLevel().registryAccess());
             if (!tag.isEmpty()) {
                 BlockItem.setBlockEntityData(stack, ModBlocks.AMMO_STORAGE_BE, tag);
             }

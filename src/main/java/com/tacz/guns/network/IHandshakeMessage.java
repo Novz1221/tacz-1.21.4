@@ -11,7 +11,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
 public interface IHandshakeMessage {
-    @Nullable IResponsePacket handle(Connection connection, Consumer<GenericFutureListener<? extends Future<? super Void>>> consumer);
+    void write(FriendlyByteBuf buf);
+
+    PacketType<?> getType();
+
+    @Nullable IResponsePacket handle(Connection connection, Consumer<net.minecraft.network.PacketSendListener> consumer);
 
     interface IResponsePacket {
         void write(FriendlyByteBuf buf);

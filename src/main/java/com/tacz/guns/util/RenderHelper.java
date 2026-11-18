@@ -114,9 +114,9 @@ public final class RenderHelper {
              var scope = AnimationRenderContext.hand(player)) {
             state.prepareArm(hand, !player.isSpectator());
             if (hand == HumanoidArm.RIGHT) {
-                renderer.renderRightHand(matrixStack, buffer, combinedLight, player);
+                renderer.renderRightHand(matrixStack, buffer, combinedLight, player.getSkin().texture(), player.isModelPartShown(net.minecraft.world.entity.player.PlayerModelPart.RIGHT_SLEEVE));
             } else {
-                renderer.renderLeftHand(matrixStack, buffer, combinedLight, player);
+                renderer.renderLeftHand(matrixStack, buffer, combinedLight, player.getSkin().texture(), player.isModelPartShown(net.minecraft.world.entity.player.PlayerModelPart.LEFT_SLEEVE));
             }
         } finally {
             if (accelerated) {

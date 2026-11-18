@@ -70,7 +70,7 @@ public class GunDisplayCaseHighlightEvent {
         Vec3 camera = context.camera().getPosition();
         AABB aabb = GunDisplayCaseSlotHelper.getSlotAabb(state, pos, slot).move(-camera.x, -camera.y, -camera.z);
         VertexConsumer buffer = consumers.getBuffer(DisplayCaseHighlightRenderType.getLines());
-        LevelRenderer.renderLineBox(context.matrixStack(), buffer, aabb, red, green, blue, 1.0F);
+        net.minecraft.client.renderer.ShapeRenderer.renderLineBox(context.matrixStack(), buffer, aabb, red, green, blue, 1.0F);
     }
 
     private static class DisplayCaseHighlightRenderType extends RenderStateShard {

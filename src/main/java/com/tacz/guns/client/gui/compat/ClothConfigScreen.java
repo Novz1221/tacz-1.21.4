@@ -13,6 +13,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class ClothConfigScreen extends Screen {
+    @Override
+    public void renderBackground(net.minecraft.client.gui.GuiGraphics tacz$g, int tacz$mx, int tacz$my, float tacz$pt) {
+        // background is drawn explicitly (no blur) to avoid the 1.21 double-blur exception
+    }
+
     public static final String CLOTH_CONFIG_URL = "https://www.curseforge.com/minecraft/mc-mods/cloth-config";
     private final Screen lastScreen;
     private MultiLineLabel message = MultiLineLabel.EMPTY;
@@ -39,7 +44,7 @@ public class ClothConfigScreen extends Screen {
 
     @Override
     public void render(@NotNull GuiGraphics gui, int pMouseX, int pMouseY, float pPartialTick) {
-        this.renderBackground(gui);
+        this.renderTransparentBackground(gui);
         this.message.renderCentered(gui, this.width / 2, 80);
         super.render(gui, pMouseX, pMouseY, pPartialTick);
     }

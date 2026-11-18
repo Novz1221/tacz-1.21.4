@@ -33,7 +33,7 @@ public final class HitBlockEffectHandler {
         HitSurfaceParticleSpawner.spawn(level, hitPos, direction, blockPos, ammoId, gunId, gunDisplayId, incendiary);
         playHitBlockStepSound(level, state, hitPos.x, hitPos.y, hitPos.z);
         if (BulletHoleParticle.isBulletHoleEnabled(ammoId, gunId, gunDisplayId)) {
-            level.addParticle(new BulletHoleOption(direction, blockPos, ammoId, gunId, gunDisplayId, incendiary), true, hitPos.x, hitPos.y, hitPos.z, 0, 0, 0);
+            level.addParticle(new BulletHoleOption(direction, blockPos, ammoId, gunId, gunDisplayId, incendiary), true, false, hitPos.x, hitPos.y, hitPos.z, 0, 0, 0);
         }
     }
 

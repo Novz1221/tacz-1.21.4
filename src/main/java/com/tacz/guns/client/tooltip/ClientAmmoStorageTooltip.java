@@ -18,7 +18,7 @@ public class ClientAmmoStorageTooltip implements ClientTooltipComponent {
     }
 
     @Override
-    public int getHeight() {
+    public int getHeight(Font tacz$font) {
         int height = tooltip.getEntries().size() * ENTRY_HEIGHT;
         return tooltip.getHidden() > 0 ? height + 10 : height;
     }
@@ -50,7 +50,7 @@ public class ClientAmmoStorageTooltip implements ClientTooltipComponent {
     }
 
     @Override
-    public void renderImage(Font font, int x, int y, GuiGraphics guiGraphics) {
+    public void renderImage(Font font, int x, int y, int tacz$w, int tacz$h, GuiGraphics guiGraphics) {
         int yOffset = y;
         for (AmmoStorageTooltip.Entry entry : tooltip.getEntries()) {
             guiGraphics.renderItem(entry.ammo(), x, yOffset + 5);

@@ -40,7 +40,6 @@
     "client.CreateWorldScreenMixin",
     "client.GuiMixin",
     "client.KeyboardHandlerMixin",
-    "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.MouseHandlerMixin",
     "client.PlayerRendererMixin",

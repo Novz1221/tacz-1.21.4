@@ -208,7 +208,7 @@ public class TargetBlock extends BaseEntityBlock {
         BlockPos blockPos = state.getValue(HALF) == DoubleBlockHalf.LOWER ? pos : pos.below();
         BlockEntity blockentity = level.getBlockEntity(blockPos);
         if (blockentity instanceof TargetBlockEntity e) {
-            return new cn.sh1rocu.tacz.util.ItemNbt.setName(ItemStack(this), e.getCustomName());
+            return cn.sh1rocu.tacz.util.ItemNbt.setName(new ItemStack(this), e.getCustomName());
         }
         return super.getCloneItemStack(level, pos, state, includeData);
     }

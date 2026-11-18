@@ -130,7 +130,7 @@ public class RangefinderImpactPredictionRender implements IFunctionalRenderer {
                         .setLightmapState(LIGHTMAP)
                         .setWriteMaskState(COLOR_DEPTH_WRITE)
                         .setCullState(NO_CULL)
-                        .setTextureState(new TextureStateShard(BeamRenderer.LASER_BEAM_TEXTURE, false, false))
+                        .setTextureState(new TextureStateShard(BeamRenderer.LASER_BEAM_TEXTURE, net.minecraft.util.TriState.FALSE, false))
                         .createCompositeState(false));
 
         private ImpactPredictionRenderState(String name, Runnable setupState, Runnable clearState) {

@@ -29,7 +29,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import cn.sh1rocu.tacz.client.render.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.event.Event;
@@ -109,7 +109,7 @@ public class TaCZFabricClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(TickAnimationEvent::tickAnimation);
         RenderTickEvent.EVENT.register(TickAnimationEvent::tickAnimation);
 
-        ItemTooltipCallback.EVENT.register(TooltipEvent::onTooltip);
+        ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> TooltipEvent.onTooltip(stack, flag, lines));
 
         ClientTickEvents.END_CLIENT_TICK.register(AimKey::cancelAim);
         ClientTickEvents.START_CLIENT_TICK.register(AimKey::onAimHoldingPreInput);

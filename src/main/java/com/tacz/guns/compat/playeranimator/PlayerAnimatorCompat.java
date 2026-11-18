@@ -34,6 +34,6 @@ public class PlayerAnimatorCompat {
     public static void stopAllAnimation(LivingEntity livingEntity, int fadeTime) {}
     public static void playAnimation(LivingEntity livingEntity, GunDisplayInstance display, float limbSwingAmount) {}
     public static boolean isInstalled() { return false; }
-    public static Runnable captureModelState(PlayerModel<?> model) { return () -> {}; }
+    public static Runnable captureModelState(PlayerModel model) { return () -> {}; }
     public static void registerReloadListener(Consumer<IdentifiableResourceReloadListener> register) {}
 }

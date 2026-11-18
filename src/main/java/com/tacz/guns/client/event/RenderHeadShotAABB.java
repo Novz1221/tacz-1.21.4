@@ -16,7 +16,7 @@ import net.minecraft.world.phys.AABB;
 
 @Environment(EnvType.CLIENT)
 public class RenderHeadShotAABB {
-    public static void onRenderEntity(RenderLivingEvent.Post<?, ?> event) {
+    public static void onRenderEntity(RenderLivingEvent.Post<?, ?, ?> event) {
         Minecraft minecraft = Minecraft.getInstance();
         boolean canRender = minecraft.getEntityRenderDispatcher().shouldRenderHitBoxes();
         if (!canRender || minecraft.showOnlyReducedInfo()) {
@@ -35,6 +35,6 @@ public class RenderHeadShotAABB {
             aabb = new AABB(-width / 2, eyeHeight - 0.25, -width / 2, width / 2, eyeHeight + 0.25, width / 2).inflate(0.01);
         }
         VertexConsumer buffer = event.getMultiBufferSource().getBuffer(RenderType.lines());
-        LevelRenderer.renderLineBox(event.getPoseStack(), buffer, aabb, 1.0F, 1.0F, 0.0F, 1.0F);
+        net.minecraft.client.renderer.ShapeRenderer.renderLineBox(event.getPoseStack(), buffer, aabb, 1.0F, 1.0F, 0.0F, 1.0F);
     }
 }

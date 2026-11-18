@@ -13,6 +13,11 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 
 public class GunPackProgressScreen extends Screen implements ProgressListener {
+    @Override
+    public void renderBackground(net.minecraft.client.gui.GuiGraphics tacz$g, int tacz$mx, int tacz$my, float tacz$pt) {
+        // background is drawn explicitly (no blur) to avoid the 1.21 double-blur exception
+    }
+
     private @Nullable Component header;
     private @Nullable Component stage;
     private int progress;
@@ -35,7 +40,7 @@ public class GunPackProgressScreen extends Screen implements ProgressListener {
         if (this.stop) {
             Screens.getClient(this).setScreen(null);
         } else {
-            this.renderBackground(gui);
+            this.renderTransparentBackground(gui);
             if (this.header != null) {
                 gui.drawCenteredString(this.font, this.header, this.width / 2, 70, 16777215);
             }

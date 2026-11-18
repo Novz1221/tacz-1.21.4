@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 /** Restore the shared player model after a vanilla or mod-provided hand draw. */
 public final class PlayerModelRenderState implements AutoCloseable {
-    private final PlayerModel<?> model;
+    private final PlayerModel model;
     private final List<PartState> parts;
     private final float attackTime;
     private final float swimAmount;
@@ -23,7 +23,7 @@ public final class PlayerModelRenderState implements AutoCloseable {
     private final HumanoidModel.ArmPose rightArmPose;
     private final Runnable restoreAnimation;
 
-    public PlayerModelRenderState(PlayerModel<?> model) {
+    public PlayerModelRenderState(PlayerModel model) {
         this.model = model;
         parts = Stream.of(model.head, model.hat, model.body, model.leftArm, model.rightArm,
                         model.leftLeg, model.rightLeg, model.jacket, model.leftSleeve, model.rightSleeve,

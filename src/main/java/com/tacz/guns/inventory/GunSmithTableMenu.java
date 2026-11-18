@@ -153,7 +153,7 @@ public class GunSmithTableMenu extends AbstractContainerMenu {
             // 给玩家对应的物品
             Level level = player.level();
             if (!level.isClientSide) {
-                ItemStack result = recipe.getResultItem(level.registryAccess());
+                ItemStack result = recipe.getOutput();
                 // Item counts in entity packets are bytes; also respect each stack's dynamic limit.
                 int stackLimit = Math.max(1, Math.min(result.getMaxStackSize(), Byte.MAX_VALUE));
                 while (!result.isEmpty()) {

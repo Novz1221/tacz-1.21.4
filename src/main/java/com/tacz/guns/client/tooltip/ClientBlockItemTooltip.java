@@ -40,7 +40,7 @@ public class ClientBlockItemTooltip implements ClientTooltipComponent {
 
 
     @Override
-    public int getHeight() {
+    public int getHeight(Font tacz$font) {
         return components.size() * 10 + (packInfo != null ? 16 : 0);
     }
 
@@ -68,7 +68,7 @@ public class ClientBlockItemTooltip implements ClientTooltipComponent {
     }
 
     @Override
-    public void renderImage(Font font, int mouseX, int mouseY, GuiGraphics gui) {
+    public void renderImage(Font font, int mouseX, int mouseY, int tacz$w, int tacz$h, GuiGraphics gui) {
     }
 
     private void addText() {

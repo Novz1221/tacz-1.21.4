@@ -288,7 +288,6 @@ public class BedrockAttachmentModel extends BedrockAnimatedModel {
 
     private void renderOcularAndDivision(PoseStack matrixStack, ItemDisplayContext transformType, RenderType renderType, int light, int overlay, boolean selective, MultiBufferSource bufferSource) {
         if (!ocularNodePaths.isEmpty()) {
-            BufferBuilder builder = Tesselator.getInstance().getBuilder();
             // 准备渲染圆形模板层
             RenderSystem.stencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_INVERT);
             RenderSystem.colorMask(false, false, false, false);
@@ -307,15 +306,16 @@ public class BedrockAttachmentModel extends BedrockAnimatedModel {
                 Vector3f ocularCenter = getBedrockPartCenter(matrixStack, ocularNodePaths.get(i));
                 float centerX = ocularCenter.x() * 16 * 90;
                 float centerY = ocularCenter.y() * 16 * 90;
-                builder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
-                builder.addVertex(centerX, centerY, -90.0D).setColor(255, 255, 255, 255);
+                RenderSystem.setShader(net.minecraft.client.renderer.CoreShaders.POSITION_COLOR);
+                BufferBuilder builder = Tesselator.getInstance().begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
+                builder.addVertex(centerX, centerY, -90.0F).setColor(255, 255, 255, 255);
                 for (int j = 0; j <= 90; j++) {
                     float angle = (float) j * ((float) Math.PI * 2F) / 90.0F;
                     float sin = Mth.sin(angle);
                     float cos = Mth.cos(angle);
-                    builder.addVertex(centerX + cos * rad, centerY + sin * rad, -90.0D).setColor(255, 255, 255, 255);
+                    builder.addVertex(centerX + cos * rad, centerY + sin * rad, -90.0F).setColor(255, 255, 255, 255);
                 }
-                BufferUploader.drawWithShader(builder.end());
+                BufferUploader.drawWithShader(builder.buildOrThrow());
             }
             RenderSystem.depthMask(true);
             RenderSystem.colorMask(true, true, true, true);

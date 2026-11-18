@@ -23,7 +23,7 @@ public class DisplayGunRenderType extends RenderStateShard {
                 "tacz_display_gun_emissive", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, false,
                 RenderType.CompositeState.builder()
                         .setShaderState(RENDERTYPE_ENERGY_SWIRL_SHADER)
-                        .setTextureState(new TextureStateShard(texture, false, false))
+                        .setTextureState(new TextureStateShard(texture, net.minecraft.util.TriState.FALSE, false))
                         .setTransparencyState(NO_TRANSPARENCY)
                         .setCullState(CULL)
                         .setTexturingState(new TexturingStateShard("tacz_display_gun_identity_uv",

@@ -71,7 +71,7 @@ public class GunPegboardHighlightEvent {
         Vec3 camera = context.camera().getPosition();
         AABB aabb = GunPegboardSlotHelper.getSlotAabb(state, pos, slot).move(-camera.x, -camera.y, -camera.z);
         VertexConsumer buffer = consumer.getBuffer(PegboardHighlightRenderType.getLines());
-        LevelRenderer.renderLineBox(context.matrixStack(), buffer, aabb, red, green, blue, 1.0F);
+        net.minecraft.client.renderer.ShapeRenderer.renderLineBox(context.matrixStack(), buffer, aabb, red, green, blue, 1.0F);
     }
 
     private static class PegboardHighlightRenderType extends RenderStateShard {

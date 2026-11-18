@@ -126,7 +126,7 @@ public enum ClientAssetsManager {
                 }
 
                 @Override
-                public CompletableFuture<Void> reload(PreparationBarrier barrier, ResourceManager resourceManager, ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
+                public CompletableFuture<Void> reload(PreparationBarrier barrier, ResourceManager resourceManager, Executor backgroundExecutor, Executor gameExecutor) {
                     return barrier.wait(Void.TYPE).thenRunAsync(ClientIndexManager::reload, gameExecutor);
                 }
             });

@@ -79,7 +79,7 @@ public final class PegboardStressCommand {
         List<BlockPos> positions = new ArrayList<>(boardCount);
         for (int i = 0; i < boardCount; i++) {
             BlockPos pos = origin.relative(right, i % columns).above(i / columns);
-            if (pos.getY() < level.getMinBuildHeight() || pos.getY() >= level.getMaxBuildHeight()
+            if (pos.getY() < level.getMinY() || pos.getY() >= (level.getMaxY() + 1)
                     || !level.isLoaded(pos) || !level.getBlockState(pos).isAir()) {
                 source.sendFailure(Component.translatable("commands.tacz.debug.pegboard.blocked", pos.toShortString()));
                 return 0;

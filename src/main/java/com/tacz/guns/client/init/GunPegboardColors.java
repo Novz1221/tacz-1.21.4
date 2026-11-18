@@ -19,8 +19,7 @@ public final class GunPegboardColors {
     }
 
     public static void itemColors() {
-        ColorProviderRegistry.ITEM.register((stack, tint) -> ((DyeableLeatherItem) stack.getItem()).hasCustomColor(stack)
-                ? ((DyeableLeatherItem) stack.getItem()).getColor(stack) : -1, ModItems.GUN_PEGBOARD, ModItems.GLOW_GUN_PEGBOARD);
+        // TODO(1.21.4): pegboard tint moved to items/*.json
     }
 
     public static void setup() {

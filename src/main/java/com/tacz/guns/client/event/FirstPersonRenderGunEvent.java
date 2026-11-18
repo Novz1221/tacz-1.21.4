@@ -244,7 +244,7 @@ public class FirstPersonRenderGunEvent {
         transformMatrix.m31(transformMatrix.m31() + idleScopeHeightAdjust * (1 - heightProgress));
         // 应用变换到 PoseStack
         poseStack.translate(0, 1.5f, 0);
-        poseStack.mulPoseMatrix(transformMatrix);
+        poseStack.mulPose(transformMatrix);
         poseStack.translate(0, -1.5f, 0);
     }
 

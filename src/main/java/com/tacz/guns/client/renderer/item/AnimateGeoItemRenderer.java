@@ -18,10 +18,10 @@ import com.tacz.guns.client.model.bedrock.BedrockPart;
 import com.tacz.guns.client.sound.SoundPlayManager;
 import com.tacz.guns.util.math.MathUtil;
 import com.tacz.guns.util.time.GunTime;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import cn.sh1rocu.tacz.client.render.BuiltinItemRendererRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import cn.sh1rocu.tacz.client.render.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -320,7 +320,7 @@ public abstract class AnimateGeoItemRenderer<M extends BedrockAnimatedModel, CTX
 
         // 应用变换到 PoseStack
         poseStack.translate(0, 1.5f, 0);
-        poseStack.mulPoseMatrix(transformMatrix);
+        poseStack.mulPose(transformMatrix);
         poseStack.translate(0, -1.5f, 0);
     }
 

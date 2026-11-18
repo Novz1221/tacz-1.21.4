@@ -2,8 +2,6 @@ package com.tacz.guns.client.event;
 
 import cn.sh1rocu.simplebedrockmodel.api.event.ViewportEvent;
 import cn.sh1rocu.tacz.api.event.ComputeFovModifierEvent;
-import com.github.exopandora.shouldersurfing.api.client.IShoulderSurfingCamera;
-import com.github.exopandora.shouldersurfing.api.client.ShoulderSurfing;
 import com.tacz.guns.api.DefaultAssets;
 import com.tacz.guns.api.TimelessAPI;
 import com.tacz.guns.api.client.event.BeforeRenderHandEvent;
@@ -33,7 +31,7 @@ import com.tacz.guns.util.math.SecondOrderDynamics;
 import com.tacz.guns.util.time.GunTime;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import cn.sh1rocu.tacz.client.render.BuiltinItemRendererRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -220,25 +218,9 @@ public class CameraSetupEvent {
         long timeTotal = GunTime.nowMillis() - shootTimeStamp;
         if (shootTimeStamp >= 0 && timeTotal >= 0 && pitchSplineFunction != null && pitchSplineFunction.isValidPoint(timeTotal)) {
             double value = pitchSplineFunction.value(timeTotal);
-            if (ShoulderSurfingCompat.isInstalled() && ShoulderSurfing.getInstance().isShoulderSurfing()) {
-                IShoulderSurfingCamera camera = ShoulderSurfing.getInstance().getCamera();
-                camera.setXRot(camera.getXRot() - (float) (value - xRotO));
-            } else {
-                player.setXRot(player.getXRot() - (float) (value - xRotO));
-            }
-            xRotO = value;
-        }
-        if (shootTimeStamp >= 0 && timeTotal >= 0 && yawSplineFunction != null && yawSplineFunction.isValidPoint(timeTotal)) {
+                    if (shootTimeStamp >= 0 && timeTotal >= 0 && yawSplineFunction != null && yawSplineFunction.isValidPoint(timeTotal)) {
             double value = yawSplineFunction.value(timeTotal);
-            if (ShoulderSurfingCompat.isInstalled() && ShoulderSurfing.getInstance().isShoulderSurfing()) {
-                IShoulderSurfingCamera camera = ShoulderSurfing.getInstance().getCamera();
-                camera.setYRot(camera.getYRot() - (float) (value - yRotO));
-            } else {
-                player.setYRot(player.getYRot() - (float) (value - yRotO));
-            }
-            yRotO = value;
-        }
-    }
+                }
 
     public static void resetTimestamp() {
         shootTimeStamp = -1;

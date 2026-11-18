@@ -16,7 +16,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 
 import java.text.DecimalFormat;
@@ -75,13 +75,13 @@ public class HeatBarOverlay {
         pGraphics.fill(w / 2 - 30, h / 2 + 30, w / 2 - 30 + (int) (heatPercentage * 60), h / 2 + 34, barColor);
         if (locked) {
             if (tickCount % 20 < 10) {
-                pGraphics.setColor(1, 0.1f, 0.1f, 1);
+                com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 0.1f, 0.1f, 1);
             } else {
-                pGraphics.setColor(1, 1, 0.1f, 1);
+                com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 0.1f, 1);
             }
         }
         pGraphics.blit(RenderType::guiTextured, HEATBASE, w / 2 - 64, h / 2 - 44, (float) (0), (float) (0), 128, 128, 128, 128);
-        pGraphics.setColor(1, 1, 1, 1);
+        com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 
         Font font = Minecraft.getInstance().fontFilterFishy;
         String percentString = locked ? "!OVERHEAT!" : HEAT_FORMAT_PERCENT.format(heatPercentage);
@@ -97,9 +97,9 @@ public class HeatBarOverlay {
         if (percent < 0.4) return 0x9FFFFFFF;
         int color;
         if (percent <= 0.65) {
-            color = FastColor.ARGB32.lerp(percent * 4 - 1.6f, 0x9FFFFFFF, 0x9FFFFF00);
+            color = ARGB.lerp(percent * 4 - 1.6f, 0x9FFFFFFF, 0x9FFFFF00);
         } else {
-            color = FastColor.ARGB32.lerp((percent - 0.65f) / 0.35f, 0x9FFFFF00, 0x9FFF0000);
+            color = ARGB.lerp((percent - 0.65f) / 0.35f, 0x9FFFFF00, 0x9FFF0000);
         }
         return color;
     }

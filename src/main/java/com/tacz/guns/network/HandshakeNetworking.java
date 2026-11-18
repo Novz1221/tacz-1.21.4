@@ -24,7 +24,9 @@ public class HandshakeNetworking {
                 try {
                     Class<? extends IHandshakeMessage> packetClass = packetInfo.packetClass;
                     IHandshakeMessage packet = packetClass.getDeclaredConstructor().newInstance();
-                    sender.sendPacket(packet);
+                    net.minecraft.network.FriendlyByteBuf loginBuf = net.fabricmc.fabric.api.networking.v1.PacketByteBufs.create();
+                    packet.write(loginBuf);
+                    sender.sendPacket(packet.getType().getId(), loginBuf);
                 } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException |
                          InstantiationException e) {
                     GunMod.LOGGER.error("{} Handshake packet processing error", packetInfo.type.getId().toString(), e);

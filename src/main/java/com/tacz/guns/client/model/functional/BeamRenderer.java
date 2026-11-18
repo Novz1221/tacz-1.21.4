@@ -192,7 +192,7 @@ public class BeamRenderer {
                         .setLightmapState(LIGHTMAP)
                         .setWriteMaskState(COLOR_DEPTH_WRITE)
                         .setCullState(NO_CULL)
-                        .setTextureState(new RenderStateShard.TextureStateShard(LASER_BEAM_TEXTURE, false, false))
+                        .setTextureState(new RenderStateShard.TextureStateShard(LASER_BEAM_TEXTURE, net.minecraft.util.TriState.FALSE, false))
                         .createCompositeState(false));
 
 		protected static final RenderType LASER_BEAM_ENTITY = RenderType.create("laser_beam_entity", DefaultVertexFormat.NEW_ENTITY,
@@ -206,7 +206,7 @@ public class BeamRenderer {
 						.setOverlayState(OVERLAY)
 						.setWriteMaskState(COLOR_DEPTH_WRITE)
 						.setCullState(NO_CULL)
-						.setTextureState(new RenderStateShard.TextureStateShard(LASER_BEAM_TEXTURE, false, false))
+						.setTextureState(new RenderStateShard.TextureStateShard(LASER_BEAM_TEXTURE, net.minecraft.util.TriState.FALSE, false))
 						.createCompositeState(false));
     	
         public static RenderType getLaserBeam() {

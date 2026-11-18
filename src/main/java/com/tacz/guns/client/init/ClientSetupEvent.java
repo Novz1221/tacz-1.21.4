@@ -80,11 +80,11 @@ public class ClientSetupEvent {
 
     public static void registerGuiOverlays() {
         // 注册 HUD
-        HudRenderCallback.EVENT.register(GunHudOverlay::render);
-        HudRenderCallback.EVENT.register(HeatBarOverlay::render);
-        HudRenderCallback.EVENT.register(KillAmountOverlay::render);
-        HudRenderCallback.EVENT.register(InteractKeyTextOverlay::render);
-        HudRenderCallback.EVENT.register(DisplayCaseLockHintOverlay::render);
+        HudRenderCallback.EVENT.register((graphics, delta) -> GunHudOverlay.render(graphics, delta.getGameTimeDeltaPartialTick(false)));
+        HudRenderCallback.EVENT.register((graphics, delta) -> HeatBarOverlay.render(graphics, delta.getGameTimeDeltaPartialTick(false)));
+        HudRenderCallback.EVENT.register((graphics, delta) -> KillAmountOverlay.render(graphics, delta.getGameTimeDeltaPartialTick(false)));
+        HudRenderCallback.EVENT.register((graphics, delta) -> InteractKeyTextOverlay.render(graphics, delta.getGameTimeDeltaPartialTick(false)));
+        HudRenderCallback.EVENT.register((graphics, delta) -> DisplayCaseLockHintOverlay.render(graphics, delta.getGameTimeDeltaPartialTick(false)));
     }
 
     public static void onClientSetup() {
@@ -92,7 +92,7 @@ public class ClientSetupEvent {
         ThirdPersonManager.registerDefault();
 
         // 注册颜色
-        ColorProviderRegistry.ITEM.register(AmmoBoxItem::getColor, ModItems.AMMO_BOX);
+        // TODO(1.21.4): item tints are defined in items/*.json now
 
         // 注册变种
         // noinspection deprecation
@@ -132,7 +132,7 @@ public class ClientSetupEvent {
             }
 
             @Override
-            public CompletableFuture<Void> reload(PreparationBarrier barrier, ResourceManager resourceManager, ProfilerFiller preparationProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
+            public CompletableFuture<Void> reload(PreparationBarrier barrier, ResourceManager resourceManager, Executor backgroundExecutor, Executor gameExecutor) {
                 return barrier.wait(Void.TYPE).thenRunAsync(SoundPlayManager::clearSoundResourceCache, gameExecutor);
             }
         });

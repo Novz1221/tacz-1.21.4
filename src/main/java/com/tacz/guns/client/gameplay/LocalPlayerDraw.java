@@ -10,7 +10,7 @@ import com.tacz.guns.network.message.ClientMessagePlayerDrawGun;
 import com.tacz.guns.resource.modifier.AttachmentPropertyManager;
 import com.tacz.guns.util.time.GunTime;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import cn.sh1rocu.tacz.client.render.BuiltinItemRendererRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.item.ItemStack;

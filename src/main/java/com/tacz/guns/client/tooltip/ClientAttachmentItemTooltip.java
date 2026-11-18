@@ -79,7 +79,7 @@ public class ClientAttachmentItemTooltip implements ClientTooltipComponent {
     }
 
     @Override
-    public int getHeight() {
+    public int getHeight(Font tacz$font) {
         if (!Screen.hasShiftDown()) {
             return components.size() * 10 + 28;
         }
@@ -124,7 +124,7 @@ public class ClientAttachmentItemTooltip implements ClientTooltipComponent {
     }
 
     @Override
-    public void renderImage(Font font, int mouseX, int mouseY, GuiGraphics gui) {
+    public void renderImage(Font font, int mouseX, int mouseY, int tacz$w, int tacz$h, GuiGraphics gui) {
         if (!Screen.hasShiftDown()) {
             return;
         }

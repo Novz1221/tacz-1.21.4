@@ -78,7 +78,7 @@ public class ClientGunTooltip implements ClientTooltipComponent {
     }
 
     @Override
-    public int getHeight() {
+    public int getHeight(Font tacz$font) {
         int height = 0;
         if (shouldShow(GunTooltipPart.DESCRIPTION) && this.desc != null) {
             height += 10 * this.desc.size() + 2;
@@ -314,7 +314,7 @@ public class ClientGunTooltip implements ClientTooltipComponent {
     }
 
     @Override
-    public void renderImage(Font pFont, int pX, int pY, GuiGraphics guiGraphics) {
+    public void renderImage(Font pFont, int pX, int pY, int tacz$w, int tacz$h, GuiGraphics guiGraphics) {
         IGun iGun = IGun.getIGunOrNull(this.gun);
         if (iGun == null) {
             return;

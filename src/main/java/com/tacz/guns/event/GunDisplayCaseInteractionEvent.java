@@ -39,7 +39,7 @@ public class GunDisplayCaseInteractionEvent {
 
 //        event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
 //        event.setCanceled(true);
-        result = InteractionResult.sidedSuccess(level.isClientSide());
+        result = level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.CONSUME;
         displayCaseBlock.toggleLockFromInteraction(level, pos, state);
 
         return result;

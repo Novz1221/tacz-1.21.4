@@ -3,8 +3,8 @@ package cn.sh1rocu.tacz.api.extension;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import cn.sh1rocu.tacz.client.render.BuiltinItemRendererRegistry;
+import cn.sh1rocu.tacz.client.render.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

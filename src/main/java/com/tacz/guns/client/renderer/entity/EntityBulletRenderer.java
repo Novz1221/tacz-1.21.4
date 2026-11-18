@@ -33,7 +33,24 @@ import org.joml.Vector3f;
 import java.util.Objects;
 import java.util.Optional;
 
-public class EntityBulletRenderer extends EntityRenderer<EntityKineticBullet> {
+public class EntityBulletRenderer extends EntityRenderer<EntityKineticBullet, EntityBulletRenderer.BulletRenderState> {
+    public static class BulletRenderState extends net.minecraft.client.renderer.entity.state.EntityRenderState {
+        public EntityKineticBullet bullet;
+        public float partialTicks;
+    }
+
+    @Override
+    public BulletRenderState createRenderState() {
+        return new BulletRenderState();
+    }
+
+    @Override
+    public void extractRenderState(EntityKineticBullet bullet, BulletRenderState state, float partialTicks) {
+        super.extractRenderState(bullet, state, partialTicks);
+        state.bullet = bullet;
+        state.partialTicks = partialTicks;
+    }
+
     public EntityBulletRenderer(EntityRendererProvider.Context pContext) {
         super(pContext);
     }
@@ -43,7 +60,12 @@ public class EntityBulletRenderer extends EntityRenderer<EntityKineticBullet> {
     }
 
     @Override
-    public void render(EntityKineticBullet bullet, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(BulletRenderState renderState, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+        EntityKineticBullet bullet = renderState.bullet;
+        float partialTicks = renderState.partialTicks;
+        if (bullet == null) {
+            return;
+        }
         ResourceLocation gunId = bullet.getGunId();
         ResourceLocation gunDisplayId = bullet.getGunDisplayId();
         Optional<GunDisplayInstance> display = TimelessAPI.getGunDisplay(gunDisplayId, gunId);
@@ -61,7 +83,7 @@ public class EntityBulletRenderer extends EntityRenderer<EntityKineticBullet> {
                 poseStack.pushPose();
                 poseStack.translate(0, 1.5, 0);
                 poseStack.scale(-1, -1, 1);
-                ammoEntityModel.render(poseStack, ItemDisplayContext.GROUND, RenderType.entityTranslucentCull(textureLocation), packedLight, OverlayTexture.NO_OVERLAY);
+                ammoEntityModel.render(poseStack, ItemDisplayContext.GROUND, RenderType.entityTranslucent(textureLocation), packedLight, OverlayTexture.NO_OVERLAY);
                 poseStack.popPose();
             }
 
@@ -79,7 +101,7 @@ public class EntityBulletRenderer extends EntityRenderer<EntityKineticBullet> {
             if (shooter == null) {
                 return;
             }
-            boolean isFirstPerson = this.entityRenderDispatcher.options.getCameraType().isFirstPerson() && shooter instanceof LocalPlayer;
+            boolean isFirstPerson = Minecraft.getInstance().options.getCameraType().isFirstPerson() && shooter instanceof LocalPlayer;
             if (isFirstPerson && !RenderConfig.FIRST_PERSON_BULLET_TRACER_ENABLE.get()) {
                 return;
             }
@@ -139,15 +161,11 @@ public class EntityBulletRenderer extends EntityRenderer<EntityKineticBullet> {
 
     @Override
     public boolean shouldRender(EntityKineticBullet bullet, Frustum camera, double pCamX, double pCamY, double pCamZ) {
-        AABB aabb = bullet.getBoundingBoxForCulling().inflate(0.5);
+        AABB aabb = bullet.getBoundingBox().inflate(0.5);
         if (aabb.hasNaN() || aabb.getSize() == 0) {
             aabb = new AABB(bullet.getX() - 2.0, bullet.getY() - 2.0, bullet.getZ() - 2.0, bullet.getX() + 2.0, bullet.getY() + 2.0, bullet.getZ() + 2.0);
         }
         return camera.isVisible(aabb);
     }
 
-    @Override
-    public ResourceLocation getTextureLocation(@NotNull EntityKineticBullet entity) {
-        return null;
-    }
 }

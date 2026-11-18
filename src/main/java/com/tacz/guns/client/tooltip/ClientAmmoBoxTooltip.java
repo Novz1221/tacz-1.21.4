@@ -27,7 +27,7 @@ public class ClientAmmoBoxTooltip implements ClientTooltipComponent {
     }
 
     @Override
-    public int getHeight() {
+    public int getHeight(Font tacz$font) {
         return 28;
     }
 
@@ -43,7 +43,7 @@ public class ClientAmmoBoxTooltip implements ClientTooltipComponent {
     }
 
     @Override
-    public void renderImage(Font pFont, int pX, int pY, GuiGraphics pGuiGraphics) {
+    public void renderImage(Font pFont, int pX, int pY, int tacz$w, int tacz$h, GuiGraphics pGuiGraphics) {
         pGuiGraphics.renderItem(ammo, pX, pY + 5);
     }
 }

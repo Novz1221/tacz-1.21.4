@@ -122,7 +122,7 @@ public class BulletHoleParticle extends TextureSheetParticle {
             // return Minecraft.getInstance().getBlockRenderer().getBlockModelShaper().getTexture(state, world, pos);
             return Minecraft.getInstance().getBlockRenderer().getBlockModelShaper().getParticleIcon(state);
         }
-        return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MissingTextureAtlasSprite.getLocation());
+        return Minecraft.getInstance().getTextureAtlas(net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS).apply(MissingTextureAtlasSprite.getLocation());
     }
 
     @Override
