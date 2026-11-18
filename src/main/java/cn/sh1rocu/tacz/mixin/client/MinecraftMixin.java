@@ -116,7 +116,7 @@ public abstract class MinecraftMixin {
         return original && (inputEvent.get() == null || inputEvent.get().shouldSwingHand());
     }
 
-    @Inject(method = "pickBlock", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Abilities;instabuild:Z", ordinal = 0), cancellable = true)
+    @Inject(method = "pickBlock", at = @At("HEAD"), cancellable = true)
     private void tacz$callInteractionPickInput(CallbackInfo ci) {
         if (tacz$onClickInput(2, this.options.keyPickItem, InteractionHand.MAIN_HAND).isCanceled())
             ci.cancel();
