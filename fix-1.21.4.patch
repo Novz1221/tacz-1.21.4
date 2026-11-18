@@ -1,4 +1,4 @@
-diff -ruN -x build -x .git orig/tacz-1.21.4-main/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/AbstractSliderButtonAccessor.java tacz-1.21.4-main/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/AbstractSliderButtonAccessor.java
+diff --git a/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/AbstractSliderButtonAccessor.java b/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/AbstractSliderButtonAccessor.java
 --- a/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/AbstractSliderButtonAccessor.java	2026-11-18 05:41:34.000000000 +0000
 +++ b/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/AbstractSliderButtonAccessor.java	1970-01-01 00:00:00.000000000 +0000
 @@ -1,21 +0,0 @@
@@ -23,7 +23,7 @@ diff -ruN -x build -x .git orig/tacz-1.21.4-main/src/main/java/cn/sh1rocu/tacz/m
 -    @Invoker("getHandleTextureY")
 -    int tacz$getHandleTextureY();
 -}
-diff -ruN -x build -x .git orig/tacz-1.21.4-main/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/MinecraftAccessor.java tacz-1.21.4-main/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/MinecraftAccessor.java
+diff --git a/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/MinecraftAccessor.java b/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/MinecraftAccessor.java
 --- a/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/MinecraftAccessor.java	2026-11-18 05:41:34.000000000 +0000
 +++ b/src/main/java/cn/sh1rocu/tacz/mixin/client/accessor/MinecraftAccessor.java	1970-01-01 00:00:00.000000000 +0000
 @@ -1,11 +0,0 @@
@@ -38,7 +38,7 @@ diff -ruN -x build -x .git orig/tacz-1.21.4-main/src/main/java/cn/sh1rocu/tacz/m
 -    @Accessor("pausePartialTick")
 -    float tacz$getPausePartialTick();
 -}
-diff -ruN -x build -x .git orig/tacz-1.21.4-main/src/main/java/cn/sh1rocu/tacz/util/forge/ForgeSlider.java tacz-1.21.4-main/src/main/java/cn/sh1rocu/tacz/util/forge/ForgeSlider.java
+diff --git a/src/main/java/cn/sh1rocu/tacz/util/forge/ForgeSlider.java b/src/main/java/cn/sh1rocu/tacz/util/forge/ForgeSlider.java
 --- a/src/main/java/cn/sh1rocu/tacz/util/forge/ForgeSlider.java	2026-11-18 05:41:34.000000000 +0000
 +++ b/src/main/java/cn/sh1rocu/tacz/util/forge/ForgeSlider.java	2026-11-18 06:14:00.084899105 +0000
 @@ -1,12 +1,8 @@
@@ -108,7 +108,19 @@ diff -ruN -x build -x .git orig/tacz-1.21.4-main/src/main/java/cn/sh1rocu/tacz/u
 -        }
 -    }
  }
-diff -ruN -x build -x .git orig/tacz-1.21.4-main/src/main/resources/tacz.fabric.mixins.json tacz-1.21.4-main/src/main/resources/tacz.fabric.mixins.json
+diff --git a/src/main/resources/tacz.accesswidener b/src/main/resources/tacz.accesswidener
+--- a/src/main/resources/tacz.accesswidener	2026-11-18 05:41:34.000000000 +0000
++++ b/src/main/resources/tacz.accesswidener	2026-11-18 06:31:33.890743212 +0000
+@@ -10,7 +10,6 @@
+ 
+ accessible field net/minecraft/world/entity/LivingEntity jumping Z # jumping
+ 
+-extendable method net/minecraft/world/entity/vehicle/AbstractMinecart getDropItem ()Lnet/minecraft/world/item/Item;
+ 
+ accessible method net/minecraft/client/renderer/block/model/ItemTransforms$Deserializer <init> ()V
+ accessible method net/minecraft/client/renderer/block/model/ItemTransform$Deserializer <init> ()V
+\ No newline at end of file
+diff --git a/src/main/resources/tacz.fabric.mixins.json b/src/main/resources/tacz.fabric.mixins.json
 --- a/src/main/resources/tacz.fabric.mixins.json	2026-11-18 05:41:34.000000000 +0000
 +++ b/src/main/resources/tacz.fabric.mixins.json	2026-11-18 06:13:56.682342079 +0000
 @@ -47,8 +47,6 @@
