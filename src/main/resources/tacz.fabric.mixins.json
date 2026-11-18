@@ -47,8 +47,6 @@
     "client.SoundEngineMixin",
     "client.TextureAtlasMixin",
     "client.accessor.AbstractContainerScreenAccessor",
-    "client.accessor.AbstractSliderButtonAccessor",
-    "client.accessor.MinecraftAccessor",
     "client.accessor.ScreenAccessor"
   ],
   "injectors": {
