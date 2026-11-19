@@ -1,0 +1,12 @@
+diff --git a/src/main/java/cn/sh1rocu/tacz/mixin/client/ClientLevelMixin.java b/src/main/java/cn/sh1rocu/tacz/mixin/client/ClientLevelMixin.java
+--- a/src/main/java/cn/sh1rocu/tacz/mixin/client/ClientLevelMixin.java	2026-11-19 10:40:19.531830319 +0000
++++ b/src/main/java/cn/sh1rocu/tacz/mixin/client/ClientLevelMixin.java	2026-11-19 10:40:24.066023086 +0000
+@@ -27,7 +27,7 @@
+     }
+ 
+     @Inject(method = "addEntity", at = @At("HEAD"), cancellable = true)
+-    public void tlm$entityJoinLevelEvent(int entityId, Entity entityToSpawn, CallbackInfo ci) {
++    public void tlm$entityJoinLevelEvent(Entity entityToSpawn, CallbackInfo ci) {
+         EntityJoinLevelEvent event = new EntityJoinLevelEvent(entityToSpawn, this);
+         EntityJoinLevelEvent.CALLBACK.invoker().post(event);
+         if (event.isCanceled())

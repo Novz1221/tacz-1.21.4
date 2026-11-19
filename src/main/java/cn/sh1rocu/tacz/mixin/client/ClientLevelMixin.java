@@ -27,7 +27,7 @@ public abstract class ClientLevelMixin extends Level {
     }
 
     @Inject(method = "addEntity", at = @At("HEAD"), cancellable = true)
-    public void tlm$entityJoinLevelEvent(int entityId, Entity entityToSpawn, CallbackInfo ci) {
+    public void tlm$entityJoinLevelEvent(Entity entityToSpawn, CallbackInfo ci) {
         EntityJoinLevelEvent event = new EntityJoinLevelEvent(entityToSpawn, this);
         EntityJoinLevelEvent.CALLBACK.invoker().post(event);
         if (event.isCanceled())
