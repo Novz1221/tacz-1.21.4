@@ -1,0 +1,48 @@
+diff --git a/src/main/java/com/tacz/guns/item/AmmoBoxItem.java b/src/main/java/com/tacz/guns/item/AmmoBoxItem.java
+--- a/src/main/java/com/tacz/guns/item/AmmoBoxItem.java	2026-11-19 22:59:13.398970084 +0000
++++ b/src/main/java/com/tacz/guns/item/AmmoBoxItem.java	2026-11-19 22:59:17.502504807 +0000
+@@ -53,7 +53,7 @@
+     private static final int ALL_TYPE_CREATIVE_INDEX = 8;
+ 
+     public AmmoBoxItem() {
+-        super(new Properties().stacksTo(1));
++        super(cn.sh1rocu.tacz.util.IdProps.item().stacksTo(1));
+     }
+ 
+     @Environment(EnvType.CLIENT)
+diff --git a/src/main/java/com/tacz/guns/item/AmmoItem.java b/src/main/java/com/tacz/guns/item/AmmoItem.java
+--- a/src/main/java/com/tacz/guns/item/AmmoItem.java	2026-11-19 22:59:13.399038642 +0000
++++ b/src/main/java/com/tacz/guns/item/AmmoItem.java	2026-11-19 22:59:17.509511579 +0000
+@@ -33,7 +33,7 @@
+ 
+ public class AmmoItem extends Item implements AmmoItemDataAccessor, IItem {
+     public AmmoItem() {
+-        super(new Properties().stacksTo(1));
++        super(cn.sh1rocu.tacz.util.IdProps.item().stacksTo(1));
+     }
+ 
+     @Override
+diff --git a/src/main/java/com/tacz/guns/item/AttachmentItem.java b/src/main/java/com/tacz/guns/item/AttachmentItem.java
+--- a/src/main/java/com/tacz/guns/item/AttachmentItem.java	2026-11-19 22:59:13.399153748 +0000
++++ b/src/main/java/com/tacz/guns/item/AttachmentItem.java	2026-11-19 22:59:17.512594813 +0000
+@@ -32,7 +32,7 @@
+ 
+ public class AttachmentItem extends Item implements AttachmentItemDataAccessor, IItem {
+     public AttachmentItem() {
+-        super(new Properties().stacksTo(1));
++        super(cn.sh1rocu.tacz.util.IdProps.item().stacksTo(1));
+     }
+ 
+     @Override
+diff --git a/src/main/java/com/tacz/guns/item/ModernKineticGunItem.java b/src/main/java/com/tacz/guns/item/ModernKineticGunItem.java
+--- a/src/main/java/com/tacz/guns/item/ModernKineticGunItem.java	2026-11-19 22:59:13.399441613 +0000
++++ b/src/main/java/com/tacz/guns/item/ModernKineticGunItem.java	2026-11-19 22:59:17.506207185 +0000
+@@ -62,7 +62,7 @@
+     );
+ 
+     public ModernKineticGunItem() {
+-        super(new Properties().stacksTo(1));
++        super(cn.sh1rocu.tacz.util.IdProps.item().stacksTo(1));
+     }
+ 
+     @Override

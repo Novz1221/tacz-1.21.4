@@ -53,7 +53,7 @@ public class AmmoBoxItem extends Item implements DyeableLeatherItem, AmmoBoxItem
     private static final int ALL_TYPE_CREATIVE_INDEX = 8;
 
     public AmmoBoxItem() {
-        super(new Properties().stacksTo(1));
+        super(cn.sh1rocu.tacz.util.IdProps.item().stacksTo(1));
     }
 
     @Environment(EnvType.CLIENT)

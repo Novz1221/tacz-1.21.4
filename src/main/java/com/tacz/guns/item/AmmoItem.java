@@ -33,7 +33,7 @@ import java.util.Optional;
 
 public class AmmoItem extends Item implements AmmoItemDataAccessor, IItem {
     public AmmoItem() {
-        super(new Properties().stacksTo(1));
+        super(cn.sh1rocu.tacz.util.IdProps.item().stacksTo(1));
     }
 
     @Override

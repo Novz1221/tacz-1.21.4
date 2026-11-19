@@ -62,7 +62,7 @@ public class ModernKineticGunItem extends AbstractGunItem implements GunItemData
     );
 
     public ModernKineticGunItem() {
-        super(new Properties().stacksTo(1));
+        super(cn.sh1rocu.tacz.util.IdProps.item().stacksTo(1));
     }
 
     @Override

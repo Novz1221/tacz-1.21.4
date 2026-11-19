@@ -32,7 +32,7 @@ import static com.tacz.guns.util.datafixer.AttachmentIdFix.updateAttachmentIdInT
 
 public class AttachmentItem extends Item implements AttachmentItemDataAccessor, IItem {
     public AttachmentItem() {
-        super(new Properties().stacksTo(1));
+        super(cn.sh1rocu.tacz.util.IdProps.item().stacksTo(1));
     }
 
     @Override
