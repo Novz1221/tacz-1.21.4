@@ -104,6 +104,12 @@ public class TargetMinecart extends AbstractMinecart implements ITargetEntity, I
         return false;
     }
 
+    // 1.21.2+: AbstractMinecart.Type was removed; rideability is now isRideable().
+    @Override
+    public boolean isRideable() {
+        return false;
+    }
+
     @Override
     public boolean shouldRenderAtSqrDistance(double distance) {
         double size = this.getBoundingBox().getSize();
