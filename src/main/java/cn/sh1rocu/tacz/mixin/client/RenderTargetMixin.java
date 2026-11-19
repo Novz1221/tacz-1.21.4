@@ -5,7 +5,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,7 +15,7 @@ import java.nio.IntBuffer;
 @Mixin(value = RenderTarget.class, priority = 2000)
 public abstract class RenderTargetMixin implements RenderTargetStencil {
     @Shadow
-    public abstract void resize(int width, int height, boolean getError);
+    public abstract void resize(int width, int height);
 
     @Shadow
     public int viewWidth;
@@ -48,7 +47,7 @@ public abstract class RenderTargetMixin implements RenderTargetStencil {
     public void tacz$enableStencil() {
         if (!stencilEnabled) {
             stencilEnabled = true;
-            resize(this.viewWidth, this.viewHeight, Minecraft.ON_OSX);
+            resize(this.viewWidth, this.viewHeight);
         }
     }
 
