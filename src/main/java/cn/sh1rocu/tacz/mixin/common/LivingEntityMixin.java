@@ -50,7 +50,7 @@ public abstract class LivingEntityMixin {
     }
 
     @Inject(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F"), cancellable = true)
-    private void tacz$shouldCancelHurt(ServerLevel level, DamageSource damageSource, float f, CallbackInfo ci, @Share("hurt") LocalRef<LivingHurtEvent> eventRef) {
+    private void tacz$cancelHurtIfZero(ServerLevel level, DamageSource damageSource, float f, CallbackInfo ci, @Share("hurt") LocalRef<LivingHurtEvent> eventRef) {
         if (eventRef.get().getAmount() <= 0)
             ci.cancel();
     }
