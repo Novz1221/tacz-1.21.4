@@ -1,0 +1,742 @@
+diff --git a/scripts/api-classes.txt b/scripts/api-classes.txt
+index d40af54..87744cc 100644
+--- a/scripts/api-classes.txt
++++ b/scripts/api-classes.txt
+@@ -1,265 +1,251 @@
+-net.minecraft.world.level.block.state.BlockBehaviour
+-net.minecraft.world.level.block.Block
+-net.minecraft.world.level.block.BaseEntityBlock
+-net.minecraft.world.level.block.entity.BlockEntity
+-net.minecraft.world.level.block.entity.BlockEntityType
+-net.minecraft.world.item.Item
+-net.minecraft.world.item.Item$Properties
+-net.minecraft.world.item.Item$TooltipContext
+-net.minecraft.world.item.BlockItem
+-net.minecraft.world.item.ItemStack
+-net.minecraft.world.item.component.CustomData
+-net.minecraft.world.item.component.DyedItemColor
+-net.minecraft.world.InteractionResult
+-net.minecraft.world.entity.Entity
+-net.minecraft.world.entity.LivingEntity
+-net.minecraft.world.entity.EntityType
+-net.minecraft.world.entity.EntityType$Builder
+-net.minecraft.world.entity.vehicle.AbstractMinecart
+-net.minecraft.world.entity.projectile.Projectile
+-net.minecraft.world.entity.player.Player
+-net.minecraft.world.entity.ai.attributes.AttributeInstance
+-net.minecraft.world.entity.ai.attributes.AttributeModifier
+-net.minecraft.world.level.Level
+-net.minecraft.server.level.ServerLevel
+-net.minecraft.server.level.ServerPlayer
+-net.minecraft.world.item.crafting.Recipe
+-net.minecraft.world.item.crafting.CustomRecipe
+-net.minecraft.world.item.crafting.RecipeSerializer
+-net.minecraft.world.item.crafting.RecipeType
+-net.minecraft.world.item.crafting.RecipeManager
+-net.minecraft.world.item.crafting.RecipeHolder
+-net.minecraft.world.item.crafting.Ingredient
+-net.minecraft.world.item.crafting.CraftingInput
+-net.minecraft.world.item.crafting.RecipeInput
+-net.minecraft.world.item.crafting.ShapedRecipe
+-net.minecraft.world.item.crafting.PlacementInfo
+-net.minecraft.world.item.crafting.CraftingBookCategory
+-net.minecraft.recipebook.PlaceRecipe
+-net.minecraft.client.gui.GuiGraphics
++com.mojang.blaze3d.pipeline.RenderTarget
++com.mojang.blaze3d.pipeline.TextureTarget
++com.mojang.blaze3d.systems.RenderSystem
++com.mojang.blaze3d.vertex.BufferBuilder
++com.mojang.blaze3d.vertex.BufferUploader
++com.mojang.blaze3d.vertex.MeshData
++com.mojang.blaze3d.vertex.PoseStack
++com.mojang.blaze3d.vertex.PoseStack$Pose
++com.mojang.blaze3d.vertex.Tesselator
++com.mojang.blaze3d.vertex.VertexConsumer
++net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
++net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
++net.fabricmc.fabric.api.client.networking.v1.ClientLoginNetworking
++net.fabricmc.fabric.api.client.networking.v1.ClientLoginNetworking$LoginQueryRequestHandler
++net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
++net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking$Context
++net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
++net.fabricmc.fabric.api.client.rendering.v1.HudLayerRegistrationCallback
++net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
++net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
++net.fabricmc.fabric.api.networking.v1.LoginPacketSender
++net.fabricmc.fabric.api.networking.v1.PacketSender
++net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
++net.fabricmc.fabric.api.networking.v1.ServerLoginNetworking
++net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
++net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking$Context
++net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder
++net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
++net.fabricmc.fabric.api.resource.ResourceManagerHelper
++net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener
++net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
++net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
++net.minecraft.advancements.CriteriaTriggers
++net.minecraft.advancements.Criterion
++net.minecraft.advancements.CriterionTrigger
++net.minecraft.advancements.critereon.ContextAwarePredicate
++net.minecraft.advancements.critereon.EntityPredicate
++net.minecraft.advancements.critereon.MinMaxBounds$Doubles
++net.minecraft.advancements.critereon.SimpleCriterionTrigger
++net.minecraft.advancements.critereon.SimpleCriterionTrigger$SimpleInstance
++net.minecraft.client.Camera
++net.minecraft.client.KeyMapping
++net.minecraft.client.KeyboardHandler
++net.minecraft.client.Minecraft
++net.minecraft.client.MouseHandler
++net.minecraft.client.Options
+ net.minecraft.client.gui.Gui
+-net.minecraft.client.gui.screens.Screen
+-net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
+-net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
+-net.minecraft.world.inventory.tooltip.TooltipComponent
+-net.minecraft.client.gui.components.AbstractWidget
+-net.minecraft.client.gui.components.AbstractSelectionList
+-net.minecraft.client.gui.components.ObjectSelectionList
++net.minecraft.client.gui.GuiGraphics
++net.minecraft.client.gui.components.AbstractButton
+ net.minecraft.client.gui.components.AbstractScrollWidget
++net.minecraft.client.gui.components.AbstractSelectionList
++net.minecraft.client.gui.components.AbstractSliderButton
++net.minecraft.client.gui.components.AbstractWidget
+ net.minecraft.client.gui.components.Button
++net.minecraft.client.gui.components.Checkbox
++net.minecraft.client.gui.components.EditBox
++net.minecraft.client.gui.components.ObjectSelectionList
++net.minecraft.client.gui.components.StringWidget
++net.minecraft.client.gui.components.events.GuiEventListener
+ net.minecraft.client.gui.components.toasts.Toast
+ net.minecraft.client.gui.components.toasts.ToastManager
++net.minecraft.client.gui.layouts.LayoutElement
++net.minecraft.client.gui.render.state.GuiRenderState
++net.minecraft.client.gui.screens.Screen
++net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
++net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen
++net.minecraft.client.gui.screens.inventory.InventoryScreen
++net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
++net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent$1
++net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner
++net.minecraft.client.gui.screens.worldselection.CreateWorldScreen
++net.minecraft.client.model.EntityModel
++net.minecraft.client.model.HumanoidModel
++net.minecraft.client.model.Model
++net.minecraft.client.model.PlayerModel
++net.minecraft.client.model.geom.ModelPart
++net.minecraft.client.multiplayer.ClientLevel
++net.minecraft.client.multiplayer.ClientPacketListener
++net.minecraft.client.particle.ParticleProvider
++net.minecraft.client.player.AbstractClientPlayer
++net.minecraft.client.player.ClientInput
++net.minecraft.client.player.LocalPlayer
++net.minecraft.client.renderer.CoreShaders
++net.minecraft.client.renderer.GameRenderer
++net.minecraft.client.renderer.ItemInHandRenderer
++net.minecraft.client.renderer.LevelRenderer
++net.minecraft.client.renderer.MultiBufferSource
++net.minecraft.client.renderer.RenderType
++net.minecraft.client.renderer.ShaderProgram
++net.minecraft.client.renderer.ShapeRenderer
++net.minecraft.client.renderer.blockentity.BlockEntityRenderer
++net.minecraft.client.renderer.blockentity.BlockEntityRenderers
++net.minecraft.client.renderer.entity.AbstractMinecartRenderer
++net.minecraft.client.renderer.entity.EntityRenderDispatcher
+ net.minecraft.client.renderer.entity.EntityRenderer
+-net.minecraft.client.renderer.entity.LivingEntityRenderer
+ net.minecraft.client.renderer.entity.EntityRendererProvider
++net.minecraft.client.renderer.entity.EntityRendererProvider$Context
++net.minecraft.client.renderer.entity.EntityRenderers
++net.minecraft.client.renderer.entity.ItemRenderer
++net.minecraft.client.renderer.entity.LivingEntityRenderer
++net.minecraft.client.renderer.entity.MinecartRenderer
++net.minecraft.client.renderer.entity.layers.ItemInHandLayer
++net.minecraft.client.renderer.entity.layers.RenderLayer
++net.minecraft.client.renderer.entity.player.PlayerRenderer
++net.minecraft.client.renderer.entity.state.ArmedEntityRenderState
++net.minecraft.client.renderer.entity.state.AvatarRenderState
+ net.minecraft.client.renderer.entity.state.EntityRenderState
++net.minecraft.client.renderer.entity.state.HumanoidRenderState
++net.minecraft.client.renderer.entity.state.ItemClusterRenderState
+ net.minecraft.client.renderer.entity.state.LivingEntityRenderState
++net.minecraft.client.renderer.entity.state.MinecartRenderState
+ net.minecraft.client.renderer.entity.state.PlayerRenderState
+-net.minecraft.client.renderer.blockentity.BlockEntityRenderer
+-net.minecraft.client.renderer.blockentity.BlockEntityRenderers
+-net.minecraft.client.renderer.entity.ItemRenderer
++net.minecraft.client.renderer.entity.state.ThrownItemRenderState
+ net.minecraft.client.renderer.item.ItemModel
+-net.minecraft.client.renderer.item.ItemModels
++net.minecraft.client.renderer.item.ItemModel$BakingContext
+ net.minecraft.client.renderer.item.ItemModel$Unbaked
++net.minecraft.client.renderer.item.ItemModelResolver
++net.minecraft.client.renderer.item.ItemModels
++net.minecraft.client.renderer.item.ItemStackRenderState
++net.minecraft.client.renderer.item.ItemStackRenderState$LayerRenderState
++net.minecraft.client.renderer.item.SpecialModelWrapper
+ net.minecraft.client.renderer.special.SpecialModelRenderer
+ net.minecraft.client.renderer.special.SpecialModelRenderer$Unbaked
+ net.minecraft.client.renderer.special.SpecialModelRenderers
+-net.minecraft.client.renderer.item.SpecialModelWrapper
+-net.minecraft.client.renderer.GameRenderer
+-net.minecraft.client.renderer.RenderType
+-net.minecraft.client.renderer.CoreShaders
+-net.minecraft.client.renderer.ShaderProgram
+-net.minecraft.client.renderer.LevelRenderer
+-net.minecraft.client.renderer.ItemInHandRenderer
+-net.minecraft.client.renderer.MultiBufferSource
+ net.minecraft.client.renderer.texture.TextureAtlas
+-net.minecraft.client.model.EntityModel
+-net.minecraft.client.model.Model
+-net.minecraft.client.model.PlayerModel
+-net.minecraft.client.model.HumanoidModel
+-net.minecraft.client.model.geom.ModelPart
+-net.minecraft.client.player.AbstractClientPlayer
+-net.minecraft.client.player.LocalPlayer
+-net.minecraft.client.renderer.entity.player.PlayerRenderer
+-net.minecraft.client.Minecraft
+-net.minecraft.client.Options
+-net.minecraft.client.multiplayer.ClientLevel
+-net.minecraft.client.multiplayer.ClientPacketListener
+-net.minecraft.client.KeyMapping
+-com.mojang.blaze3d.systems.RenderSystem
+-com.mojang.blaze3d.vertex.PoseStack
+-com.mojang.blaze3d.vertex.PoseStack$Pose
+-com.mojang.blaze3d.vertex.VertexConsumer
+-com.mojang.blaze3d.vertex.BufferBuilder
+-com.mojang.blaze3d.vertex.Tesselator
+-com.mojang.blaze3d.vertex.BufferUploader
+-com.mojang.blaze3d.vertex.MeshData
+-com.mojang.blaze3d.pipeline.RenderTarget
+-com.mojang.blaze3d.pipeline.TextureTarget
+-net.minecraft.advancements.critereon.SimpleCriterionTrigger
+-net.minecraft.advancements.critereon.SimpleCriterionTrigger$SimpleInstance
+-net.minecraft.advancements.CriterionTrigger
+-net.minecraft.advancements.CriteriaTriggers
+-net.minecraft.core.particles.ParticleType
++net.minecraft.client.resources.SkinManager
++net.minecraft.client.resources.model.ModelBaker
++net.minecraft.client.resources.model.ModelManager
++net.minecraft.client.sounds.ChannelAccess$ChannelHandle
++net.minecraft.client.sounds.SoundEngine
++net.minecraft.core.Holder
++net.minecraft.core.HolderLookup
++net.minecraft.core.HolderLookup$Provider
++net.minecraft.core.HolderLookup$RegistryLookup
++net.minecraft.core.Registry
++net.minecraft.core.particles.DustParticleOptions
+ net.minecraft.core.particles.ParticleOptions
++net.minecraft.core.particles.ParticleType
+ net.minecraft.core.particles.SimpleParticleType
+-net.minecraft.client.particle.ParticleProvider
+-net.minecraft.server.packs.metadata.MetadataSectionType
+-net.minecraft.server.packs.AbstractPackResources
+-net.minecraft.server.packs.resources.PreparableReloadListener
+-net.minecraft.server.packs.resources.ResourceManager
+-net.minecraft.server.packs.resources.ResourceManagerReloadListener
+-net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener
+-net.minecraft.world.level.storage.loot.LootTable
+-net.minecraft.world.level.storage.loot.LootContext
++net.minecraft.core.registries.BuiltInRegistries
+ net.minecraft.core.registries.Registries
+-net.minecraft.core.Holder
+-net.minecraft.world.inventory.MenuType
+-net.minecraft.world.inventory.AbstractContainerMenu
+-net.minecraft.world.inventory.Slot
+-net.minecraft.world.entity.player.Inventory
+-net.minecraft.util.Mth
+-net.minecraft.util.ARGB
+-net.minecraft.sounds.SoundEvents
+-net.minecraft.world.phys.AABB
+ net.minecraft.network.FriendlyByteBuf
+ net.minecraft.network.RegistryFriendlyByteBuf
+ net.minecraft.network.codec.StreamCodec
+ net.minecraft.network.protocol.common.custom.CustomPacketPayload
++net.minecraft.network.protocol.game.ClientboundExplodePacket
+ net.minecraft.network.syncher.SynchedEntityData
+ net.minecraft.network.syncher.SynchedEntityData$Builder
+-net.minecraft.world.entity.Entity
+-net.minecraft.world.level.ClipContext
+-net.minecraft.world.level.Explosion
+-net.minecraft.world.level.ScheduledTickAccess
+-net.minecraft.world.damagesource.DamageSource
+-net.minecraft.world.damagesource.DamageSources
+-net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
+-net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+-net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking$Context
+-net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
+-net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking$Context
+-net.fabricmc.fabric.api.networking.v1.ServerLoginNetworking
+-net.fabricmc.fabric.api.client.networking.v1.ClientLoginNetworking
+-net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
+-net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
+-net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder
+-net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+-net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
+-net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
+-net.fabricmc.fabric.api.client.rendering.v1.HudLayerRegistrationCallback
+-net.fabricmc.fabric.api.resource.ResourceManagerHelper
+-net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
+-net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener
+-net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
+-net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
+-org.ladysnake.cca.api.v3.component.ComponentKey
+-org.ladysnake.cca.api.v3.component.ComponentV3
+-org.ladysnake.cca.api.v3.component.ComponentRegistry
+-org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry
+-org.ladysnake.cca.api.v3.entity.EntityComponentInitializer
+-net.minecraft.world.item.crafting.RecipeBookCategories
+-net.minecraft.world.item.crafting.CraftingRecipe
+-net.minecraft.world.item.crafting.RecipeAccess
+-net.minecraft.world.item.crafting.CustomRecipe$Serializer
+-net.minecraft.core.registries.BuiltInRegistries
+-net.minecraft.core.Registry
+-net.minecraft.core.HolderLookup
+-net.minecraft.core.HolderLookup$Provider
+-net.minecraft.core.HolderLookup$RegistryLookup
++net.minecraft.recipebook.PlaceRecipe
+ net.minecraft.resources.ResourceKey
+-net.minecraft.world.entity.ai.attributes.Attributes
+-net.minecraft.world.level.block.EntityBlock
+-net.minecraft.world.level.LevelReader
+-net.minecraft.world.level.ScheduledTickAccess
+-net.minecraft.world.level.LevelAccessor
+-net.minecraft.client.renderer.entity.EntityRenderers
+-net.minecraft.client.renderer.entity.state.ItemClusterRenderState
+-net.minecraft.client.renderer.item.ItemStackRenderState
+-net.minecraft.client.renderer.item.ItemModelResolver
+-net.minecraft.client.resources.model.ModelManager
+-net.minecraft.client.gui.layouts.LayoutElement
+-net.minecraft.client.gui.components.events.GuiEventListener
+-net.minecraft.client.gui.components.AbstractSliderButton
+-net.minecraft.client.gui.components.EditBox
+-net.minecraft.client.gui.components.Checkbox
+-net.minecraft.client.gui.components.StringWidget
+-net.minecraft.client.gui.screens.inventory.InventoryScreen
+-net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen
+-net.minecraft.world.level.block.entity.BlockEntityTicker
++net.minecraft.server.MinecraftServer
++net.minecraft.server.ReloadableServerRegistries
++net.minecraft.server.ReloadableServerRegistries$Holder
++net.minecraft.server.level.ServerEntity
++net.minecraft.server.level.ServerLevel
++net.minecraft.server.level.ServerPlayer
++net.minecraft.server.packs.AbstractPackResources
+ net.minecraft.server.packs.FilePackResources
++net.minecraft.server.packs.FilePackResources$FileResourcesSupplier
+ net.minecraft.server.packs.PackLocationInfo
+ net.minecraft.server.packs.PackResources
+-net.minecraft.server.packs.repository.Pack
+-net.minecraft.server.packs.repository.PackSource
+-net.minecraft.server.packs.metadata.pack.PackMetadataSection
++net.minecraft.server.packs.PackSelectionConfig
+ net.minecraft.server.packs.PathPackResources
+ net.minecraft.server.packs.VanillaPackResources
++net.minecraft.server.packs.metadata.MetadataSectionType
++net.minecraft.server.packs.metadata.pack.PackMetadataSection
++net.minecraft.server.packs.repository.Pack
++net.minecraft.server.packs.repository.Pack$Metadata
++net.minecraft.server.packs.repository.Pack$ResourcesSupplier
+ net.minecraft.server.packs.repository.PackRepository
+-net.minecraft.world.level.ServerExplosion
++net.minecraft.server.packs.repository.PackSource
++net.minecraft.server.packs.resources.PreparableReloadListener
++net.minecraft.server.packs.resources.ResourceManager
++net.minecraft.server.packs.resources.ResourceManagerReloadListener
++net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener
++net.minecraft.sounds.SoundEvents
++net.minecraft.util.ARGB
++net.minecraft.util.Mth
++net.minecraft.world.InteractionResult
++net.minecraft.world.damagesource.DamageSource
++net.minecraft.world.damagesource.DamageSources
++net.minecraft.world.entity.Entity
++net.minecraft.world.entity.EntitySpawnReason
++net.minecraft.world.entity.EntityType
++net.minecraft.world.entity.EntityType$Builder
++net.minecraft.world.entity.LivingEntity
++net.minecraft.world.entity.ai.attributes.AttributeInstance
++net.minecraft.world.entity.ai.attributes.AttributeModifier
++net.minecraft.world.entity.ai.attributes.Attributes
++net.minecraft.world.entity.player.Input
++net.minecraft.world.entity.player.Inventory
++net.minecraft.world.entity.player.Player
++net.minecraft.world.entity.projectile.Projectile
++net.minecraft.world.entity.projectile.ProjectileUtil
++net.minecraft.world.entity.projectile.ThrowableItemProjectile
++net.minecraft.world.entity.vehicle.AbstractMinecart
++net.minecraft.world.entity.vehicle.Minecart
++net.minecraft.world.entity.vehicle.VehicleEntity
++net.minecraft.world.inventory.AbstractContainerMenu
++net.minecraft.world.inventory.MenuType
++net.minecraft.world.inventory.Slot
++net.minecraft.world.inventory.tooltip.TooltipComponent
++net.minecraft.world.item.BlockItem
++net.minecraft.world.item.Item
++net.minecraft.world.item.Item$Properties
++net.minecraft.world.item.Item$TooltipContext
++net.minecraft.world.item.ItemDisplayContext
++net.minecraft.world.item.ItemStack
++net.minecraft.world.item.component.CustomData
++net.minecraft.world.item.component.DyedItemColor
++net.minecraft.world.item.crafting.CraftingBookCategory
++net.minecraft.world.item.crafting.CraftingInput
++net.minecraft.world.item.crafting.CraftingRecipe
++net.minecraft.world.item.crafting.CustomRecipe
++net.minecraft.world.item.crafting.CustomRecipe$Serializer
++net.minecraft.world.item.crafting.Ingredient
++net.minecraft.world.item.crafting.PlacementInfo
++net.minecraft.world.item.crafting.Recipe
++net.minecraft.world.item.crafting.RecipeAccess
++net.minecraft.world.item.crafting.RecipeBookCategories
++net.minecraft.world.item.crafting.RecipeHolder
++net.minecraft.world.item.crafting.RecipeInput
++net.minecraft.world.item.crafting.RecipeManager
++net.minecraft.world.item.crafting.RecipeSerializer
++net.minecraft.world.item.crafting.RecipeType
++net.minecraft.world.item.crafting.ShapedRecipe
++net.minecraft.world.level.ClipContext
+ net.minecraft.world.level.Explosion
+ net.minecraft.world.level.ExplosionDamageCalculator
+-net.minecraft.network.protocol.game.ClientboundExplodePacket
+-net.minecraft.world.level.block.state.properties.RailShape
+-net.minecraft.server.level.ServerEntity
++net.minecraft.world.level.Level
++net.minecraft.world.level.LevelAccessor
++net.minecraft.world.level.LevelReader
++net.minecraft.world.level.ScheduledTickAccess
++net.minecraft.world.level.ServerExplosion
++net.minecraft.world.level.block.BaseEntityBlock
+ net.minecraft.world.level.block.Block
+-net.minecraft.client.renderer.entity.state.ThrownItemRenderState
+-net.minecraft.world.entity.projectile.ThrowableItemProjectile
+-net.minecraft.world.entity.projectile.ProjectileUtil
+-net.minecraft.world.level.storage.loot.LootTable
+-net.minecraft.server.ReloadableServerRegistries
+-net.minecraft.server.ReloadableServerRegistries$Holder
+-net.minecraft.world.level.storage.loot.LootDataType
+-net.minecraft.advancements.critereon.SimpleCriterionTrigger
+-net.minecraft.advancements.critereon.ContextAwarePredicate
+-net.minecraft.advancements.Criterion
+-net.minecraft.world.entity.EntitySpawnReason
+-net.minecraft.client.renderer.item.ItemModel$BakingContext
+-net.minecraft.client.renderer.special.SpecialModelRenderer$Unbaked
+-net.minecraft.client.renderer.special.SpecialModelRenderers
+-net.minecraft.client.renderer.item.SpecialModelWrapper
+-net.minecraft.client.renderer.item.ItemModels
+-net.minecraft.client.resources.model.ModelBaker
+-net.minecraft.client.renderer.entity.player.PlayerRenderer
+-net.minecraft.client.model.PlayerModel
+-net.minecraft.client.renderer.entity.layers.RenderLayer
+-net.minecraft.client.renderer.entity.state.AvatarRenderState
+-net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
+-net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
+-net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent$1
+-net.minecraft.world.inventory.tooltip.TooltipComponent
+-net.minecraft.world.entity.vehicle.VehicleEntity
+-net.minecraft.world.entity.vehicle.Minecart
+-net.minecraft.server.packs.repository.Pack$ResourcesSupplier
+-net.minecraft.server.packs.repository.Pack$Metadata
+-net.minecraft.server.packs.FilePackResources$FileResourcesSupplier
+-net.minecraft.server.packs.PackSelectionConfig
+-net.minecraft.advancements.CriterionTrigger
+-net.minecraft.advancements.critereon.EntityPredicate
+-net.minecraft.advancements.critereon.MinMaxBounds$Doubles
+-net.minecraft.server.MinecraftServer
++net.minecraft.world.level.block.EntityBlock
++net.minecraft.world.level.block.entity.BlockEntity
++net.minecraft.world.level.block.entity.BlockEntityTicker
++net.minecraft.world.level.block.entity.BlockEntityType
++net.minecraft.world.level.block.state.BlockBehaviour
+ net.minecraft.world.level.block.state.properties.RailShape
+-net.minecraft.world.entity.projectile.Projectile
+-net.minecraft.client.renderer.entity.layers.RenderLayer
+-net.minecraft.client.renderer.entity.state.EntityRenderState
+-net.minecraft.client.renderer.entity.EntityRenderDispatcher
+-net.minecraft.client.renderer.entity.ItemRenderer
+-net.minecraft.world.item.ItemDisplayContext
+-net.minecraft.client.renderer.item.ItemStackRenderState$LayerRenderState
+-net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner
+-net.minecraft.client.gui.render.state.GuiRenderState
+-net.fabricmc.fabric.api.networking.v1.LoginPacketSender
+-net.fabricmc.fabric.api.networking.v1.PacketSender
+-net.fabricmc.fabric.api.client.networking.v1.ClientLoginNetworking$LoginQueryRequestHandler
+-net.minecraft.client.renderer.entity.AbstractMinecartRenderer
+-net.minecraft.client.renderer.entity.state.MinecartRenderState
+-net.minecraft.client.renderer.entity.MinecartRenderer
+-net.minecraft.client.resources.SkinManager
+-net.minecraft.client.renderer.ShapeRenderer
+-net.minecraft.client.player.ClientInput
+-net.minecraft.world.entity.player.Input
+-net.minecraft.client.multiplayer.ClientLevel
+-net.minecraft.client.renderer.entity.state.LivingEntityRenderState
+-net.minecraft.util.ARGB
+-net.minecraft.core.particles.DustParticleOptions
+-net.minecraft.client.renderer.entity.EntityRendererProvider$Context
++net.minecraft.world.level.storage.loot.LootContext
++net.minecraft.world.level.storage.loot.LootDataType
++net.minecraft.world.level.storage.loot.LootTable
++net.minecraft.world.phys.AABB
++org.ladysnake.cca.api.v3.component.ComponentKey
++org.ladysnake.cca.api.v3.component.ComponentRegistry
++org.ladysnake.cca.api.v3.component.ComponentV3
++org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry
++org.ladysnake.cca.api.v3.entity.EntityComponentInitializer
+diff --git a/src/main/java/cn/sh1rocu/tacz/api/extension/IRenderStateEntity.java b/src/main/java/cn/sh1rocu/tacz/api/extension/IRenderStateEntity.java
+new file mode 100644
+index 0000000..d425f0c
+--- /dev/null
++++ b/src/main/java/cn/sh1rocu/tacz/api/extension/IRenderStateEntity.java
+@@ -0,0 +1,10 @@
++package cn.sh1rocu.tacz.api.extension;
++
++import net.minecraft.world.entity.LivingEntity;
++
++/** Duck interface on EntityRenderState: 1.21.2+ models only see render states, so keep the source entity here. */
++public interface IRenderStateEntity {
++    LivingEntity tacz$getEntity();
++
++    void tacz$setEntity(LivingEntity entity);
++}
+diff --git a/src/main/java/cn/sh1rocu/tacz/mixin/client/EntityRenderStateMixin.java b/src/main/java/cn/sh1rocu/tacz/mixin/client/EntityRenderStateMixin.java
+new file mode 100644
+index 0000000..05934ac
+--- /dev/null
++++ b/src/main/java/cn/sh1rocu/tacz/mixin/client/EntityRenderStateMixin.java
+@@ -0,0 +1,23 @@
++package cn.sh1rocu.tacz.mixin.client;
++
++import cn.sh1rocu.tacz.api.extension.IRenderStateEntity;
++import net.minecraft.client.renderer.entity.state.EntityRenderState;
++import net.minecraft.world.entity.LivingEntity;
++import org.spongepowered.asm.mixin.Mixin;
++import org.spongepowered.asm.mixin.Unique;
++
++@Mixin(EntityRenderState.class)
++public class EntityRenderStateMixin implements IRenderStateEntity {
++    @Unique
++    private LivingEntity tacz$entity;
++
++    @Override
++    public LivingEntity tacz$getEntity() {
++        return tacz$entity;
++    }
++
++    @Override
++    public void tacz$setEntity(LivingEntity entity) {
++        this.tacz$entity = entity;
++    }
++}
+diff --git a/src/main/java/cn/sh1rocu/tacz/mixin/client/LivingEntityRendererMixin.java b/src/main/java/cn/sh1rocu/tacz/mixin/client/LivingEntityRendererMixin.java
+new file mode 100644
+index 0000000..a7e717b
+--- /dev/null
++++ b/src/main/java/cn/sh1rocu/tacz/mixin/client/LivingEntityRendererMixin.java
+@@ -0,0 +1,20 @@
++package cn.sh1rocu.tacz.mixin.client;
++
++import cn.sh1rocu.tacz.api.extension.IRenderStateEntity;
++import net.minecraft.client.renderer.entity.LivingEntityRenderer;
++import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
++import net.minecraft.world.entity.LivingEntity;
++import org.spongepowered.asm.mixin.Mixin;
++import org.spongepowered.asm.mixin.injection.At;
++import org.spongepowered.asm.mixin.injection.Inject;
++import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
++
++@Mixin(LivingEntityRenderer.class)
++public class LivingEntityRendererMixin {
++    @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V", at = @At("TAIL"))
++    private void tacz$captureEntity(LivingEntity entity, LivingEntityRenderState state, float partialTick, CallbackInfo ci) {
++        if ((Object) state instanceof IRenderStateEntity holder) {
++            holder.tacz$setEntity(entity);
++        }
++    }
++}
+diff --git a/src/main/java/cn/sh1rocu/tacz/mixin/client/PlayerRendererMixin.java b/src/main/java/cn/sh1rocu/tacz/mixin/client/PlayerRendererMixin.java
+index 184430b..5f00479 100644
+--- a/src/main/java/cn/sh1rocu/tacz/mixin/client/PlayerRendererMixin.java
++++ b/src/main/java/cn/sh1rocu/tacz/mixin/client/PlayerRendererMixin.java
+@@ -1,10 +1,13 @@
+ package cn.sh1rocu.tacz.mixin.client;
+ 
+ import cn.sh1rocu.tacz.api.event.RenderPlayerEvent;
++import cn.sh1rocu.tacz.api.extension.IRenderStateEntity;
+ import com.mojang.blaze3d.vertex.PoseStack;
++import net.minecraft.client.Minecraft;
+ import net.minecraft.client.player.AbstractClientPlayer;
+ import net.minecraft.client.renderer.MultiBufferSource;
+ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
++import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+ import org.spongepowered.asm.mixin.Mixin;
+ import org.spongepowered.asm.mixin.injection.At;
+ import org.spongepowered.asm.mixin.injection.Inject;
+@@ -12,17 +15,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+ 
+ @Mixin(PlayerRenderer.class)
+ public class PlayerRendererMixin {
+-    @Inject(method = "render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"), cancellable = true)
+-    private void goety$onRenderPlayerPre(AbstractClientPlayer player, float f, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
++    @Inject(method = "render(Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"), cancellable = true)
++    private void goety$onRenderPlayerPre(PlayerRenderState state, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
++        if (!((Object) state instanceof IRenderStateEntity holder) || !(holder.tacz$getEntity() instanceof AbstractClientPlayer player)) {
++            return;
++        }
++        float partialTick = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false);
+         var event = new RenderPlayerEvent.Pre(player, (PlayerRenderer) (Object) this, partialTick, poseStack, buffer, packedLight);
+         RenderPlayerEvent.PRE.invoker().post(event);
+         if (event.isCanceled())
+             ci.cancel();
+     }
+ 
+-    @Inject(method = "render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("RETURN"))
+-    private void tacz$onRenderPlayerPost(AbstractClientPlayer player, float f, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
++    @Inject(method = "render(Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("RETURN"))
++    private void tacz$onRenderPlayerPost(PlayerRenderState state, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
++        if (!((Object) state instanceof IRenderStateEntity holder) || !(holder.tacz$getEntity() instanceof AbstractClientPlayer player)) {
++            return;
++        }
++        float partialTick = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false);
+         var event = new RenderPlayerEvent.Post(player, (PlayerRenderer) (Object) this, partialTick, poseStack, buffer, packedLight);
+         RenderPlayerEvent.POST.invoker().post(event);
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/src/main/java/com/tacz/guns/mixin/client/CreativeModeInventoryScreenMixin.java b/src/main/java/com/tacz/guns/mixin/client/CreativeModeInventoryScreenMixin.java
+index d0c286a..0ccc820 100644
+--- a/src/main/java/com/tacz/guns/mixin/client/CreativeModeInventoryScreenMixin.java
++++ b/src/main/java/com/tacz/guns/mixin/client/CreativeModeInventoryScreenMixin.java
+@@ -62,8 +62,8 @@ public abstract class CreativeModeInventoryScreenMixin extends AbstractContainer
+     }
+ 
+     @Inject(method = "mouseScrolled", at = @At("HEAD"), cancellable = true)
+-    private void tacz$scrollPackFilters(double mouseX, double mouseY, double delta, CallbackInfoReturnable<Boolean> cir) {
+-        if (tacz$packFilters != null && tacz$packFilters.mouseScrolled(mouseX, mouseY, delta)) {
++    private void tacz$scrollPackFilters(double mouseX, double mouseY, double scrollX, double scrollY, CallbackInfoReturnable<Boolean> cir) {
++        if (tacz$packFilters != null && tacz$packFilters.mouseScrolled(mouseX, mouseY, scrollY)) {
+             cir.setReturnValue(true);
+         }
+     }
+diff --git a/src/main/java/com/tacz/guns/mixin/client/GameRendererMixin.java b/src/main/java/com/tacz/guns/mixin/client/GameRendererMixin.java
+index 6b40bfc..892e563 100644
+--- a/src/main/java/com/tacz/guns/mixin/client/GameRendererMixin.java
++++ b/src/main/java/com/tacz/guns/mixin/client/GameRendererMixin.java
+@@ -5,7 +5,6 @@ import com.tacz.guns.api.client.event.RenderItemInHandBobEvent;
+ import com.tacz.guns.api.client.event.RenderLevelBobEvent;
+ import com.tacz.guns.api.item.gun.AbstractGunItem;
+ import com.tacz.guns.client.renderer.other.GunHurtBobTweak;
+-import com.tacz.guns.client.renderer.scope.ScopeLensRenderer;
+ import com.tacz.guns.config.client.RenderConfig;
+ import net.minecraft.client.Camera;
+ import net.minecraft.client.Minecraft;
+@@ -26,30 +25,9 @@ public abstract class GameRendererMixin {
+     @Unique
+     private boolean tacz$useFovSetting;
+ 
+-    @Inject(method = "renderLevel", at = @At("HEAD"))
+-    private void tacz$beginScopeFrame(float partialTicks, long finishTime, PoseStack poseStack, CallbackInfo ci) {
+-        ScopeLensRenderer.beginFrame();
+-    }
+-
+-    // After AFTER_LEVEL and Oculus' composite, before hand depth is cleared and colour space converted.
+-    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/ProfilerFiller;popPush(Ljava/lang/String;)V", ordinal = 1))
+-    private void tacz$drawShaderScopeLenses(float partialTicks, long finishTime, PoseStack poseStack, CallbackInfo ci) {
+-        ScopeLensRenderer.render();
+-    }
+-
+-    // AR flushes hands in an AFTER callback on renderHandsWithItems, which also captures lenses.
+-    // Use a later vanilla call so that flush always finishes first, with screen overlays still on top.
+-    @Inject(method = "renderItemInHand", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ScreenEffectRenderer;renderScreenEffect(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V"))
+-    private void tacz$drawVanillaScopeLenses(PoseStack poseStack, Camera camera, float partialTicks, CallbackInfo ci) {
+-        ScopeLensRenderer.render();
+-    }
+-
+     @Shadow
+     public abstract Minecraft getMinecraft();
+ 
+-    @Shadow
+-    public abstract void render(float pPartialTicks, long pNanoTime, boolean pRenderLevel);
+-
+     @Inject(method = "bobHurt", at = @At("HEAD"), cancellable = true)
+     public void onBobHurt(PoseStack pMatrixStack, float pPartialTicks, CallbackInfo ci) {
+         // 取消受伤导致的视角摇晃
+@@ -114,7 +92,7 @@ public abstract class GameRendererMixin {
+      * 至于为什么不直接对 renderItemInHand 这个方法 mixin ，是因为安装了 Optifine 之后，这个方法的内容被大幅度修改了。
+      */
+     @Inject(method = "getFov", at = @At("HEAD"))
+-    public void switchRenderType(Camera pActiveRenderInfo, float pPartialTicks, boolean pUseFOVSetting, CallbackInfoReturnable<Double> cir) {
++    public void switchRenderType(Camera pActiveRenderInfo, float pPartialTicks, boolean pUseFOVSetting, CallbackInfoReturnable<Float> cir) {
+         this.tacz$useFovSetting = pUseFOVSetting;
+     }
+ }
+diff --git a/src/main/java/com/tacz/guns/mixin/client/HumanoidModelMixin.java b/src/main/java/com/tacz/guns/mixin/client/HumanoidModelMixin.java
+index d2ac5b6..ca772f3 100644
+--- a/src/main/java/com/tacz/guns/mixin/client/HumanoidModelMixin.java
++++ b/src/main/java/com/tacz/guns/mixin/client/HumanoidModelMixin.java
+@@ -1,8 +1,10 @@
+ package com.tacz.guns.mixin.client;
+ 
++import cn.sh1rocu.tacz.api.extension.IRenderStateEntity;
+ import com.tacz.guns.client.animation.third.InnerThirdPersonManager;
+ import net.minecraft.client.model.HumanoidModel;
+ import net.minecraft.client.model.geom.ModelPart;
++import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+ import net.minecraft.world.entity.LivingEntity;
+ import org.spongepowered.asm.mixin.Final;
+ import org.spongepowered.asm.mixin.Mixin;
+@@ -12,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
+ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+ 
+ @Mixin(HumanoidModel.class)
+-public class HumanoidModelMixin<T extends LivingEntity> {
++public class HumanoidModelMixin<T extends HumanoidRenderState> {
+     @Shadow
+     @Final
+     public ModelPart head;
+@@ -26,8 +28,14 @@ public class HumanoidModelMixin<T extends LivingEntity> {
+     @Final
+     public ModelPart rightArm;
+ 
+-    @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At(value = "TAIL"))
+-    private void setRotationAnglesHead(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
+-        InnerThirdPersonManager.setRotationAnglesHead(entityIn, rightArm, leftArm, body, head, limbSwingAmount);
++    // 1.21.2+: models only receive a render state; the entity is carried by IRenderStateEntity.
++    @Inject(method = "setupAnim(Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;)V", at = @At(value = "TAIL"))
++    private void setRotationAnglesHead(T state, CallbackInfo ci) {
++        if ((Object) state instanceof IRenderStateEntity holder) {
++            LivingEntity entity = holder.tacz$getEntity();
++            if (entity != null) {
++                InnerThirdPersonManager.setRotationAnglesHead(entity, rightArm, leftArm, body, head, state.walkAnimationSpeed);
++            }
++        }
+     }
+ }
+diff --git a/src/main/resources/tacz.fabric.mixins.json b/src/main/resources/tacz.fabric.mixins.json
+index 22e5518..82ef81f 100644
+--- a/src/main/resources/tacz.fabric.mixins.json
++++ b/src/main/resources/tacz.fabric.mixins.json
+@@ -35,8 +35,10 @@
+     "client.ClientLevelMixin",
+     "client.ClientPacketListenerMixin",
+     "client.CreateWorldScreenMixin",
++    "client.EntityRenderStateMixin",
+     "client.GuiMixin",
+     "client.KeyboardHandlerMixin",
++    "client.LivingEntityRendererMixin",
+     "client.MinecraftMixin",
+     "client.MouseHandlerMixin",
+     "client.PlayerRendererMixin",
+diff --git a/src/main/resources/tacz.mixins.json b/src/main/resources/tacz.mixins.json
+index ff65fd7..902cffb 100644
+--- a/src/main/resources/tacz.mixins.json
++++ b/src/main/resources/tacz.mixins.json
+@@ -15,7 +15,6 @@
+     "client.CreativeModeInventoryScreenMixin",
+     "client.GameRendererMixin",
+     "client.HumanoidModelMixin",
+-    "client.ItemInHandLayerMixin",
+     "client.ItemInHandRendererMixin",
+     "client.LanguageMixin",
+     "client.LocalPlayerMixin",
