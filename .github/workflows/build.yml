@@ -35,4 +35,8 @@ jobs:
         if: success()
         with:
           name: tacz-1.21.4
-          path: build/libs/*.jar
+          path: |
+            build/libs/*.jar
+            !build/libs/*-sources.jar
+            !build/libs/*-dev.jar
+          compression-level: 9
