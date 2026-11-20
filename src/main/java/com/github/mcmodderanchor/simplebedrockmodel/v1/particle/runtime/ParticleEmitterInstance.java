@@ -8,5 +8,6 @@ public class ParticleEmitterInstance {
     public void tick(float partialTick) { }
     public void setWorldParticleScale(float scale) { }
     public void setEmitterTransform(Matrix4f emitterTransform, Matrix4f worldTransform) { }
+    public void setFollowAnchor(boolean follow) { }
     public void setVariable(String name, float value) { }
 }

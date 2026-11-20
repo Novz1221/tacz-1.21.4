@@ -1,11 +1,31 @@
 package cn.sh1rocu.simplebedrockmodel.api.event;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.GameRenderer;
 
+import java.util.function.Consumer;
+
 /** Pengganti net.minecraftforge.client.event.ViewportEvent untuk Fabric. */
 public class ViewportEvent {
+    /** Dipanggil saat sudut kamera dihitung (roll/pitch/yaw). */
+    public static final Event<Consumer<ComputeCameraAngles>> CAMERA = EventFactory.createArrayBacked(Consumer.class,
+            listeners -> event -> {
+                for (Consumer<ComputeCameraAngles> l : listeners) {
+                    l.accept(event);
+                }
+            });
+
+    /** Dipanggil saat FOV dihitung. */
+    public static final Event<Consumer<ComputeFov>> FOV = EventFactory.createArrayBacked(Consumer.class,
+            listeners -> event -> {
+                for (Consumer<ComputeFov> l : listeners) {
+                    l.accept(event);
+                }
+            });
+
     private ViewportEvent() {
     }
 
