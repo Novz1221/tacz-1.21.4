@@ -235,7 +235,7 @@ public class ClientAmmoIndex {
                 AmmoParticle particle = display.getParticle();
                 String name = particle.getName();
                 if (StringUtils.isNoneBlank()) {
-                    particle.setParticleOptions(ParticleArgument.readParticle(new StringReader(name), net.minecraft.client.Minecraft.getInstance().level.registryAccess()));
+                    particle.setParticleOptions(ParticleArgument.readParticle(new StringReader(name), com.tacz.guns.util.ClientParticleLookup.get()));
                     Preconditions.checkArgument(particle.getCount() > 0, "particle count must be greater than 0");
                     Preconditions.checkArgument(particle.getLifeTime() > 0, "particle life time must be greater than 0");
                     index.particle = particle;

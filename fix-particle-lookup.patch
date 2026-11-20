@@ -1,0 +1,77 @@
+diff --git a/src/main/java/com/tacz/guns/client/particle/HitSurfaceParticleSpawner.java b/src/main/java/com/tacz/guns/client/particle/HitSurfaceParticleSpawner.java
+index 43b4902..012c97a 100644
+--- a/src/main/java/com/tacz/guns/client/particle/HitSurfaceParticleSpawner.java
++++ b/src/main/java/com/tacz/guns/client/particle/HitSurfaceParticleSpawner.java
+@@ -171,7 +171,7 @@ public final class HitSurfaceParticleSpawner {
+         boolean hasArguments = trimmedName.split("\\s+", 2).length > 1;
+         if (hasArguments) {
+             try {
+-                return ParticleArgument.readParticle(new StringReader(trimmedName), net.minecraft.client.Minecraft.getInstance().level.registryAccess());
++                return ParticleArgument.readParticle(new StringReader(trimmedName), com.tacz.guns.util.ClientParticleLookup.get());
+             } catch (CommandSyntaxException ignored) {
+                 return null;
+             }
+@@ -197,7 +197,7 @@ public final class HitSurfaceParticleSpawner {
+             return null;
+         }
+         try {
+-            return ParticleArgument.readParticle(new StringReader(trimmedName), net.minecraft.client.Minecraft.getInstance().level.registryAccess());
++            return ParticleArgument.readParticle(new StringReader(trimmedName), com.tacz.guns.util.ClientParticleLookup.get());
+         } catch (CommandSyntaxException ignored) {
+             return null;
+         }
+diff --git a/src/main/java/com/tacz/guns/client/resource/GunDisplayInstance.java b/src/main/java/com/tacz/guns/client/resource/GunDisplayInstance.java
+index 15bfaa6..5d69c56 100644
+--- a/src/main/java/com/tacz/guns/client/resource/GunDisplayInstance.java
++++ b/src/main/java/com/tacz/guns/client/resource/GunDisplayInstance.java
+@@ -657,7 +657,7 @@ public class GunDisplayInstance {
+             try {
+                 String name = particle.getName();
+                 if (StringUtils.isNoneBlank()) {
+-                    particle.setParticleOptions(ParticleArgument.readParticle(new StringReader(name), net.minecraft.client.Minecraft.getInstance().level.registryAccess()));
++                    particle.setParticleOptions(ParticleArgument.readParticle(new StringReader(name), com.tacz.guns.util.ClientParticleLookup.get()));
+                     Preconditions.checkArgument(particle.getCount() > 0, "particle count must be greater than 0");
+                     Preconditions.checkArgument(particle.getLifeTime() > 0, "particle life time must be greater than 0");
+                     this.particle = particle;
+diff --git a/src/main/java/com/tacz/guns/client/resource/index/ClientAmmoIndex.java b/src/main/java/com/tacz/guns/client/resource/index/ClientAmmoIndex.java
+index 38e539f..6ae98ef 100644
+--- a/src/main/java/com/tacz/guns/client/resource/index/ClientAmmoIndex.java
++++ b/src/main/java/com/tacz/guns/client/resource/index/ClientAmmoIndex.java
+@@ -235,7 +235,7 @@ public class ClientAmmoIndex {
+                 AmmoParticle particle = display.getParticle();
+                 String name = particle.getName();
+                 if (StringUtils.isNoneBlank()) {
+-                    particle.setParticleOptions(ParticleArgument.readParticle(new StringReader(name), net.minecraft.client.Minecraft.getInstance().level.registryAccess()));
++                    particle.setParticleOptions(ParticleArgument.readParticle(new StringReader(name), com.tacz.guns.util.ClientParticleLookup.get()));
+                     Preconditions.checkArgument(particle.getCount() > 0, "particle count must be greater than 0");
+                     Preconditions.checkArgument(particle.getLifeTime() > 0, "particle life time must be greater than 0");
+                     index.particle = particle;
+diff --git a/src/main/java/com/tacz/guns/util/ClientParticleLookup.java b/src/main/java/com/tacz/guns/util/ClientParticleLookup.java
+new file mode 100644
+index 0000000..3e2ba5d
+--- /dev/null
++++ b/src/main/java/com/tacz/guns/util/ClientParticleLookup.java
+@@ -0,0 +1,23 @@
++package com.tacz.guns.util;
++
++import net.minecraft.client.Minecraft;
++import net.minecraft.core.HolderLookup;
++import net.minecraft.core.registries.BuiltInRegistries;
++
++import java.util.stream.Stream;
++
++/**
++ * 1.21+: ParticleArgument needs a registry lookup. During resource loading at the title screen there is
++ * no client level yet, so fall back to the built-in particle registry.
++ */
++public final class ClientParticleLookup {
++    private static final HolderLookup.Provider BUILT_IN = HolderLookup.Provider.create(Stream.of(BuiltInRegistries.PARTICLE_TYPE));
++
++    private ClientParticleLookup() {
++    }
++
++    public static HolderLookup.Provider get() {
++        var level = Minecraft.getInstance().level;
++        return level != null ? level.registryAccess() : BUILT_IN;
++    }
++}

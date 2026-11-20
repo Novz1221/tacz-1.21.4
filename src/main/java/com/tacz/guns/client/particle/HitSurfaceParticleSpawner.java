@@ -171,7 +171,7 @@ public final class HitSurfaceParticleSpawner {
         boolean hasArguments = trimmedName.split("\\s+", 2).length > 1;
         if (hasArguments) {
             try {
-                return ParticleArgument.readParticle(new StringReader(trimmedName), net.minecraft.client.Minecraft.getInstance().level.registryAccess());
+                return ParticleArgument.readParticle(new StringReader(trimmedName), com.tacz.guns.util.ClientParticleLookup.get());
             } catch (CommandSyntaxException ignored) {
                 return null;
             }
@@ -197,7 +197,7 @@ public final class HitSurfaceParticleSpawner {
             return null;
         }
         try {
-            return ParticleArgument.readParticle(new StringReader(trimmedName), net.minecraft.client.Minecraft.getInstance().level.registryAccess());
+            return ParticleArgument.readParticle(new StringReader(trimmedName), com.tacz.guns.util.ClientParticleLookup.get());
         } catch (CommandSyntaxException ignored) {
             return null;
         }
