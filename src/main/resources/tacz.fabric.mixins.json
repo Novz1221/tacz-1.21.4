@@ -41,7 +41,6 @@
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.MouseHandlerMixin",
-    "client.PlayerRendererMixin",
     "client.RenderTargetMixin",
     "client.SoundEngineMixin",
     "client.TextureAtlasMixin",
