@@ -9,7 +9,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import cn.sh1rocu.simplebedrockmodel.api.event.ViewportEvent;
+import cn.sh1rocu.tacz.api.event.ViewportEvent;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 

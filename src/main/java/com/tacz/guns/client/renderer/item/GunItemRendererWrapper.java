@@ -1,6 +1,6 @@
 package com.tacz.guns.client.renderer.item;
 
-import cn.sh1rocu.simplebedrockmodel.api.event.ViewportEvent;
+import cn.sh1rocu.tacz.api.event.ViewportEvent;
 import com.google.common.base.Suppliers;
 import com.github.mcmodderanchor.simplebedrockmodel.v1.client.handler.FirstPersonRenderHandler;
 import com.github.mcmodderanchor.simplebedrockmodel.v1.common.resource.pojo.ParticleEffectData;

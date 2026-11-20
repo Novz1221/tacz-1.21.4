@@ -2,7 +2,7 @@ package cn.sh1rocu.tacz.client;
 
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import cn.sh1rocu.simplebedrockmodel.api.event.RenderTickEvent;
-import cn.sh1rocu.simplebedrockmodel.api.event.ViewportEvent;
+import cn.sh1rocu.tacz.api.event.ViewportEvent;
 import cn.sh1rocu.tacz.api.event.*;
 import cn.sh1rocu.tacz.api.extension.IItem;
 import com.tacz.guns.api.client.event.BeforeRenderHandEvent;

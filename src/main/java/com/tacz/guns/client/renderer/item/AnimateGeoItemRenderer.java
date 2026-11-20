@@ -1,6 +1,6 @@
 package com.tacz.guns.client.renderer.item;
 
-import cn.sh1rocu.simplebedrockmodel.api.event.ViewportEvent;
+import cn.sh1rocu.tacz.api.event.ViewportEvent;
 import com.github.mcmodderanchor.simplebedrockmodel.v1.client.animation.IFPAnimationInstance;
 import com.github.mcmodderanchor.simplebedrockmodel.v1.client.renderer.IFPGeoItemRenderer;
 import com.maydaymemory.mae.basic.DummyPose;
