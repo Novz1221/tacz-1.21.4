@@ -33,7 +33,7 @@ public class AttachmentItemRenderer extends BlockEntityWithoutLevelRenderer impl
 
     public static final Supplier<AttachmentItemRenderer> INSTANCE = Suppliers.memoize(() -> {
         Minecraft client = Minecraft.getInstance();
-        return new AttachmentItemRenderer(client.getBlockEntityRenderDispatcher(), client.getEntityModels());
+        return new AttachmentItemRenderer(client.getBlockEntityRenderDispatcher(), null);
     });
 
     public AttachmentItemRenderer(BlockEntityRenderDispatcher pBlockEntityRenderDispatcher, EntityModelSet pEntityModelSet) {

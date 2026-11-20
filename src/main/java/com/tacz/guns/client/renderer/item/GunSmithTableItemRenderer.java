@@ -29,7 +29,7 @@ public class GunSmithTableItemRenderer extends BlockEntityWithoutLevelRenderer i
 
     public static final Supplier<GunSmithTableItemRenderer> INSTANCE = Suppliers.memoize(() -> {
         Minecraft client = Minecraft.getInstance();
-        return new GunSmithTableItemRenderer(client.getBlockEntityRenderDispatcher(), client.getEntityModels());
+        return new GunSmithTableItemRenderer(client.getBlockEntityRenderDispatcher(), null);
     });
 
     public GunSmithTableItemRenderer(BlockEntityRenderDispatcher dispatcher, EntityModelSet modelSet) {

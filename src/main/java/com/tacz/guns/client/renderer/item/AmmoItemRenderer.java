@@ -35,7 +35,7 @@ public class AmmoItemRenderer extends BlockEntityWithoutLevelRenderer implements
 
     public static final Supplier<AmmoItemRenderer> INSTANCE = Suppliers.memoize(() -> {
         Minecraft client = Minecraft.getInstance();
-        return new AmmoItemRenderer(client.getBlockEntityRenderDispatcher(), client.getEntityModels());
+        return new AmmoItemRenderer(client.getBlockEntityRenderDispatcher(), null);
     });
 
     public AmmoItemRenderer(BlockEntityRenderDispatcher pBlockEntityRenderDispatcher, EntityModelSet pEntityModelSet) {
