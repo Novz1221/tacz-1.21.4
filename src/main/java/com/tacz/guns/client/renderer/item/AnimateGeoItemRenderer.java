@@ -60,7 +60,7 @@ public abstract class AnimateGeoItemRenderer<M extends BedrockAnimatedModel, CTX
     public ResourceLocation textureLocation;
 
     public AnimateGeoItemRenderer() {
-        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), null);
     }
 
     public void setModel(M model) {
